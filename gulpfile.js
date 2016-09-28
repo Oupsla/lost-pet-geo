@@ -6,8 +6,9 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
-const sourcemaps = require('gulp-sourcemaps');
-const babel = require('gulp-babel');
+var sourcemaps = require('gulp-sourcemaps');
+var babel = require('gulp-babel');
+var jshint = require('gulp-jshint');
 
 var paths = {
   sass: ['./scss/**/*.scss'],
@@ -15,7 +16,7 @@ var paths = {
   misc: ['./app/**/*', '!./app/**/*.js', './app/lib/**/*']
 };
 
-gulp.task('default', ['babel', 'sass']);
+gulp.task('default', ['lint', 'babel', 'sass']);
 
 gulp.task('copy', function () {
   return gulp.src(paths.misc)
@@ -34,7 +35,7 @@ gulp.task('babel', function () {
 });
 
 
-gulp.task('sass', function(done) {
+gulp.task('sass', function (done) {
   gulp.src(['./scss/ionic.app.scss', './app/**/*.scss'])
     .pipe(sass())
     .on('error', sass.logError)
@@ -47,20 +48,26 @@ gulp.task('sass', function(done) {
     .on('end', done);
 });
 
-gulp.task('watch', function() {
+gulp.task('lint', function () {
+  return gulp.src(paths.js)
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'));
+});
+
+gulp.task('watch', ['lint', 'babel', 'sass', 'copy'], function () {
   gulp.watch(paths.sass, ['sass']);
-  gulp.watch(paths.js, ['babel']);
+  gulp.watch(paths.js, ['lint', 'babel']);
   gulp.watch(paths.misc, ['copy']);
 });
 
-gulp.task('install', ['git-check'], function() {
+gulp.task('install', ['git-check'], function () {
   return bower.commands.install()
     .on('log', function(data) {
       gutil.log('bower', gutil.colors.cyan(data.id), data.message);
     });
 });
 
-gulp.task('git-check', function(done) {
+gulp.task('git-check', function (done) {
   if (!sh.which('git')) {
     console.log(
       '  ' + gutil.colors.red('Git is not installed.'),
