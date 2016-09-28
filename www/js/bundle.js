@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  angular.module('lostpetgeo', ['ionic', 'list', 'add']);
+  angular.module('lostpetgeo', ['ionic', 'list', 'add', 'alert']);
 })();
 'use strict';
 
@@ -9,6 +9,11 @@
   'use strict';
 
   angular.module('add', []);
+})();
+'use strict';
+
+(function () {
+  angular.module('alert', []);
 })();
 'use strict';
 
@@ -36,8 +41,11 @@
     });
   }
 
-  configApplication.$inject = ['$stateProvider', '$urlRouterProvider'];
-  function configApplication($stateProvider, $urlRouterProvider) {
+  configApplication.$inject = ['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'];
+  function configApplication($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+
+    $ionicConfigProvider.backButton.icon('ion-chevron-left');
+    $ionicConfigProvider.backButton.text('Back');
 
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
@@ -84,6 +92,21 @@
 'use strict';
 
 (function () {
+  angular.module('alert').config(configAlert);
+
+  configAlert.$inject = ['$stateProvider'];
+  function configAlert($stateProvider) {
+    $stateProvider.state('alert', {
+      url: '/alert/:alertId',
+      templateUrl: 'alert/alert.html',
+      controller: 'AlertCtrl',
+      controllerAs: 'AlertCtrl'
+    });
+  }
+})();
+'use strict';
+
+(function () {
   angular.module('list').config(configList);
 
   configList.$inject = ['$stateProvider'];
@@ -100,13 +123,18 @@
     });
   }
 })();
-'use strict';
+// self.addEventListener('activate', function (event) {
 
-self.addEventListener('activate', function (event) {});
+// });
 
-self.addEventListener('fetch', function (event) {});
+// self.addEventListener('fetch', function (event) {
 
-self.addEventListener('push', function (event) {});
+// });
+
+// self.addEventListener('push', function (event) {
+
+// });
+"use strict";
 'use strict';
 
 (function () {
@@ -126,21 +154,91 @@ self.addEventListener('push', function (event) {});
 'use strict';
 
 (function () {
+  angular.module('alert').controller('AlertCtrl', alertController);
+
+  alertController.$inject = ['$stateParams'];
+  function alertController($stateParams) {
+    var self = this;
+
+    function getAlert(id) {
+      /*
+      wsAlert.getAlert(id).then(function(result) {
+        self.alert = result;
+      });
+      * */
+      self.alert = {
+        id: id,
+        state: 'Perdu',
+        photo: 'http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg',
+        date: '10-08-2016',
+        comment: "J'ai perdu mon chien ... :",
+        pet: {
+          type: 'chien',
+          name: 'toutou',
+          race: 'bichon',
+          color: 'blanc'
+        }
+      };
+    }
+
+    function init() {
+      getAlert($stateParams.alertId);
+    }
+
+    init();
+
+    console.log(self.alert);
+  }
+})();
+"use strict";
+"use strict";
+'use strict';
+
+(function () {
   angular.module('list').controller('ListCtrl', listController);
 
   listController.$inject = [];
   function listController() {
     var self = this;
 
-    function init() {
-      self.listPet = [{
-        type: "chien", name: "toutou", state: "Perdu", race: "bichon", color: "blanc"
+    function getListAlert() {
+      /*
+       wsAlert.getListAlert().then(function(result) {
+        self.listAlert = result;
+       });
+       * */
+
+      self.listAlert = [{
+        id: 1,
+        state: 'Perdu',
+        date: "10-08-2016",
+        photo: 'http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg',
+        pet: {
+          type: 'chien',
+          name: 'toutou',
+          race: 'bichon',
+          color: 'blanc'
+        }
       }, {
-        type: "chat", name: "chaton", state: "Perdu", race: "", color: "noir"
+        id: 2,
+        state: 'Perdu',
+        date: "10-08-2016",
+        photo: "http://previews.123rf.com/images/bartkowski/bartkowski1203/bartkowski120300005/12612383-Noir-petit-chaton-assis-un-sur-un-fond-blanc-Banque-d'images.jpg",
+        pet: {
+          type: 'chat',
+          name: 'chaton',
+          state: 'Perdu',
+          race: '',
+          color: 'noir'
+        }
       }];
     }
+
+    function init() {
+      getListAlert();
+    }
+
     init();
-    console.log(self.listPet);
   }
 })();
 "use strict";
