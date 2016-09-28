@@ -12,7 +12,7 @@ const babel = require('gulp-babel');
 var paths = {
   sass: ['./scss/**/*.scss'],
   js: ['./app/**/*.module.js', './app/**/*.config.js', './app/**/*.js', '!./app/lib/**/*'],
-  misc: ['./app/**/*', '!./app/**/*.js', './app/lib/**/*']
+  misc: ['./app/**/*', '!./app/**/*.js', './app/lib/**/*', './app/**/*.html']
 };
 
 gulp.task('default', ['babel', 'sass']);

@@ -1,0 +1,13 @@
+<ion-view title="List animaux" id="tab-list">
+    <ion-content padding="true" class="has-header">
+        <ion-list id="listAnimaux-list1">
+          TEST
+          <ion-item ng-repeat="pet in ListCtrl.listPet track by $index" class="item-thumbnail-left positive">
+              <img src="http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg">
+              <h2positive>{{pet.name}}
+                  <p>{{pet.type}} {{pet.color}}, race {{pet.race}}</p>
+              </h2positive>
+          </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

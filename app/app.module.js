@@ -1,4 +1,4 @@
 (function () {
   angular
-    .module('lostpetgeo', ['ionic', 'home', 'add']);
+    .module('lostpetgeo', ['ionic', 'list', 'add']);
 })();

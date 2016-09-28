@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  angular.module('lostpetgeo', ['ionic', 'home', 'add']);
+  angular.module('lostpetgeo', ['ionic', 'list', 'add']);
 })();
 'use strict';
 
@@ -13,7 +13,7 @@
 'use strict';
 
 (function () {
-  angular.module('home', []);
+  angular.module('list', []);
 })();
 'use strict';
 
@@ -56,7 +56,7 @@
 
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/tab/home');
+    $urlRouterProvider.otherwise('/tab/list');
   }
 })();
 'use strict';
@@ -84,17 +84,17 @@
 'use strict';
 
 (function () {
-  angular.module('home').config(configHome);
+  angular.module('list').config(configList);
 
-  configHome.$inject = ['$stateProvider'];
-  function configHome($stateProvider) {
-    $stateProvider.state('tab.home', {
-      url: '/home',
+  configList.$inject = ['$stateProvider'];
+  function configList($stateProvider) {
+    $stateProvider.state('tab.list', {
+      url: '/list',
       views: {
-        'tab-home': {
-          templateUrl: 'home/home.html',
-          controller: 'HomeCtrl',
-          controllerAs: 'homeCtrl'
+        'tab-list': {
+          templateUrl: 'list/list.html',
+          controller: 'ListCtrl',
+          controllerAs: 'ListCtrl'
         }
       }
     });
@@ -122,16 +122,27 @@ self.addEventListener('push', function (event) {});
     console.log("AddCtrl", this);
   }
 })();
+"use strict";
 'use strict';
 
 (function () {
-  angular.module('home').controller('HomeCtrl', homeController);
+  angular.module('list').controller('ListCtrl', listController);
 
-  homeController.$inject = [];
+  listController.$inject = [];
+  function listController() {
+    var self = this;
 
-  function homeController() {
-    console.log(this);
+    function init() {
+      self.listPet = [{
+        type: "chien", name: "toutou", state: "Perdu", race: "bichon", color: "blanc"
+      }, {
+        type: "chat", name: "chaton", state: "Perdu", race: "", color: "noir"
+      }];
+    }
+    init();
+    console.log(self.listPet);
   }
 })();
+"use strict";
 "use strict";
 //# sourceMappingURL=bundle.js.map
