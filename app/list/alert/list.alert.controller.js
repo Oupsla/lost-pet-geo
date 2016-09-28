@@ -1,10 +1,10 @@
 (() => {
     angular
-      .module('list')
-      .controller('ListCtrl', listController);
+      .module('listAlert')
+      .controller('ListAlertCtrl', listAlertController);
 
-    listController.$inject = [];
-    function listController() {
+    listAlertController.$inject = [];
+    function listAlertController() {
       var self = this;
 
       function getListAlert() {

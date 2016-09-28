@@ -1,7 +1,3 @@
-<ion-nav-bar class="nav-title-slide-ios7 bar-positive">
-  <ion-nav-back-button class="button-icon ion-arrow-left-c">
-  </ion-nav-back-button>
-</ion-nav-bar>
 <ion-view title="Alert Pet" id="alert">
   <ion-content padding="true" class="has-header">
     <div class="list card">
@@ -17,13 +13,17 @@
         <p>
           {{AlertCtrl.alert.comment}}
         </p>
-        <div data-ng-repeat="(key, value) in AlertCtrl.alert.pet">
+        <div data-ng-repeat="(key, value) in AlertCtrl.alert.pet.details">
           <p data-ng-if="value">{{key}}: {{value}}</p>
         </div>
+       <!-- <p>
+          Vaccins:
+        </p>
+        <div data-ng-repeat="(key, value) in AlertCtrl.alert.pet.vaccins">
+          <p data-ng-if="value">{{key}}: {{value}}</p>
+        </div>-->
       </div>
-      <button id="found-button1" class="button button-balanced  button-block">Found</button>
-
-
+      <button id="found-button1" class="button button-balanced  button-block">I've Found it</button>
     </div>
   </ion-content>
 </ion-view>

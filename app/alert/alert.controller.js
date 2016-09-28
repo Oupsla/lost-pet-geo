@@ -7,12 +7,12 @@
   function alertController($stateParams) {
     var self = this;
 
-    function getAlert(id){
+    function getAlert(id) {
       /*
-      wsAlert.getAlert(id).then(function(result) {
-        self.alert = result;
-      });
-      * */
+       wsAlert.getAlert(id).then(function(result) {
+       self.alert = result;
+       });
+       * */
       self.alert = {
         id: id,
         state: 'Perdu',
@@ -20,10 +20,15 @@
         date: '10-08-2016',
         comment: "J'ai perdu mon chien ... :",
         pet: {
-          type: 'chien',
-          name: 'toutou',
-          race: 'bichon',
-          color: 'blanc',
+          details: {
+            type: 'chien',
+            name: 'toutou',
+            race: 'bichon',
+            color: 'blanc'
+          }
+          /*vaccins: {
+            rage: 'ok'
+          }*/
         }
       };
     }
@@ -33,7 +38,5 @@
     }
 
     init();
-
-    console.log(self.alert);
   }
 })();

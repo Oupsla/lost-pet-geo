@@ -1,8 +1,8 @@
-<ion-view title="List animaux" id="tab-list">
+<ion-view title="List animaux" id="tab-list-alert">
   <ion-content padding="true" class="has-header">
-    <ion-list id="listAnimaux-lost">
+    <ion-list id="listAlertPet-lost">
       Lost
-      <ion-item ui-sref="alert({alertId: alert.id})"  ng-repeat="alert in ListCtrl.listAlert track by $index" class="item-thumbnail-left positive">
+      <ion-item ui-sref="alert({alertId: alert.id})"  ng-repeat="alert in ListAlertCtrl.listAlert track by $index" class="item-thumbnail-left positive">
         <img ng-if="alert.photo" ng-src="{{alert.photo}}"/>
         <h2positive>
           <div data-ng-repeat="(key, value) in alert.pet">
