@@ -8,15 +8,17 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');
 var sourcemaps = require('gulp-sourcemaps');
 var babel = require('gulp-babel');
+/*
 var jshint = require('gulp-jshint');
+*/
 
 var paths = {
   sass: ['./scss/**/*.scss'],
   js: ['./app/**/*.module.js', './app/**/*.config.js', './app/**/*.js', '!./app/lib/**/*'],
-  misc: ['./app/**/*', '!./app/**/*.js', './app/lib/**/*', './app/**/*.html']
+  misc: ['./app/**/*', './app/**/*.js', './app/lib/**/*', './app/**/*.html']
 };
 
-gulp.task('default', ['lint', 'babel', 'sass']);
+gulp.task('default', ['babel', 'sass']);
 
 gulp.task('copy', function () {
   return gulp.src(paths.misc)
@@ -48,15 +50,15 @@ gulp.task('sass', function (done) {
     .on('end', done);
 });
 
-gulp.task('lint', function () {
+/*gulp.task('lint', function () {
   return gulp.src(paths.js)
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
-});
+});*/
 
-gulp.task('watch', ['lint', 'babel', 'sass', 'copy'], function () {
+gulp.task('watch', ['babel', 'sass', 'copy'], function () {
   gulp.watch(paths.sass, ['sass']);
-  gulp.watch(paths.js, ['lint', 'babel']);
+  gulp.watch(paths.js, ['babel']);
   gulp.watch(paths.misc, ['copy']);
 });
 

@@ -1,0 +1,29 @@
+<ion-nav-bar class="nav-title-slide-ios7 bar-positive">
+  <ion-nav-back-button class="button-icon ion-arrow-left-c">
+  </ion-nav-back-button>
+</ion-nav-bar>
+<ion-view title="Alert Pet" id="alert">
+  <ion-content padding="true" class="has-header">
+    <div class="list card">
+
+      <div class="item item-avatar">
+        <i class="ion-android-warning">{{AlertCtrl.alert.state}} </i>
+        <h2>{{AlertCtrl.alert.pet.name}}</h2>
+        <p>{{AlertCtrl.alert.date}}</p>
+      </div>
+
+      <div class="item item-body">
+        <img class="full-image" data-ng-src="{{AlertCtrl.alert.photo}}">
+        <p>
+          {{AlertCtrl.alert.comment}}
+        </p>
+        <div data-ng-repeat="(key, value) in AlertCtrl.alert.pet">
+          <p data-ng-if="value">{{key}}: {{value}}</p>
+        </div>
+      </div>
+      <button id="found-button1" class="button button-balanced  button-block">Found</button>
+
+
+    </div>
+  </ion-content>
+</ion-view>

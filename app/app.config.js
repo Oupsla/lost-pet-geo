@@ -21,8 +21,11 @@
       });
     }
 
-    configApplication.$inject = ['$stateProvider', '$urlRouterProvider'];
-    function configApplication($stateProvider, $urlRouterProvider) {
+    configApplication.$inject = ['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'];
+    function configApplication($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+
+      $ionicConfigProvider.backButton.icon('ion-chevron-left');
+      $ionicConfigProvider.backButton.text('Back');
 
       // Ionic uses AngularUI Router which uses the concept of states
       // Learn more here: https://github.com/angular-ui/ui-router
@@ -35,7 +38,7 @@
         url: '/tab',
         abstract: true,
         templateUrl: 'tabs/tabs.html'
-      })
+      });
 
       // Each tab has its own nav history stack:
 
