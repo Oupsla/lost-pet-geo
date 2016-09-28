@@ -2,6 +2,9 @@
   "name": "lost_pet_geo",
   "version": "1.1.1",
   "description": "lost_pet_geo: An Ionic project",
+  "scripts": {
+    "precommit": "gulp lint"
+  },
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-concat": "^2.2.0",
@@ -17,6 +20,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^2.2.14",
+    "husky": "^0.11.8",
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
