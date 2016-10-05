@@ -1,0 +1,15 @@
+<ion-view title="List animaux" id="tab-list">
+  <ion-content padding="true" class="has-header">
+    <ion-list id="listAnimaux-list1">
+      TEST
+      <ion-item  ui-sref="alertDetail" ng-repeat="pet in ListCtrl.listPet track by $index" class="item-thumbnail-left positive">
+        <img ng-if="pet.photo" ng-src="{{pet.photo}}"/>
+        <h2positive>
+            {{pet.name}}
+          <p>{{pet.type}} {{pet.color}}</p>
+          <p data-ng-if="pet.race">Race : {{pet.race}}</p>
+        </h2positive>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
