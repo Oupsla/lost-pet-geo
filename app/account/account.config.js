@@ -14,7 +14,7 @@
           'tab-account': {
             templateUrl: 'account/account.html',
             controller: 'AccountCtrl',
-            controllerAs: 'accountCtrl'
+            controllerAs: 'AccountCtrl'
           }
         }
       });
