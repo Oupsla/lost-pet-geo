@@ -35,13 +35,13 @@
         url: '/tab',
         abstract: true,
         templateUrl: 'tabs/tabs.html'
-      })
+      });
 
       // Each tab has its own nav history stack:
 
 
       // if none of the above states are matched, use this as the fallback
-      $urlRouterProvider.otherwise('/tab/home');
+      $urlRouterProvider.otherwise('/tab/listAlert');
 
     }
 })();

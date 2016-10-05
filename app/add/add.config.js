@@ -14,7 +14,7 @@
           'tab-add': {
             templateUrl: 'add/add.html',
             controller: 'AddCtrl',
-            controllerAs: 'addCtrl'
+            controllerAs: 'AddCtrl'
           }
         }
       });
