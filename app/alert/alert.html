@@ -3,15 +3,13 @@
     <div class="list card">
       <div class="item item-avatar">
         <i class="ion-android-warning">{{AlertCtrl.alert.state}} </i>
-        <h2>{{AlertCtrl.alert.pet.name}}</h2>
-        <p>{{AlertCtrl.alert.date}}</p>
+        <h2 data-ng-bind="AlertCtrl.alert.pet.name"></h2>
+        <p data-ng-bind="AlertCtrl.alert.date"></p>
       </div>
 
       <div class="item item-body">
         <img class="full-image" data-ng-src="{{AlertCtrl.alert.photo}}">
-        <p>
-          {{AlertCtrl.alert.comment}}
-        </p>
+        <p data-ng-bind="AlertCtrl.alert.comment"></p>
         <div data-ng-repeat="(key, value) in AlertCtrl.alert.pet.details">
           <p data-ng-if="value">{{key}}: {{value}}</p>
         </div>

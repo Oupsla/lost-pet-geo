@@ -2,19 +2,19 @@
   <ion-content padding="true" class="has-header">
     <div class="list card">
       <div class="item item-avatar">
-        <h1>{{PetCtrl.pet.name}}</h1>
+        <h1 data-ng-bind="PetCtrl.pet.name"></h1>
       </div>
 
       <div class="item item-body">
         <img class="full-image" data-ng-src="{{PetCtrl.pet.photo}}">
         <p>Type:
-          {{PetCtrl.pet.type}}
+          <span data-ng-bind="PetCtrl.pet.type"></span>
         </p>
         <p>Race:
-          {{PetCtrl.pet.race}}
+          <span data-ng-bind="PetCtrl.pet.race"></span>
         </p>
         <p>Color:
-          {{PetCtrl.pet.color}}
+          <span data-ng-bind="PetCtrl.pet.color"></span>
         </p>
         <!-- <p>
            Vaccins:
