@@ -1,21 +1,78 @@
+<div class="bar bar-header bar-dark">
+  <div class="h1 title">Account</div>
+  <button class="button button-clear button-positive" ui-sref="accountUpdate({accountId : AccountCtrl.account.id})">Edit</button>
+</div>
+
 <ion-view title="Account" id="tab-account">
-  Account
   <ion-content padding="true" class="has-header">
 
-    <form id="account-form" class="list">
-<!--
-      <ion-toggle toggle-class="toggle-positive" id="account-toggle1">Name</ion-toggle>
--->
-      <label class="item item-input">
-        <span class="input-label">Name</span>
-        <input type="text" placeholder="Name" ng-model="AccountCtrl.account.name">
-      </label>
-      <label class="item item-input">
-        <span class="input-label">Adress</span>
-        <input type="text" placeholder="Address" ng-model="AccountCtrl.account.address">
-      </label>
-      <a ui-sref="listPet({accountId:1})">Pets</a>
-      <button id="account-button1" class="button button-balanced  button-block">Account</button>
+    <form name="AccountCtrl.accountForm" id="AccountCtrl.accountForm" class="list">
+      <div>
+        <label class="item item-input">
+          <span class="input-label">Name:</span>
+          <p data-ng-bind="AccountCtrl.account.name"></p>
+        </label>
+      </div>
+      <div>
+        <label class="item item-input">
+          <span class="input-label">First Name:</span>
+          <p data-ng-bind="AccountCtrl.account.firstName"></p>
+        </label>
+      </div>
+      <div>
+        <label class="item item-input">
+          <span class="input-label">Email:</span>
+          <p data-ng-bind="AccountCtrl.account.email"></p>
+        </label>
+      </div>
+      <div>
+        <label class="item item-input">
+          <span class="input-label">Phone:</span>
+          <p data-ng-bind="AccountCtrl.account.phone"></p>
+        </label>
+      </div>
+      <div>
+        <label class="item item-input">
+          <span class="input-label">Birth Date:</span>
+          <p data-ng-bind="AccountCtrl.account.birthdate"></p>
+        </label>
+      </div>
+      <div>
+        <p>Address</p>
+      </div>
+      <div>
+        <label class="item item-input">
+          <span class="input-label">N°</span>
+          <p required type="text" placeholder="N°" data-ng-bind="AccountCtrl.account.address.number">
+        </label>
+      </div>
+      <div>
+        <label class="item item-input">
+          <span class="input-label">Street</span>
+          <p required type="text" placeholder="street" data-ng-bind="AccountCtrl.account.address.street">
+        </label>
+      </div>
+      <div>
+        <label class="item item-input">
+          <span class="input-label">Postal Code</span>
+          <p required type="number" placeholder="postalCode" data-ng-bind="AccountCtrl.account.address.postalCode">
+        </label>
+      </div>
+      <div>
+        <label class="item item-input">
+          <span class="input-label">City</span>
+          <p required type="text" placeholder="city" data-ng-bind="AccountCtrl.account.address.city">
+        </label>
+      </div>
+      <div>
+        <label class="item item-input">
+          <span class="input-label">Country</span>
+          <p required type="text" placeholder="country" data-ng-bind="AccountCtrl.account.address.country">
+        </label>
+      </div>
+      <button ui-sref="listPet({accountId:AccountCtrl.account.id})" class="button button-balanced button-block">My
+        Pets
+      </button>
     </form>
   </ion-content>
 </ion-view>

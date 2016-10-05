@@ -1,0 +1,54 @@
+<div class="bar bar-header bar-dark">
+  <div class="h1 title">Edit Account</div>
+</div>
+<ion-view title="AccountUpdate" id="tab-accountUpdate">
+  AccountUpdate
+  <ion-content padding="true" class="has-header">
+
+    <form name="AccountUpdateCtrl.accountForm" id="AccountUpdateCtrl.accountForm" class="list">
+      <label class="item item-input">
+        <span class="input-label">Name:</span>
+        <input required type="text" placeholder="Name" data-ng-model="AccountUpdateCtrl.account.name">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">First Name:</span>
+        <input required type="text" placeholder="First Name" data-ng-model="AccountUpdateCtrl.account.firstName">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Email:</span>
+        <input required type="text" placeholder="Email" data-ng-model="AccountUpdateCtrl.account.email">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Phone:</span>
+        <input type="text" placeholder="Phone" data-ng-model="AccountUpdateCtrl.account.phone">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Birth Date:</span>
+        <input required type="date" max="{{AccountUpdateCtrl.today}}"  placeholder="Birth date" data-ng-model="AccountUpdateCtrl.account.birthdate">
+      </label>
+      <p>Address</p>
+      <label class="item item-input">
+        <span class="input-label">N°</span>
+        <input required type="text" placeholder="N°" data-ng-model="AccountUpdateCtrl.account.address.number">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Street</span>
+        <input required type="text" placeholder="street" data-ng-model="AccountUpdateCtrl.account.address.street">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Postal Code</span>
+        <input required type="number" placeholder="postalCode" data-ng-model="AccountUpdateCtrl.account.address.postalCode">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">City</span>
+        <input required type="text" placeholder="city" data-ng-model="AccountUpdateCtrl.account.address.city">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Country</span>
+        <input required type="text" placeholder="country" data-ng-model="AccountUpdateCtrl.account.address.country">
+      </label>
+
+      <button data-ng-disabled="AccountUpdateCtrl.accountForm.$invalid" id="accountUpdate-button1" class="button button-balanced  button-block" data-ng-click="AccountUpdateCtrl.updateAccount()">Update</button>
+    </form>
+  </ion-content>
+</ion-view>

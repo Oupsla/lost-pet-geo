@@ -3,8 +3,8 @@
     .module('alert')
     .controller('AlertCtrl', alertController);
 
-  alertController.$inject = ['$stateParams', 'AlertService'];
-  function alertController($stateParams, AlertService) {
+  alertController.$inject = ['$scope','$stateParams', 'AlertService'];
+  function alertController($scope, $stateParams, AlertService) {
     var self = this;
 
     function getAlert(id) {

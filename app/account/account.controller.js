@@ -5,17 +5,23 @@
     .module('account')
     .controller('AccountCtrl', accountController);
 
-  accountController.$inject = [];
+  accountController.$inject = ['AccountService'];
 
-  function accountController() {
+  function accountController(AccountService) {
     var self = this;
 
     function getAccount() {
-      self.account = {};
+      AccountService.getAccount(self.account.id).then(function (result) {
+        self.account = result;
+      });
     }
 
     function init() {
+      self.account = {
+        id: 3
+      };
       getAccount();
+      self.today = new Date();
     }
 
     init();
