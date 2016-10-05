@@ -1,0 +1,21 @@
+<ion-view title="Account" id="tab-account">
+  Account
+  <ion-content padding="true" class="has-header">
+
+    <form id="account-form" class="list">
+<!--
+      <ion-toggle toggle-class="toggle-positive" id="account-toggle1">Name</ion-toggle>
+-->
+      <label class="item item-input">
+        <span class="input-label">Name</span>
+        <input type="text" placeholder="Name" ng-model="AccountCtrl.account.name">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Adress</span>
+        <input type="text" placeholder="Address" ng-model="AccountCtrl.account.address">
+      </label>
+      <a ui-sref="listPet({accountId:1})">Pets</a>
+      <button id="account-button1" class="button button-balanced  button-block">Account</button>
+    </form>
+  </ion-content>
+</ion-view>

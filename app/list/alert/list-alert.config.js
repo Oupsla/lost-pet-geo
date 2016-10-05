@@ -10,7 +10,7 @@
         url: '/listAlert',
         views: {
           'tab-listAlert': {
-            templateUrl: 'listAlert/listAlert.html',
+            templateUrl: 'list/alert/list-alert.html',
             controller: 'ListAlertCtrl',
             controllerAs: 'ListAlertCtrl'
           }

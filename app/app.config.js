@@ -21,11 +21,8 @@
       });
     }
 
-    configApplication.$inject = ['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'];
-    function configApplication($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
-
-      $ionicConfigProvider.backButton.icon('ion-chevron-left');
-      $ionicConfigProvider.backButton.text('Back');
+    configApplication.$inject = ['$stateProvider', '$urlRouterProvider'];
+    function configApplication($stateProvider, $urlRouterProvider) {
 
       // Ionic uses AngularUI Router which uses the concept of states
       // Learn more here: https://github.com/angular-ui/ui-router
@@ -44,7 +41,7 @@
 
 
       // if none of the above states are matched, use this as the fallback
-      $urlRouterProvider.otherwise('/tab/list');
+      $urlRouterProvider.otherwise('/tab/listAlert');
 
     }
 })();

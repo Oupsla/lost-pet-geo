@@ -1,0 +1,29 @@
+<ion-view title="Pet" id="pet">
+  <ion-content padding="true" class="has-header">
+    <div class="list card">
+      <div class="item item-avatar">
+        <h1>{{PetCtrl.pet.name}}</h1>
+      </div>
+
+      <div class="item item-body">
+        <img class="full-image" data-ng-src="{{PetCtrl.pet.photo}}">
+        <p>Type:
+          {{PetCtrl.pet.type}}
+        </p>
+        <p>Race:
+          {{PetCtrl.pet.race}}
+        </p>
+        <p>Color:
+          {{PetCtrl.pet.color}}
+        </p>
+        <!-- <p>
+           Vaccins:
+         </p>
+         <div data-ng-repeat="(key, value) in PetCtrl.pet.vaccins">
+           <p data-ng-if="value">{{key}}: {{value}}</p>
+         </div>-->
+      </div>
+      <button id="found-button1" class="button button-balanced  button-block">I've Found it</button>
+    </div>
+  </ion-content>
+</ion-view>

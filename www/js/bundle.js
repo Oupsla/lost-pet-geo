@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  angular.module('lostpetgeo', ['ionic', 'list', 'add', 'alert']);
+  angular.module('lostpetgeo', ['ionic', 'listAlert', 'add', 'listPet', 'pet', 'alert', 'account']);
 })();
 'use strict';
 
@@ -18,7 +18,24 @@
 'use strict';
 
 (function () {
-  angular.module('list', []);
+  'use strict';
+
+  angular.module('account', []);
+})();
+'use strict';
+
+(function () {
+  angular.module('pet', []);
+})();
+'use strict';
+
+(function () {
+  angular.module('listAlert', []);
+})();
+'use strict';
+
+(function () {
+  angular.module('listPet', []);
 })();
 'use strict';
 
@@ -41,11 +58,8 @@
     });
   }
 
-  configApplication.$inject = ['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'];
-  function configApplication($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
-
-    $ionicConfigProvider.backButton.icon('ion-chevron-left');
-    $ionicConfigProvider.backButton.text('Back');
+  configApplication.$inject = ['$stateProvider', '$urlRouterProvider'];
+  function configApplication($stateProvider, $urlRouterProvider) {
 
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
@@ -64,7 +78,7 @@
 
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/tab/list');
+    $urlRouterProvider.otherwise('/tab/listAlert');
   }
 })();
 'use strict';
@@ -107,19 +121,71 @@
 'use strict';
 
 (function () {
-  angular.module('list').config(configList);
+  'use strict';
 
-  configList.$inject = ['$stateProvider'];
-  function configList($stateProvider) {
-    $stateProvider.state('tab.list', {
-      url: '/list',
+  angular.module('account').config(configAccount);
+
+  configAccount.$inject = ['$stateProvider'];
+
+  function configAccount($stateProvider) {
+    $stateProvider.state('tab.account', {
+      url: '/account',
       views: {
-        'tab-list': {
-          templateUrl: 'list/list.html',
-          controller: 'ListCtrl',
-          controllerAs: 'ListCtrl'
+        'tab-account': {
+          templateUrl: 'account/account.html',
+          controller: 'AccountCtrl',
+          controllerAs: 'accountCtrl'
         }
       }
+    });
+  }
+})();
+'use strict';
+
+(function () {
+  angular.module('pet').config(configAlert);
+
+  configAlert.$inject = ['$stateProvider'];
+  function configAlert($stateProvider) {
+    $stateProvider.state('pet', {
+      url: '/pet/:petId',
+      templateUrl: 'pet/pet.html',
+      controller: 'PetCtrl',
+      controllerAs: 'PetCtrl'
+    });
+  }
+})();
+'use strict';
+
+(function () {
+  angular.module('listAlert').config(configListAlert);
+
+  configListAlert.$inject = ['$stateProvider'];
+  function configListAlert($stateProvider) {
+    $stateProvider.state('tab.listAlert', {
+      url: '/listAlert',
+      views: {
+        'tab-listAlert': {
+          templateUrl: 'list/alert/list-alert.html',
+          controller: 'ListAlertCtrl',
+          controllerAs: 'ListAlertCtrl'
+        }
+      }
+    });
+  }
+})();
+'use strict';
+
+(function () {
+  angular.module('listPet').config(configListPet);
+
+  configListPet.$inject = ['$stateProvider'];
+  function configListPet($stateProvider) {
+    $stateProvider.state('listPet', {
+      url: '/listPet',
+      templateUrl: 'list/pet/list-pet.html',
+      controller: 'ListPetCtrl',
+      controllerAs: 'ListPetCtrl'
     });
   }
 })();
@@ -198,10 +264,71 @@
 'use strict';
 
 (function () {
-  angular.module('list').controller('ListCtrl', listController);
+  'use strict';
 
-  listController.$inject = [];
-  function listController() {
+  angular.module('account').controller('AccountCtrl', accountController);
+
+  accountController.$inject = [];
+
+  function accountController() {
+    var self = this;
+
+    function getAccount() {
+      self.account = {};
+    }
+
+    function init() {
+      getAccount();
+    }
+
+    init();
+  }
+})();
+"use strict";
+'use strict';
+
+(function () {
+  angular.module('pet').controller('PetCtrl', alertController);
+
+  alertController.$inject = ['$stateParams'];
+  function alertController($stateParams) {
+    var self = this;
+
+    function getAlert(id) {
+      /*
+       wsAlert.getAlert(id).then(function(result) {
+       self.alert = result;
+       });
+       * */
+      self.pet = {
+        id: id,
+        type: 'chien',
+        photo: 'http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg',
+        name: 'toutou',
+        race: 'bichon',
+        color: 'blanc'
+        /*vaccins: {
+         rage: 'ok'
+         }*/
+      };
+    }
+
+    function init() {
+      getAlert($stateParams.petId);
+    }
+
+    init();
+  }
+})();
+"use strict";
+"use strict";
+'use strict';
+
+(function () {
+  angular.module('listAlert').controller('ListAlertCtrl', listAlertController);
+
+  listAlertController.$inject = [];
+  function listAlertController() {
     var self = this;
 
     function getListAlert() {
@@ -239,6 +366,55 @@
 
     function init() {
       getListAlert();
+    }
+
+    init();
+  }
+})();
+"use strict";
+"use strict";
+'use strict';
+
+(function () {
+  angular.module('listPet').controller('ListPetCtrl', listPetController);
+
+  listPetController.$inject = ['$stateParams'];
+  function listPetController($stateParams) {
+    var self = this;
+
+    function getListPet() {
+      /*
+       wsPet.getListPet(self.accountId).then(function(result) {
+       self.listPet = result;
+       });
+       * */
+
+      self.listPet = [{
+        accountId: 1,
+        id: 1,
+        photo: 'http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg',
+        pet: {
+          type: 'chien',
+          name: 'toutou',
+          race: 'bichon',
+          color: 'blanc'
+        }
+      }, {
+        accountId: 1,
+        id: 2,
+        photo: "http://previews.123rf.com/images/bartkowski/bartkowski1203/bartkowski120300005/12612383-Noir-petit-chaton-assis-un-sur-un-fond-blanc-Banque-d'images.jpg",
+        pet: {
+          type: 'chat',
+          name: 'chaton',
+          race: '',
+          color: 'noir'
+        }
+      }];
+    }
+
+    function init() {
+      self.accountId = $stateParams.accountId;
+      getListPet();
     }
 
     init();
