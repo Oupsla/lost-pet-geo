@@ -5,11 +5,23 @@
     .module('addPet')
     .controller('AddPetCtrl', addPetController);
 
-  addPetController.$inject = [];
+  addPetController.$inject = ['PetService'];
 
-  function addPetController() {
-    // let self = this;
+  function addPetController(PetService) {
+     let self = this;
 
     console.log("AddPetCtrl", this);
+
+    function addPet() {
+      PetService.addPet(self.pet).then(function (result) {
+        console.log(result);
+      });
+
+      function init() {
+        self.pet = {};
+      }
+
+      init();
+    }
   }
 })();

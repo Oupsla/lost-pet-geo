@@ -5,7 +5,7 @@
 
   alertController.$inject = ['$scope','$stateParams', 'AlertService'];
   function alertController($scope, $stateParams, AlertService) {
-    var self = this;
+    let self = this;
 
     function getAlert(id) {
 

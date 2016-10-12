@@ -5,16 +5,16 @@
 
   alertController.$inject = ['$stateParams', 'PetService'];
   function alertController($stateParams, PetService) {
-    var self = this;
+    let self = this;
 
-    function getAlert(id) {
+    function getPet(id) {
       PetService.getPet(id).then(function (result) {
         self.pet = result;
       });
     }
 
     function init() {
-      getAlert($stateParams.petId);
+      getPet($stateParams.petId);
     }
 
     init();

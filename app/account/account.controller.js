@@ -8,7 +8,7 @@
   accountController.$inject = ['AccountService'];
 
   function accountController(AccountService) {
-    var self = this;
+    let self = this;
 
     function getAccount() {
       AccountService.getAccount(self.account.id).then(function (result) {
