@@ -5,11 +5,15 @@
     .module('addAlert')
     .controller('AddAlertCtrl', addAlertController);
 
-  addAlertController.$inject = [];
+  addAlertController.$inject = ['AddAlertService'];
 
-  function addAlertController() {
+  function addAlertController(AddAlertService) {
     let self = this;
 
-    console.log("AddAlertCtrl", self);
+    function addAlert() {
+      AddAlertService.addAlert(self.alert).then(function (result) {
+        console.log(result);
+      })
+    }
   }
 })();

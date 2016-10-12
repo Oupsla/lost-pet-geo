@@ -1,5 +1,11 @@
-<ion-view title="Ajouter" id="tab-add">
+<ion-view title="Ajouter" id="tab-add-pet">
     <ion-content padding="true" class="has-header">
+      <button class="button button-energized" ng-click="AddPetCtrl.addImage()">
+        Add image
+      </button><br><br>
+      <ion-scroll>
+        <img ng-repeat="image in images" ng-src="{{AddPetCtrl.urlForImage(image)}}" height="200px"/>
+      </ion-scroll>
         <div>
             <img ng-src="{{AddPetCtrl.pet.photo}}" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
         </div>
