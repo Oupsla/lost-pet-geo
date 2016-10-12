@@ -1,7 +1,12 @@
 'use strict';
 
 (function () {
-  angular.module('lostpetgeo', ['ionic', 'listAlert', 'add', 'listPet', 'pet', 'alert', 'account']);
+  angular.module('lostpetgeo', ['ionic', 'listAlert', 'addAlert', 'addPet', 'listPet', 'pet', 'alert', 'account', 'accountUpdate']);
+})();
+'use strict';
+
+(function () {
+  angular.module('alert', []);
 })();
 'use strict';
 
@@ -13,19 +18,28 @@
 'use strict';
 
 (function () {
+  angular.module('pet', []);
+})();
+'use strict';
+
+(function () {
   'use strict';
 
-  angular.module('add', []);
+  angular.module('addAlert', []);
 })();
 'use strict';
 
 (function () {
-  angular.module('alert', []);
+  'use strict';
+
+  angular.module('addPet', []);
 })();
 'use strict';
 
 (function () {
-  angular.module('pet', []);
+  'use strict';
+
+  angular.module('accountUpdate', []);
 })();
 'use strict';
 
@@ -84,6 +98,21 @@
 'use strict';
 
 (function () {
+  angular.module('alert').config(configAlert);
+
+  configAlert.$inject = ['$stateProvider'];
+  function configAlert($stateProvider) {
+    $stateProvider.state('alert', {
+      url: '/alert/:alertId',
+      templateUrl: 'alert/alert.html',
+      controller: 'AlertCtrl',
+      controllerAs: 'AlertCtrl'
+    });
+  }
+})();
+'use strict';
+
+(function () {
   'use strict';
 
   angular.module('account').config(configAccount);
@@ -106,43 +135,6 @@
 'use strict';
 
 (function () {
-  'use strict';
-
-  angular.module('add').config(configAdd);
-
-  configAdd.$inject = ['$stateProvider'];
-
-  function configAdd($stateProvider) {
-    $stateProvider.state('tab.add', {
-      url: '/add',
-      views: {
-        'tab-add': {
-          templateUrl: 'add/add.html',
-          controller: 'AddCtrl',
-          controllerAs: 'AddCtrl'
-        }
-      }
-    });
-  }
-})();
-'use strict';
-
-(function () {
-  angular.module('alert').config(configAlert);
-
-  configAlert.$inject = ['$stateProvider'];
-  function configAlert($stateProvider) {
-    $stateProvider.state('alert', {
-      url: '/alert/:alertId',
-      templateUrl: 'alert/alert.html',
-      controller: 'AlertCtrl',
-      controllerAs: 'AlertCtrl'
-    });
-  }
-})();
-'use strict';
-
-(function () {
   angular.module('pet').config(configAlert);
 
   configAlert.$inject = ['$stateProvider'];
@@ -152,6 +144,64 @@
       templateUrl: 'pet/pet.html',
       controller: 'PetCtrl',
       controllerAs: 'PetCtrl'
+    });
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('addAlert').config(configAddAlert);
+
+  configAddAlert.$inject = ['$stateProvider'];
+
+  function configAddAlert($stateProvider) {
+    $stateProvider.state('tab.addAlert', {
+      url: '/alert/add',
+      views: {
+        'tab-account': {
+          templateUrl: 'alert/add/add-alert.html',
+          controller: 'AddAlertCtrl',
+          controllerAs: 'AddAlertCtrl'
+        }
+      }
+    });
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('addPet').config(configAddPet);
+
+  configAddPet.$inject = ['$stateProvider'];
+
+  function configAddPet($stateProvider) {
+    $stateProvider.state('addPet', {
+      url: '/pet/add',
+      templateUrl: 'pet/add/add-pet.html',
+      controller: 'AddPetCtrl',
+      controllerAs: 'AddPetCtrl'
+    });
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('accountUpdate').config(configAccountUpdate);
+
+  configAccountUpdate.$inject = ['$stateProvider'];
+
+  function configAccountUpdate($stateProvider) {
+    $stateProvider.state('accountUpdate', {
+      url: '/accountUpdate/:accountId',
+      templateUrl: 'account/update/account-update.html',
+      controller: 'AccountUpdateCtrl',
+      controllerAs: 'AccountUpdateCtrl'
     });
   }
 })();
@@ -204,60 +254,10 @@
 'use strict';
 
 (function () {
-  'use strict';
-
-  angular.module('account').controller('AccountCtrl', accountController);
-
-  accountController.$inject = [];
-
-  function accountController() {
-    var self = this;
-
-    function getAccount() {
-      self.account = {};
-    }
-
-    function init() {
-      getAccount();
-    }
-
-    init();
-  }
-})();
-"use strict";
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('add').controller('AddCtrl', addController);
-
-  addController.$inject = [];
-
-  function addController() {
-    // let self = this;
-
-    console.log("AddCtrl", this);
-  }
-})();
-'use strict';
-
-(function () {
-  angular.module('add').service('AddService', addService);
-
-  addService.$inject = ['$q'];
-  function addService($q) {
-    var self = this;
-  }
-})();
-"use strict";
-'use strict';
-
-(function () {
   angular.module('alert').controller('AlertCtrl', alertController);
 
-  alertController.$inject = ['$stateParams', 'AlertService'];
-  function alertController($stateParams, AlertService) {
+  alertController.$inject = ['$scope', '$stateParams', 'AlertService'];
+  function alertController($scope, $stateParams, AlertService) {
     var self = this;
 
     function getAlert(id) {
@@ -311,6 +311,72 @@
 'use strict';
 
 (function () {
+  'use strict';
+
+  angular.module('account').controller('AccountCtrl', accountController);
+
+  accountController.$inject = ['AccountService'];
+
+  function accountController(AccountService) {
+    var self = this;
+
+    function getAccount() {
+      AccountService.getAccount(self.account.id).then(function (result) {
+        self.account = result;
+      });
+    }
+
+    function init() {
+      self.account = {
+        id: 3
+      };
+      getAccount();
+      self.today = new Date();
+    }
+
+    init();
+  }
+})();
+'use strict';
+
+(function () {
+  angular.module('account').service('AccountService', accountService);
+
+  accountService.$inject = ['$q'];
+  function accountService($q) {
+    var self = this;
+
+    self.getAccount = function (id) {
+      return $q(function (resolve, reject) {
+        return resolve({
+          id: id,
+          name: 'marine',
+          firstName: 'bal',
+          email: 'ooo-mama-ooo@hotmail.fr',
+          phone: '0668557173',
+          birthdate: new Date('17-04-1993'),
+          address: {
+            number: 314,
+            street: 'rue truc',
+            postalCode: 59100,
+            city: 'roubaix',
+            country: 'france'
+          }
+        });
+      });
+    };
+
+    self.updateAccount = function (account) {
+      return $q(function (resolve, reject) {
+        return resolve({});
+      });
+    };
+  }
+})();
+"use strict";
+'use strict';
+
+(function () {
   angular.module('pet').controller('PetCtrl', alertController);
 
   alertController.$inject = ['$stateParams', 'PetService'];
@@ -354,6 +420,95 @@
         });
       });
     };
+  }
+})();
+"use strict";
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('addAlert').controller('AddAlertCtrl', addAlertController);
+
+  addAlertController.$inject = [];
+
+  function addAlertController() {
+    // let self = this;
+
+    console.log("AddAlertCtrl", this);
+  }
+})();
+'use strict';
+
+(function () {
+  angular.module('addAlert').service('AddAlertService', addAlertService);
+
+  addAlertService.$inject = ['$q'];
+  function addAlertService($q) {
+    var self = this;
+  }
+})();
+"use strict";
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('addPet').controller('AddPetCtrl', addPetController);
+
+  addPetController.$inject = [];
+
+  function addPetController() {
+    // let self = this;
+
+    console.log("AddPetCtrl", this);
+  }
+})();
+'use strict';
+
+(function () {
+  angular.module('addPet').service('AddPetService', addPetService);
+
+  addPetService.$inject = ['$q'];
+  function addPetService($q) {
+    var self = this;
+  }
+})();
+"use strict";
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('accountUpdate').controller('AccountUpdateCtrl', accountUpdateController);
+
+  accountUpdateController.$inject = ['$state', '$stateParams', 'AccountService'];
+
+  function accountUpdateController($state, $stateParams, AccountService) {
+    var self = this;
+
+    function getAccount() {
+      AccountService.getAccount(self.account.id).then(function (result) {
+        self.account = result;
+      });
+    }
+
+    self.updateAccount = function () {
+      AccountService.updateAccount(self.account).then(function () {
+        $state.go('tab.account');
+      });
+    };
+
+    function init() {
+      self.account = {
+        id: $stateParams.accountId
+      };
+
+      getAccount();
+      self.today = new Date();
+    }
+
+    init();
   }
 })();
 "use strict";
@@ -424,8 +579,8 @@
 (function () {
   angular.module('listPet').controller('ListPetCtrl', listPetController);
 
-  listPetController.$inject = ['$stateParams', 'ListPetService'];
-  function listPetController($stateParams, ListPetService) {
+  listPetController.$inject = ['$scope', '$stateParams', 'ListPetService'];
+  function listPetController($scope, $stateParams, ListPetService) {
     var self = this;
 
     function getListPet() {
@@ -440,6 +595,9 @@
     }
 
     init();
+    $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+      viewData.enableBack = true;
+    });
   }
 })();
 'use strict';
