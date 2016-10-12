@@ -11,7 +11,7 @@
       .state('tab.addAlert', {
         url: '/alert/add',
         views: {
-          'tab-account': {
+          'tab-addAlert': {
             templateUrl: 'alert/add/add-alert.html',
             controller: 'AddAlertCtrl',
             controllerAs: 'AddAlertCtrl'

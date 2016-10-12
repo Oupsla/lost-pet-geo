@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  angular.module('lostpetgeo', ['ionic', 'listAlert', 'addAlert', 'addPet', 'listPet', 'pet', 'alert', 'account', 'accountUpdate']);
+  angular.module('lostpetgeo', ['ionic', 'alert', 'listAlert', 'addAlert', 'pet', 'listPet', 'addPet', 'account', 'accountUpdate']);
 })();
 'use strict';
 
@@ -37,6 +37,11 @@
 'use strict';
 
 (function () {
+  angular.module('listAlert', []);
+})();
+'use strict';
+
+(function () {
   'use strict';
 
   angular.module('addPet', []);
@@ -45,11 +50,6 @@
 
 (function () {
   angular.module('listPet', []);
-})();
-'use strict';
-
-(function () {
-  angular.module('listAlert', []);
 })();
 'use strict';
 
@@ -178,10 +178,29 @@
     $stateProvider.state('tab.addAlert', {
       url: '/alert/add',
       views: {
-        'tab-account': {
+        'tab-addAlert': {
           templateUrl: 'alert/add/add-alert.html',
           controller: 'AddAlertCtrl',
           controllerAs: 'AddAlertCtrl'
+        }
+      }
+    });
+  }
+})();
+'use strict';
+
+(function () {
+  angular.module('listAlert').config(configListAlert);
+
+  configListAlert.$inject = ['$stateProvider'];
+  function configListAlert($stateProvider) {
+    $stateProvider.state('tab.listAlert', {
+      url: '/listAlert',
+      views: {
+        'tab-listAlert': {
+          templateUrl: 'list/alert/list-alert.html',
+          controller: 'ListAlertCtrl',
+          controllerAs: 'ListAlertCtrl'
         }
       }
     });
@@ -217,25 +236,6 @@
       templateUrl: 'list/pet/list-pet.html',
       controller: 'ListPetCtrl',
       controllerAs: 'ListPetCtrl'
-    });
-  }
-})();
-'use strict';
-
-(function () {
-  angular.module('listAlert').config(configListAlert);
-
-  configListAlert.$inject = ['$stateProvider'];
-  function configListAlert($stateProvider) {
-    $stateProvider.state('tab.listAlert', {
-      url: '/listAlert',
-      views: {
-        'tab-listAlert': {
-          templateUrl: 'list/alert/list-alert.html',
-          controller: 'ListAlertCtrl',
-          controllerAs: 'ListAlertCtrl'
-        }
-      }
     });
   }
 })();
@@ -471,9 +471,9 @@
   addAlertController.$inject = [];
 
   function addAlertController() {
-    // let self = this;
+    var self = this;
 
-    console.log("AddAlertCtrl", this);
+    console.log("AddAlertCtrl", self);
   }
 })();
 'use strict';
@@ -484,6 +484,92 @@
   addAlertService.$inject = ['$q'];
   function addAlertService($q) {
     var self = this;
+
+    self.addAlert = function (id) {
+      return $q(function (resolve, reject) {
+        return resolve({
+          id: id,
+          state: 'Perdu',
+          photo: 'http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg',
+          date: '10-08-2016',
+          comment: "J'ai perdu mon chien ... :",
+          pet: {
+            details: {
+              type: 'chien',
+              name: 'toutou',
+              race: 'bichon',
+              color: 'blanc'
+            }
+            /*vaccins: {
+             rage: 'ok'
+             }*/
+          }
+        });
+      });
+    };
+  }
+})();
+"use strict";
+'use strict';
+
+(function () {
+  angular.module('listAlert').controller('ListAlertCtrl', listAlertController);
+
+  listAlertController.$inject = ['ListAlertService'];
+  function listAlertController(ListAlertService) {
+    var self = this;
+
+    function getListAlert() {
+      ListAlertService.getListAlert().then(function (result) {
+        self.listAlert = result;
+      });
+    }
+
+    function init() {
+      console.log("List alert ");
+      getListAlert();
+    }
+
+    init();
+  }
+})();
+'use strict';
+
+(function () {
+  angular.module('listAlert').service('ListAlertService', listAlertService);
+
+  listAlertService.$inject = ['$q'];
+  function listAlertService($q) {
+    var self = this;
+
+    self.getListAlert = function () {
+      return $q(function (resolve, reject) {
+        return resolve([{
+          id: 1,
+          state: 'Perdu',
+          date: '10-08-2016',
+          photo: 'http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg',
+          pet: {
+            type: 'chien',
+            name: 'toutou',
+            race: 'bichon',
+            color: 'blanc'
+          }
+        }, {
+          id: 2,
+          state: 'Perdu',
+          date: '10-08-2016',
+          photo: 'http://previews.123rf.com/images/bartkowski/bartkowski1203/bartkowski120300005/12612383-Noir-petit-chaton-assis-un-sur-un-fond-blanc-Banque-d\'images.jpg',
+          pet: {
+            type: 'chat',
+            name: 'chaton',
+            state: 'Perdu',
+            race: '',
+            color: 'noir'
+          }
+        }]);
+      });
+    };
   }
 })();
 "use strict";
@@ -522,6 +608,22 @@
   addPetService.$inject = ['$q'];
   function addPetService($q) {
     var self = this;
+    self.addPet = function (id) {
+      return $q(function (resolve, reject) {
+        return resolve({
+          id: id,
+          type: 'chien',
+          photo: 'http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg',
+          name: 'toutou',
+          race: 'bichon',
+          color: 'blanc',
+          particularity: 'Bla bla bla'
+          /*vaccins: {
+           rage: 'ok'
+           }*/
+        });
+      });
+    };
   }
 })();
 "use strict";
@@ -530,8 +632,8 @@
 (function () {
   angular.module('listPet').controller('ListPetCtrl', listPetController);
 
-  listPetController.$inject = ['$scope', '$stateParams', 'ListPetService'];
-  function listPetController($scope, $stateParams, ListPetService) {
+  listPetController.$inject = ['$stateParams', 'ListPetService'];
+  function listPetController($stateParams, ListPetService) {
     var self = this;
 
     function getListPet() {
@@ -546,9 +648,6 @@
     }
 
     init();
-    $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
-      viewData.enableBack = true;
-    });
   }
 })();
 'use strict';
@@ -579,68 +678,6 @@
           pet: {
             type: 'chat',
             name: 'chaton',
-            race: '',
-            color: 'noir'
-          }
-        }]);
-      });
-    };
-  }
-})();
-"use strict";
-'use strict';
-
-(function () {
-  angular.module('listAlert').controller('ListAlertCtrl', listAlertController);
-
-  listAlertController.$inject = ['ListAlertService'];
-  function listAlertController(ListAlertService) {
-    var self = this;
-
-    function getListAlert() {
-      ListAlertService.getListAlert().then(function (result) {
-        self.listAlert = result;
-      });
-    }
-
-    function init() {
-      getListAlert();
-    }
-
-    init();
-  }
-})();
-'use strict';
-
-(function () {
-  angular.module('listAlert').service('ListAlertService', listAlertService);
-
-  listAlertService.$inject = ['$q'];
-  function listAlertService($q) {
-    var self = this;
-
-    self.getListAlert = function () {
-      return $q(function (resolve, reject) {
-        return resolve([{
-          id: 1,
-          state: 'Perdu',
-          date: '10-08-2016',
-          photo: 'http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg',
-          pet: {
-            type: 'chien',
-            name: 'toutou',
-            race: 'bichon',
-            color: 'blanc'
-          }
-        }, {
-          id: 2,
-          state: 'Perdu',
-          date: '10-08-2016',
-          photo: 'http://previews.123rf.com/images/bartkowski/bartkowski1203/bartkowski120300005/12612383-Noir-petit-chaton-assis-un-sur-un-fond-blanc-Banque-d\'images.jpg',
-          pet: {
-            type: 'chat',
-            name: 'chaton',
-            state: 'Perdu',
             race: '',
             color: 'noir'
           }

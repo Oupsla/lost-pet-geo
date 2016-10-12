@@ -8,8 +8,8 @@
   addAlertController.$inject = [];
 
   function addAlertController() {
-    // let self = this;
+    let self = this;
 
-    console.log("AddAlertCtrl", this);
+    console.log("AddAlertCtrl", self);
   }
 })();
