@@ -3,9 +3,9 @@
     .module('listPet')
     .controller('ListPetCtrl', listPetController);
 
-  listPetController.$inject = ['$scope','$stateParams', 'ListPetService'];
-  function listPetController($scope, $stateParams, ListPetService) {
-    var self = this;
+  listPetController.$inject = ['$stateParams', 'ListPetService'];
+  function listPetController($stateParams, ListPetService) {
+    let self = this;
 
     function getListPet() {
       ListPetService.getListPet(self.accountId).then(function(result) {
@@ -19,8 +19,5 @@
     }
 
     init();
-    $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
-      viewData.enableBack = true;
-    });
   }
 })();

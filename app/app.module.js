@@ -1,4 +1,7 @@
 (function () {
   angular
-    .module('lostpetgeo', ['ionic', 'listAlert', 'addAlert', 'addPet', 'listPet', 'pet', 'alert', 'account', 'accountUpdate']);
+    .module('lostpetgeo', ['ionic',
+      'alert', 'listAlert', 'addAlert',
+      'pet', 'listPet', 'addPet',
+      'account', 'accountUpdate']);
 })();
