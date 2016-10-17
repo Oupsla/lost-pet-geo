@@ -5,7 +5,7 @@
 
   listAlertController.$inject = ['ListAlertService'];
   function listAlertController(ListAlertService) {
-    var self = this;
+    let self = this;
 
     function getListAlert() {
       ListAlertService.getListAlert().then(function (result) {
@@ -14,9 +14,11 @@
     }
 
     function init() {
+      console.log("List alert ");
       getListAlert();
     }
 
     init();
   }
+
 })();

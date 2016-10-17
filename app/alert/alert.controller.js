@@ -3,9 +3,9 @@
     .module('alert')
     .controller('AlertCtrl', alertController);
 
-  alertController.$inject = ['$stateParams', 'AlertService'];
-  function alertController($stateParams, AlertService) {
-    var self = this;
+  alertController.$inject = ['$scope','$stateParams', 'AlertService'];
+  function alertController($scope, $stateParams, AlertService) {
+    let self = this;
 
     function getAlert(id) {
 

@@ -1,0 +1,29 @@
+<ion-view title="Ajouter" id="tab-add-pet">
+    <ion-content padding="true" class="has-header">
+      <button class="button button-energized" ng-click="AddPetCtrl.addImage()">
+        Add image
+      </button><br><br>
+      <ion-scroll>
+        <img ng-repeat="image in images" ng-src="{{AddPetCtrl.urlForImage(image)}}" height="200px"/>
+      </ion-scroll>
+        <div>
+            <img ng-src="{{AddPetCtrl.pet.photo}}" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
+        </div>
+        <form id="ajouter-form1" class="list">
+            <ion-toggle toggle-class="toggle-positive" data-ng-model="AddPetCtrl.pet.name"></ion-toggle>
+            <label class="item item-input">
+                <span class="input-label">Race</span>
+                <input type="text" placeholder="Yorkshire" data-ng-model="AddPetCtrl.pet.race">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Couleur</span>
+                <input type="text" placeholder="Noir" data-ng-model="AddPetCtrl.pet.color">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Signes distinctifs</span>
+                <input type="text" placeholder="Collier bleu" data-ng-model="AddPetCtrl.pet.particularity">
+            </label>
+            <button class="button button-balanced button-block">Ajouter</button>
+        </form>
+    </ion-content>
+</ion-view>

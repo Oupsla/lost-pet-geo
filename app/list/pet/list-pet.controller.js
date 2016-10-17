@@ -5,7 +5,7 @@
 
   listPetController.$inject = ['$stateParams', 'ListPetService'];
   function listPetController($stateParams, ListPetService) {
-    var self = this;
+    let self = this;
 
     function getListPet() {
       ListPetService.getListPet(self.accountId).then(function(result) {

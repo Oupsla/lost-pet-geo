@@ -1,0 +1,28 @@
+
+<ion-view title="Ajouter" id="tab-add-alert">
+  <ion-content padding="true" class="has-header">
+    <div>
+      <img ng-src="{{AddAlertCtrl.pet.photo}}" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
+    </div>
+    <form id="ajouter-form1" class="list">
+      <ion-toggle toggle-class="toggle-positive" data-ng-model="AddAlertCtrl.pet.name"></ion-toggle>
+      <label class="item item-input">
+        <span class="input-label">Race</span>
+        <input type="text" placeholder="Yorkshire" data-ng-model="AddAlertCtrl.pet.race">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Couleur</span>
+        <input type="text" placeholder="Noir" data-ng-model="AddAlertCtrl.pet.color">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Signes distinctifs</span>
+        <input type="text" placeholder="Collier bleu" data-ng-model="AddAlertCtrl.pet.particularity">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Commentaire</span>
+        <input type="text" placeholder="A l'air très apeuré" data-ng-model="AddAlertCtrl.pet.comment">
+      </label>
+      <button class="button button-balanced button-block">Ajouter</button>
+    </form>
+  </ion-content>
+</ion-view>

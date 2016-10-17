@@ -1,13 +1,12 @@
 (() => {
   angular
-    .module('pet')
-    .service('PetService', petService);
+    .module('addPet')
+    .service('AddPetService', addPetService);
 
-  petService.$inject = ['$q'];
-  function petService($q) {
-    var self = this;
-
-    self.getPet = function (id) {
+  addPetService.$inject = ['$q'];
+  function addPetService($q) {
+    let self = this;
+    self.addPet = function (id) {
       return $q((resolve, reject) => {
         return resolve({
           id: id,
