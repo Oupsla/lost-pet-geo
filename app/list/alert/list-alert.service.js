@@ -8,7 +8,7 @@
     var self = this;
 
     self.getListAlert = function () {
-      return $http.get("http://lostpet-api.mybluemix.net/api/v1.0/alerts")
+      return $http.get("http://lostpet-api.mybluemix.net/api/v1.0/alerts/")
         .then((resp) => resp.data);
     }
   }
