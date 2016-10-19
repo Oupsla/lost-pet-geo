@@ -20,6 +20,7 @@
       self.account = {
         id: 3
       };
+
       getAccount();
       self.today = new Date();
     }
