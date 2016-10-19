@@ -34,7 +34,9 @@
       .state('nav', {
         url: '/nav',
         abstract: true,
-        templateUrl: 'navs/navs.html'
+        templateUrl: 'navs/navs.html',
+        controller: 'NavsCtrl',
+        controllerAs: 'NavsCtrl'
       });
 
       // Each tab has its own nav history stack:
