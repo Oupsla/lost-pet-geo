@@ -29,7 +29,7 @@
 
     self.updateAccount = function (account) {
       return $q((resolve, reject) => {
-        return resolve({})
+        return resolve({});
       });
     };
   }
