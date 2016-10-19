@@ -14,7 +14,6 @@ var jshint = require('gulp-jshint');
 
 var paths = {
   sass: ['./scss/**/*.scss'],
-  css: ['./app/**/*.css'],
   js: ['./app/**/*.module.js', './app/**/*.config.js', './app/**/*.js', '!./app/lib/**/*'],
   misc: ['./app/**/*', './app/**/*.js', './app/lib/**/*', './app/**/*.html']
 };

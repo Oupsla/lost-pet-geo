@@ -3,12 +3,12 @@
     .module('listPet')
     .service('ListPetService', listPetService);
 
-  listPetService.$inject = ['$q'];
-  function listPetService($q) {
+  listPetService.$inject = ['$q', '$http'];
+  function listPetService($q, $http) {
     var self = this;
 
     self.getListPet = function (accountId) {
-      return $http.get("http://lostpet-api.mybluemix.net/api/v1.0/pets/")
+      return $http.get("http://lostpet-api.mybluemix.net/api/v1.0/pets/" + accountId)
         .then((resp) => resp.data);
     }
   }
