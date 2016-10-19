@@ -31,17 +31,17 @@
       $stateProvider
 
       // setup an abstract state for the tabs directive
-      .state('tab', {
-        url: '/tab',
+      .state('nav', {
+        url: '/nav',
         abstract: true,
-        templateUrl: 'tabs/tabs.html'
+        templateUrl: 'navs/navs.html'
       });
 
       // Each tab has its own nav history stack:
 
 
       // if none of the above states are matched, use this as the fallback
-      $urlRouterProvider.otherwise('/tab/listAlert');
+      $urlRouterProvider.otherwise('/nav/listAlert');
 
     }
 })();
