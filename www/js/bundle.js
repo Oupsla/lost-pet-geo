@@ -30,14 +30,24 @@
 'use strict';
 
 (function () {
+<<<<<<< HEAD
   'use strict';
 
   angular.module('addAlert', ['ionic', 'ionic-toast']);
+=======
+  angular.module('listPet', []);
+>>>>>>> replace tab by nav
 })();
 'use strict';
 
 (function () {
+<<<<<<< HEAD
   angular.module('listAlert', []);
+=======
+  'use strict';
+
+  angular.module('addPet', []);
+>>>>>>> replace tab by nav
 })();
 'use strict';
 
@@ -82,17 +92,17 @@
     $stateProvider
 
     // setup an abstract state for the tabs directive
-    .state('tab', {
-      url: '/tab',
+    .state('nav', {
+      url: '/nav',
       abstract: true,
-      templateUrl: 'tabs/tabs.html'
+      templateUrl: 'navs/navs.html'
     });
 
     // Each tab has its own nav history stack:
 
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/tab/listAlert');
+    $urlRouterProvider.otherwise('/nav/listAlert');
   }
 })();
 'use strict';
@@ -105,10 +115,10 @@
   configAccount.$inject = ['$stateProvider'];
 
   function configAccount($stateProvider) {
-    $stateProvider.state('tab.account', {
+    $stateProvider.state('nav.account', {
       url: '/account',
       views: {
-        'tab-account': {
+        'menuContent': {
           templateUrl: 'account/account.html',
           controller: 'AccountCtrl',
           controllerAs: 'AccountCtrl'
@@ -168,10 +178,26 @@
 'use strict';
 
 (function () {
+  angular.module('listPet').config(configListPet);
+
+  configListPet.$inject = ['$stateProvider'];
+  function configListPet($stateProvider) {
+    $stateProvider.state('listPet', {
+      url: '/listPet',
+      templateUrl: 'list/pet/list-pet.html',
+      controller: 'ListPetCtrl',
+      controllerAs: 'ListPetCtrl'
+    });
+  }
+})();
+'use strict';
+
+(function () {
   'use strict';
 
   angular.module('addAlert').config(configAddAlert);
 
+<<<<<<< HEAD
   configAddAlert.$inject = ['$stateProvider'];
 
   function configAddAlert($stateProvider) {
@@ -189,15 +215,17 @@
 })();
 'use strict';
 
+=======
+>>>>>>> replace tab by nav
 (function () {
   angular.module('listAlert').config(configListAlert);
 
   configListAlert.$inject = ['$stateProvider'];
   function configListAlert($stateProvider) {
-    $stateProvider.state('tab.listAlert', {
+    $stateProvider.state('nav.listAlert', {
       url: '/listAlert',
       views: {
-        'tab-listAlert': {
+        'menuContent': {
           templateUrl: 'list/alert/list-alert.html',
           controller: 'ListAlertCtrl',
           controllerAs: 'ListAlertCtrl'
@@ -230,12 +258,25 @@
 
   configAddPet.$inject = ['$stateProvider'];
 
+<<<<<<< HEAD
   function configAddPet($stateProvider) {
     $stateProvider.state('addPet', {
       url: '/pet/add',
       templateUrl: 'pet/add/add-pet.html',
       controller: 'AddPetCtrl',
       controllerAs: 'AddPetCtrl'
+=======
+  function configAddAlert($stateProvider) {
+    $stateProvider.state('nav.addAlert', {
+      url: '/alert/add',
+      views: {
+        'menuContent': {
+          templateUrl: 'alert/add/add-alert.html',
+          controller: 'AddAlertCtrl',
+          controllerAs: 'AddAlertCtrl'
+        }
+      }
+>>>>>>> replace tab by nav
     });
   }
 })();
@@ -466,6 +507,7 @@
 'use strict';
 
 (function () {
+<<<<<<< HEAD
   'use strict';
 
   angular.module('addAlert').controller('AddAlertCtrl', addAlertController);
@@ -529,6 +571,9 @@
 
 (function () {
   angular.module('listAlert').controller('ListAlertCtrl', listAlertController);
+=======
+  angular.module('listPet').controller('ListPetCtrl', listPetController);
+>>>>>>> replace tab by nav
 
   listAlertController.$inject = ['ListAlertService'];
   function listAlertController(ListAlertService) {
@@ -591,7 +636,131 @@
 'use strict';
 
 (function () {
+<<<<<<< HEAD
   angular.module('listPet').controller('ListPetCtrl', listPetController);
+=======
+  'use strict';
+
+  angular.module('addPet').controller('AddPetCtrl', addPetController);
+
+  addPetController.$inject = ['PetService'];
+
+  function addPetController(PetService) {
+    var self = this;
+
+    console.log("AddPetCtrl", this);
+
+    function addPet() {
+      PetService.addPet(self.pet).then(function (result) {
+        console.log(result);
+      });
+
+      self.addImage = function () {
+        // 2
+        var options = {
+          destinationType: Camera.DestinationType.FILE_URI,
+          sourceType: Camera.PictureSourceType.CAMERA, // Camera.PictureSourceType.PHOTOLIBRARY
+          allowEdit: false,
+          encodingType: Camera.EncodingType.JPEG,
+          popoverOptions: CameraPopoverOptions
+        };
+
+        // 3
+        $cordovaCamera.getPicture(options).then(function (imageData) {
+
+          // 4
+          onImageSuccess(imageData);
+
+          function onImageSuccess(fileURI) {
+            createFileEntry(fileURI);
+          }
+
+          function createFileEntry(fileURI) {
+            window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
+          }
+
+          // 5
+          function copyFile(fileEntry) {
+            var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
+            var newName = makeid() + name;
+
+            window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (fileSystem2) {
+              fileEntry.copyTo(fileSystem2, newName, onCopySuccess, fail);
+            }, fail);
+          }
+
+          // 6
+          function onCopySuccess(entry) {
+            $scope.$apply(function () {
+              $scope.images.push(entry.nativeURL);
+            });
+          }
+
+          function fail(error) {
+            console.log("fail: " + error.code);
+          }
+
+          function makeid() {
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+            for (var i = 0; i < 5; i++) {
+              text += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+            return text;
+          }
+        }, function (err) {
+          console.log(err);
+        });
+      };
+
+      self.urlForImage = function (imageName) {
+        var name = imageName.substr(imageName.lastIndexOf('/') + 1);
+        var trueOrigin = cordova.file.dataDirectory + name;
+        return trueOrigin;
+      };
+
+      function init() {
+        self.images = [];
+        self.pet = {};
+      }
+
+      init();
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  angular.module('addPet').service('AddPetService', addPetService);
+
+  addPetService.$inject = ['$q'];
+  function addPetService($q) {
+    var self = this;
+    self.addPet = function (id) {
+      return $q(function (resolve, reject) {
+        return resolve({
+          id: id,
+          type: 'chien',
+          photo: 'http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg',
+          name: 'toutou',
+          race: 'bichon',
+          color: 'blanc',
+          particularity: 'Bla bla bla'
+          /*vaccins: {
+           rage: 'ok'
+           }*/
+        });
+      });
+    };
+  }
+})();
+"use strict";
+'use strict';
+
+(function () {
+  angular.module('listAlert').controller('ListAlertCtrl', listAlertController);
+>>>>>>> replace tab by nav
 
   listPetController.$inject = ['$stateParams', 'ListPetService'];
   function listPetController($stateParams, ListPetService) {

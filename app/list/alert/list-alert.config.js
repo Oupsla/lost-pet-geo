@@ -6,10 +6,10 @@
   configListAlert.$inject = ['$stateProvider'];
   function configListAlert($stateProvider) {
     $stateProvider
-      .state('tab.listAlert', {
+      .state('nav.listAlert', {
         url: '/listAlert',
         views: {
-          'tab-listAlert': {
+          'menuContent': {
             templateUrl: 'list/alert/list-alert.html',
             controller: 'ListAlertCtrl',
             controllerAs: 'ListAlertCtrl'

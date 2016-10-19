@@ -8,10 +8,10 @@
 
   function configAddAlert($stateProvider) {
     $stateProvider
-      .state('tab.addAlert', {
+      .state('nav.addAlert', {
         url: '/alert/add',
         views: {
-          'tab-addAlert': {
+          'menuContent': {
             templateUrl: 'alert/add/add-alert.html',
             controller: 'AddAlertCtrl',
             controllerAs: 'AddAlertCtrl'
