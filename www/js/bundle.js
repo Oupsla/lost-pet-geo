@@ -32,12 +32,7 @@
 (function () {
   'use strict';
 
-  angular.module('addPet', []);
-})();
-'use strict';
-
-(function () {
-  angular.module('listPet', []);
+  angular.module('addAlert', []);
 })();
 'use strict';
 
@@ -47,9 +42,14 @@
 'use strict';
 
 (function () {
+  angular.module('listPet', []);
+})();
+'use strict';
+
+(function () {
   'use strict';
 
-  angular.module('addAlert', []);
+  angular.module('addPet', []);
 })();
 'use strict';
 
@@ -170,31 +170,20 @@
 (function () {
   'use strict';
 
-  angular.module('addPet').config(configAddPet);
+  angular.module('addAlert').config(configAddAlert);
 
-  configAddPet.$inject = ['$stateProvider'];
+  configAddAlert.$inject = ['$stateProvider'];
 
-  function configAddPet($stateProvider) {
-    $stateProvider.state('addPet', {
-      url: '/pet/add',
-      templateUrl: 'pet/add/add-pet.html',
-      controller: 'AddPetCtrl',
-      controllerAs: 'AddPetCtrl'
-    });
-  }
-})();
-'use strict';
-
-(function () {
-  angular.module('listPet').config(configListPet);
-
-  configListPet.$inject = ['$stateProvider'];
-  function configListPet($stateProvider) {
-    $stateProvider.state('listPet', {
-      url: '/listPet',
-      templateUrl: 'list/pet/list-pet.html',
-      controller: 'ListPetCtrl',
-      controllerAs: 'ListPetCtrl'
+  function configAddAlert($stateProvider) {
+    $stateProvider.state('tab.addAlert', {
+      url: '/alert/add',
+      views: {
+        'tab-addAlert': {
+          templateUrl: 'alert/add/add-alert.html',
+          controller: 'AddAlertCtrl',
+          controllerAs: 'AddAlertCtrl'
+        }
+      }
     });
   }
 })();
@@ -220,22 +209,33 @@
 'use strict';
 
 (function () {
+  angular.module('listPet').config(configListPet);
+
+  configListPet.$inject = ['$stateProvider'];
+  function configListPet($stateProvider) {
+    $stateProvider.state('listPet', {
+      url: '/listPet',
+      templateUrl: 'list/pet/list-pet.html',
+      controller: 'ListPetCtrl',
+      controllerAs: 'ListPetCtrl'
+    });
+  }
+})();
+'use strict';
+
+(function () {
   'use strict';
 
-  angular.module('addAlert').config(configAddAlert);
+  angular.module('addPet').config(configAddPet);
 
-  configAddAlert.$inject = ['$stateProvider'];
+  configAddPet.$inject = ['$stateProvider'];
 
-  function configAddAlert($stateProvider) {
-    $stateProvider.state('tab.addAlert', {
-      url: '/alert/add',
-      views: {
-        'tab-addAlert': {
-          templateUrl: 'alert/add/add-alert.html',
-          controller: 'AddAlertCtrl',
-          controllerAs: 'AddAlertCtrl'
-        }
-      }
+  function configAddPet($stateProvider) {
+    $stateProvider.state('addPet', {
+      url: '/pet/add',
+      templateUrl: 'pet/add/add-pet.html',
+      controller: 'AddPetCtrl',
+      controllerAs: 'AddPetCtrl'
     });
   }
 })();
@@ -273,6 +273,7 @@
       self.account = {
         id: 3
       };
+
       getAccount();
       self.today = new Date();
     }
@@ -382,6 +383,7 @@
   alertController.$inject = ['$stateParams', 'PetService'];
   function alertController($stateParams, PetService) {
     var self = this;
+    self.petId = $stateParams.petId;
 
     function getPet(id) {
       PetService.getPet(id).then(function (result) {
@@ -466,73 +468,34 @@
 (function () {
   'use strict';
 
-  angular.module('addPet').controller('AddPetCtrl', addPetController);
+  angular.module('addAlert').controller('AddAlertCtrl', addAlertController);
 
-  addPetController.$inject = ['PetService'];
-
-  function addPetController(PetService) {
+  addAlertController.$inject = ['$stateParams', 'AddAlertService'];
+  function addAlertController($stateParams, AddAlertService) {
     var self = this;
 
-    console.log("AddPetCtrl", this);
-
-    function addPet() {
-      PetService.addPet(self.pet).then(function (result) {
-        console.log(result);
+    function getAlert() {
+      AddAlertService.getAlert(self.alert).then(function (result) {
+        self.alert = result;
       });
-
-      function init() {
-        self.pet = {};
-      }
-
-      init();
     }
-  }
-})();
-'use strict';
 
-(function () {
-  angular.module('addPet').service('AddPetService', addPetService);
-
-  addPetService.$inject = ['$q'];
-  function addPetService($q) {
-    var self = this;
-    self.addPet = function (id) {
-      return $q(function (resolve, reject) {
-        return resolve({
-          id: id,
-          type: 'chien',
-          photo: 'http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg',
-          name: 'toutou',
-          race: 'bichon',
-          color: 'blanc',
-          particularity: 'Bla bla bla'
-          /*vaccins: {
-           rage: 'ok'
-           }*/
-        });
+    function getMyPet(id) {
+      AddAlertService.getMyPet(id).then(function (result) {
+        self.pet = result;
       });
-    };
-  }
-})();
-"use strict";
-'use strict';
+    }
 
-(function () {
-  angular.module('listPet').controller('ListPetCtrl', listPetController);
-
-  listPetController.$inject = ['$stateParams', 'ListPetService'];
-  function listPetController($stateParams, ListPetService) {
-    var self = this;
-
-    function getListPet() {
-      ListPetService.getListPet(self.accountId).then(function (result) {
-        self.listPet = result;
+    function addAlert() {
+      AddAlertService.addAlert(self.alert).then(function (result) {
+        console.log(result);
       });
     }
 
     function init() {
-      self.accountId = $stateParams.accountId;
-      getListPet();
+      self.myPetId = $stateParams.petId;
+      console.log(self.petId);
+      getMyPet(self.myPetId);
     }
 
     init();
@@ -541,35 +504,45 @@
 'use strict';
 
 (function () {
-  angular.module('listPet').service('ListPetService', listPetService);
+  angular.module('addAlert').service('AddAlertService', addAlertService);
 
-  listPetService.$inject = ['$q'];
-  function listPetService($q) {
+  addAlertService.$inject = ['$q'];
+  function addAlertService($q) {
     var self = this;
-
-    self.getListPet = function (accountId) {
+    self.getMyPet = function (id) {
       return $q(function (resolve, reject) {
-        return resolve([{
-          accountId: accountId,
-          id: 1,
+        return resolve({
+          id: id,
           photo: 'http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg',
+          name: 'loulou',
+          race: 'bichon',
+          type: 'chien',
+          particularity: 'aggresif',
+          color: 'noir'
+        });
+      });
+    };
+
+    self.addAlert = function (id) {
+      return $q(function (resolve, reject) {
+        return resolve({
+          id: id,
+          state: 'Perdu',
+          photo: 'http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg',
+          date: '10-08-2016',
+          comment: "J'ai perdu mon chien ... :",
           pet: {
-            type: 'chien',
-            name: 'toutou',
-            race: 'bichon',
-            color: 'blanc'
+            details: {
+              type: 'chien',
+              name: 'toutou',
+              race: 'bichon',
+              color: 'blanc'
+            }
+            /*vaccins: {
+             rage: 'ok'
+             }*/
           }
-        }, {
-          accountId: accountId,
-          id: 2,
-          photo: 'http://previews.123rf.com/images/bartkowski/bartkowski1203/bartkowski120300005/12612383-Noir-petit-chaton-assis-un-sur-un-fond-blanc-Banque-d\'images.jpg',
-          pet: {
-            type: 'chat',
-            name: 'chaton',
-            race: '',
-            color: 'noir'
-          }
-        }]);
+        });
       });
     };
   }
@@ -641,50 +614,177 @@
 'use strict';
 
 (function () {
-  'use strict';
+  angular.module('listPet').controller('ListPetCtrl', listPetController);
 
-  angular.module('addAlert').controller('AddAlertCtrl', addAlertController);
-
-  addAlertController.$inject = ['AddAlertService'];
-
-  function addAlertController(AddAlertService) {
+  listPetController.$inject = ['$stateParams', 'ListPetService'];
+  function listPetController($stateParams, ListPetService) {
     var self = this;
 
-    function addAlert() {
-      AddAlertService.addAlert(self.alert).then(function (result) {
+    function getListPet() {
+      ListPetService.getListPet(self.accountId).then(function (result) {
+        self.listPet = result;
+      });
+    }
+
+    function init() {
+      self.accountId = $stateParams.accountId;
+      getListPet();
+    }
+
+    init();
+  }
+})();
+'use strict';
+
+(function () {
+  angular.module('listPet').service('ListPetService', listPetService);
+
+  listPetService.$inject = ['$q'];
+  function listPetService($q) {
+    var self = this;
+
+    self.getListPet = function (accountId) {
+      return $q(function (resolve, reject) {
+        return resolve([{
+          accountId: accountId,
+          id: 1,
+          photo: 'http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg',
+          pet: {
+            type: 'chien',
+            name: 'toutou',
+            race: 'bichon',
+            color: 'blanc'
+          }
+        }, {
+          accountId: accountId,
+          id: 2,
+          photo: 'http://previews.123rf.com/images/bartkowski/bartkowski1203/bartkowski120300005/12612383-Noir-petit-chaton-assis-un-sur-un-fond-blanc-Banque-d\'images.jpg',
+          pet: {
+            type: 'chat',
+            name: 'chaton',
+            race: '',
+            color: 'noir'
+          }
+        }]);
+      });
+    };
+  }
+})();
+"use strict";
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('addPet').controller('AddPetCtrl', addPetController);
+
+  addPetController.$inject = ['PetService'];
+
+  function addPetController(PetService) {
+    var self = this;
+
+    console.log("AddPetCtrl", this);
+
+    function addPet() {
+      PetService.addPet(self.pet).then(function (result) {
         console.log(result);
       });
+
+      self.addImage = function () {
+        // 2
+        var options = {
+          destinationType: Camera.DestinationType.FILE_URI,
+          sourceType: Camera.PictureSourceType.CAMERA, // Camera.PictureSourceType.PHOTOLIBRARY
+          allowEdit: false,
+          encodingType: Camera.EncodingType.JPEG,
+          popoverOptions: CameraPopoverOptions
+        };
+
+        // 3
+        $cordovaCamera.getPicture(options).then(function (imageData) {
+
+          // 4
+          onImageSuccess(imageData);
+
+          function onImageSuccess(fileURI) {
+            createFileEntry(fileURI);
+          }
+
+          function createFileEntry(fileURI) {
+            window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
+          }
+
+          // 5
+          function copyFile(fileEntry) {
+            var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
+            var newName = makeid() + name;
+
+            window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (fileSystem2) {
+              fileEntry.copyTo(fileSystem2, newName, onCopySuccess, fail);
+            }, fail);
+          }
+
+          // 6
+          function onCopySuccess(entry) {
+            $scope.$apply(function () {
+              $scope.images.push(entry.nativeURL);
+            });
+          }
+
+          function fail(error) {
+            console.log("fail: " + error.code);
+          }
+
+          function makeid() {
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+            for (var i = 0; i < 5; i++) {
+              text += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+            return text;
+          }
+        }, function (err) {
+          console.log(err);
+        });
+      };
+
+      self.urlForImage = function (imageName) {
+        var name = imageName.substr(imageName.lastIndexOf('/') + 1);
+        var trueOrigin = cordova.file.dataDirectory + name;
+        return trueOrigin;
+      };
+
+      function init() {
+        self.images = [];
+        self.pet = {};
+      }
+
+      init();
     }
   }
 })();
 'use strict';
 
 (function () {
-  angular.module('addAlert').service('AddAlertService', addAlertService);
+  angular.module('addPet').service('AddPetService', addPetService);
 
-  addAlertService.$inject = ['$q'];
-  function addAlertService($q) {
+  addPetService.$inject = ['$q'];
+  function addPetService($q) {
     var self = this;
-
-    self.addAlert = function (id) {
+    self.addPet = function (id) {
       return $q(function (resolve, reject) {
         return resolve({
           id: id,
-          state: 'Perdu',
+          type: 'chien',
           photo: 'http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg',
-          date: '10-08-2016',
-          comment: "J'ai perdu mon chien ... :",
-          pet: {
-            details: {
-              type: 'chien',
-              name: 'toutou',
-              race: 'bichon',
-              color: 'blanc'
-            }
-            /*vaccins: {
-             rage: 'ok'
-             }*/
-          }
+          name: 'toutou',
+          race: 'bichon',
+          color: 'blanc',
+          particularity: 'Bla bla bla'
+          /*vaccins: {
+           rage: 'ok'
+           }*/
         });
       });
     };
