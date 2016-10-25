@@ -31,16 +31,23 @@
 
 (function () {
 <<<<<<< HEAD
+<<<<<<< HEAD
   'use strict';
 
   angular.module('addAlert', ['ionic', 'ionic-toast']);
 =======
   angular.module('listPet', []);
 >>>>>>> replace tab by nav
+=======
+  'use strict';
+
+  angular.module('addAlert', []);
+>>>>>>> creation annonce depuis mes animaux
 })();
 'use strict';
 
 (function () {
+<<<<<<< HEAD
 <<<<<<< HEAD
   angular.module('listAlert', []);
 =======
@@ -48,6 +55,9 @@
 
   angular.module('addPet', []);
 >>>>>>> replace tab by nav
+=======
+  angular.module('listAlert', []);
+>>>>>>> creation annonce depuis mes animaux
 })();
 'use strict';
 
@@ -92,17 +102,28 @@
     $stateProvider
 
     // setup an abstract state for the tabs directive
+<<<<<<< HEAD
     .state('nav', {
       url: '/nav',
       abstract: true,
       templateUrl: 'navs/navs.html'
+=======
+    .state('tab', {
+      url: '/tab',
+      abstract: true,
+      templateUrl: 'tabs/tabs.html'
+>>>>>>> creation annonce depuis mes animaux
     });
 
     // Each tab has its own nav history stack:
 
 
     // if none of the above states are matched, use this as the fallback
+<<<<<<< HEAD
     $urlRouterProvider.otherwise('/nav/listAlert');
+=======
+    $urlRouterProvider.otherwise('/tab/listAlert');
+>>>>>>> creation annonce depuis mes animaux
   }
 })();
 'use strict';
@@ -115,10 +136,17 @@
   configAccount.$inject = ['$stateProvider'];
 
   function configAccount($stateProvider) {
+<<<<<<< HEAD
     $stateProvider.state('nav.account', {
       url: '/account',
       views: {
         'menuContent': {
+=======
+    $stateProvider.state('tab.account', {
+      url: '/account',
+      views: {
+        'tab-account': {
+>>>>>>> creation annonce depuis mes animaux
           templateUrl: 'account/account.html',
           controller: 'AccountCtrl',
           controllerAs: 'AccountCtrl'
@@ -178,6 +206,7 @@
 'use strict';
 
 (function () {
+<<<<<<< HEAD
   angular.module('listPet').config(configListPet);
 
   configListPet.$inject = ['$stateProvider'];
@@ -193,11 +222,16 @@
 'use strict';
 
 (function () {
+=======
+>>>>>>> creation annonce depuis mes animaux
   'use strict';
 
   angular.module('addAlert').config(configAddAlert);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> creation annonce depuis mes animaux
   configAddAlert.$inject = ['$stateProvider'];
 
   function configAddAlert($stateProvider) {
@@ -215,17 +249,27 @@
 })();
 'use strict';
 
+<<<<<<< HEAD
 =======
 >>>>>>> replace tab by nav
+=======
+>>>>>>> creation annonce depuis mes animaux
 (function () {
   angular.module('listAlert').config(configListAlert);
 
   configListAlert.$inject = ['$stateProvider'];
   function configListAlert($stateProvider) {
+<<<<<<< HEAD
     $stateProvider.state('nav.listAlert', {
       url: '/listAlert',
       views: {
         'menuContent': {
+=======
+    $stateProvider.state('tab.listAlert', {
+      url: '/listAlert',
+      views: {
+        'tab-listAlert': {
+>>>>>>> creation annonce depuis mes animaux
           templateUrl: 'list/alert/list-alert.html',
           controller: 'ListAlertCtrl',
           controllerAs: 'ListAlertCtrl'
@@ -259,12 +303,16 @@
   configAddPet.$inject = ['$stateProvider'];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> creation annonce depuis mes animaux
   function configAddPet($stateProvider) {
     $stateProvider.state('addPet', {
       url: '/pet/add',
       templateUrl: 'pet/add/add-pet.html',
       controller: 'AddPetCtrl',
       controllerAs: 'AddPetCtrl'
+<<<<<<< HEAD
 =======
   function configAddAlert($stateProvider) {
     $stateProvider.state('nav.addAlert', {
@@ -277,6 +325,8 @@
         }
       }
 >>>>>>> replace tab by nav
+=======
+>>>>>>> creation annonce depuis mes animaux
     });
   }
 })();
@@ -508,12 +558,20 @@
 
 (function () {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> creation annonce depuis mes animaux
   'use strict';
 
   angular.module('addAlert').controller('AddAlertCtrl', addAlertController);
 
+<<<<<<< HEAD
   addAlertController.$inject = ['$stateParams', 'AddAlertService', 'PetService'];
   function addAlertController($stateParams, AddAlertService, PetService) {
+=======
+  addAlertController.$inject = ['$stateParams', 'AddAlertService'];
+  function addAlertController($stateParams, AddAlertService) {
+>>>>>>> creation annonce depuis mes animaux
     var self = this;
 
     function getAlert() {
@@ -522,14 +580,34 @@
       });
     }
 
+<<<<<<< HEAD
     function init() {
       self.myPetId = $stateParams.petId;
 
       PetService.getPet(self.myPetId).then(function (result) {
+=======
+    function getMyPet(id) {
+      AddAlertService.getMyPet(id).then(function (result) {
+>>>>>>> creation annonce depuis mes animaux
         self.pet = result;
       });
     }
 
+<<<<<<< HEAD
+=======
+    function addAlert() {
+      AddAlertService.addAlert(self.alert).then(function (result) {
+        console.log(result);
+      });
+    }
+
+    function init() {
+      self.myPetId = $stateParams.petId;
+      console.log(self.petId);
+      getMyPet(self.myPetId);
+    }
+
+>>>>>>> creation annonce depuis mes animaux
     init();
   }
 })();
@@ -541,6 +619,22 @@
   addAlertService.$inject = ['$q'];
   function addAlertService($q) {
     var self = this;
+<<<<<<< HEAD
+=======
+    self.getMyPet = function (id) {
+      return $q(function (resolve, reject) {
+        return resolve({
+          id: id,
+          photo: 'http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg',
+          name: 'loulou',
+          race: 'bichon',
+          type: 'chien',
+          particularity: 'aggresif',
+          color: 'noir'
+        });
+      });
+    };
+>>>>>>> creation annonce depuis mes animaux
 
     self.addAlert = function (id) {
       return $q(function (resolve, reject) {
@@ -571,9 +665,12 @@
 
 (function () {
   angular.module('listAlert').controller('ListAlertCtrl', listAlertController);
+<<<<<<< HEAD
 =======
   angular.module('listPet').controller('ListPetCtrl', listPetController);
 >>>>>>> replace tab by nav
+=======
+>>>>>>> creation annonce depuis mes animaux
 
   listAlertController.$inject = ['ListAlertService'];
   function listAlertController(ListAlertService) {
@@ -636,6 +733,7 @@
 'use strict';
 
 (function () {
+<<<<<<< HEAD
 <<<<<<< HEAD
   angular.module('listPet').controller('ListPetCtrl', listPetController);
 =======
@@ -761,6 +859,9 @@
 (function () {
   angular.module('listAlert').controller('ListAlertCtrl', listAlertController);
 >>>>>>> replace tab by nav
+=======
+  angular.module('listPet').controller('ListPetCtrl', listPetController);
+>>>>>>> creation annonce depuis mes animaux
 
   listPetController.$inject = ['$stateParams', 'ListPetService'];
   function listPetController($stateParams, ListPetService) {
