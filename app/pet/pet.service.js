@@ -3,8 +3,8 @@
     .module('pet')
     .service('PetService', petService);
 
-  petService.$inject = ['$q'];
-  function petService($q) {
+  petService.$inject = ['$q', '$http'];
+  function petService($q, $http) {
     var self = this;
 
     self.getPet = function (id) {

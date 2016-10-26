@@ -11,6 +11,7 @@
     function getPet(id) {
       PetService.getPet(id).then(function (result) {
         self.pet = result;
+        console.log(result);
       });
     }
 
