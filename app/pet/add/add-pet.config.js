@@ -8,11 +8,15 @@
 
   function configAddPet($stateProvider) {
     $stateProvider
-      .state('addPet', {
+      .state('nav.addPet', {
         url: '/pet/add',
-        templateUrl: 'pet/add/add-pet.html',
-        controller: 'AddPetCtrl',
-        controllerAs: 'AddPetCtrl'
+        views: {
+          'menuContent': {
+            templateUrl: 'pet/add/add-pet.html',
+            controller: 'AddPetCtrl',
+            controllerAs: 'AddPetCtrl'
+          }
+        }
       });
   }
 })();

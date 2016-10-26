@@ -8,9 +8,13 @@
     $stateProvider
       .state('nav.listPet', {
           url: '/listPet',
-          templateUrl: 'list/pet/list-pet.html',
-          controller: 'ListPetCtrl',
-          controllerAs: 'ListPetCtrl'
+          views: {
+            'menuContent': {
+              templateUrl: 'list/pet/list-pet.html',
+              controller: 'ListPetCtrl',
+              controllerAs: 'ListPetCtrl'
+            }
+          }
         }
       );
   }
