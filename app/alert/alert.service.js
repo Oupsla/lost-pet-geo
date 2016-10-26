@@ -8,6 +8,7 @@
     var self = this;
 
     self.getAlert = function (id) {
+
       return $q((resolve, reject) => {
         return resolve({
           id: id,

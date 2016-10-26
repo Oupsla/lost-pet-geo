@@ -8,10 +8,10 @@
 
   function configAccount($stateProvider) {
     $stateProvider
-      .state('tab.account', {
+      .state('nav.account', {
         url: '/account',
         views: {
-          'tab-account': {
+          'menuContent': {
             templateUrl: 'account/account.html',
             controller: 'AccountCtrl',
             controllerAs: 'AccountCtrl'
