@@ -18,7 +18,6 @@
 
     function init() {
       self.loaders = {getList: false};
-      console.log("List alert ");
       getListAlert();
     }
 
