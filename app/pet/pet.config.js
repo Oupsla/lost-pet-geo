@@ -6,11 +6,15 @@
   configAlert.$inject = ['$stateProvider'];
   function configAlert($stateProvider) {
     $stateProvider
-      .state('pet', {
+      .state('nav.pet', {
         url: '/pet/:petId',
-        templateUrl: 'pet/pet.html',
-        controller: 'PetCtrl',
-        controllerAs: 'PetCtrl'
+        views: {
+          'menuContent': {
+            templateUrl: 'pet/pet.html',
+            controller: 'PetCtrl',
+            controllerAs: 'PetCtrl'
+          }
+        }
       });
   }
 })();
