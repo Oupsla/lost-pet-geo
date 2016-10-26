@@ -6,11 +6,15 @@
   configAlert.$inject = ['$stateProvider'];
   function configAlert($stateProvider) {
     $stateProvider
-      .state('alert', {
+      .state('nav.alert', {
         url: '/alert/:alertId',
-        templateUrl: 'alert/alert.html',
-        controller: 'AlertCtrl',
-        controllerAs: 'AlertCtrl'
+        views: {
+          'menuContent': {
+            templateUrl: 'alert/alert.html',
+            controller: 'AlertCtrl',
+            controllerAs: 'AlertCtrl'
+          }
+        }
       });
   }
 })();

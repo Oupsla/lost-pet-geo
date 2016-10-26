@@ -1,7 +1,7 @@
-<ion-view title="List pet" id="tab-list-pet">
+<ion-view title="Mes animaux" id="tab-list-pet">
   <ion-content padding="true" class="has-header">
     <ion-list id="listPet">
-      <ion-item ui-sref="pet({petId: pet.id})"  ng-repeat="pet in ListPetCtrl.listPet track by $index" class="item-thumbnail-left positive">
+      <ion-item ui-sref="nav.pet({petId: pet.id})"  ng-repeat="pet in ListPetCtrl.listPet track by $index" class="item-thumbnail-left positive">
         <img ng-if="pet.photo" data-ng-src="{{pet.photo}}"/>
         <h2positive>
           <div data-ng-repeat="(key, value) in pet.pet">
