@@ -1,4 +1,4 @@
-<div class="bar bar-header bar-dark">
+<div class="bar bar-header bar-royal">
   <div class="h1 title">Account</div>
   <button class="button button-clear button-positive" ui-sref="accountUpdate({accountId : AccountCtrl.account.id})">Edit</button>
 </div>
@@ -9,8 +9,8 @@
     <form name="AccountCtrl.accountForm" id="AccountCtrl.accountForm" class="list">
       <div>
         <label class="item item-input">
-          <span class="input-label">Name:</span>
-          <p data-ng-bind="AccountCtrl.account.name"></p>
+          <span class="input-label">LastName:</span>
+          <p data-ng-bind="AccountCtrl.account.lastName"></p>
         </label>
       </div>
       <div>
@@ -38,7 +38,7 @@
         </label>
       </div>
       <div>
-        <p>Address</p>
+        <h2 class="text-center">Address</h2>
       </div>
       <div>
         <label class="item item-input">
@@ -55,7 +55,7 @@
       <div>
         <label class="item item-input">
           <span class="input-label">Postal Code</span>
-          <p required type="number" placeholder="postalCode" data-ng-bind="AccountCtrl.account.address.postalCode">
+          <p required type="number" placeholder="zip" data-ng-bind="AccountCtrl.account.address.zip">
         </label>
       </div>
       <div>
@@ -70,7 +70,7 @@
           <p required type="text" placeholder="country" data-ng-bind="AccountCtrl.account.address.country">
         </label>
       </div>
-      <button ui-sref="listPet({accountId:AccountCtrl.account.id})" class="button button-balanced button-block">My
+      <button ui-sref="nav.listPet({accountId:AccountCtrl.account.id})" class="button button-balanced button-block">My
         Pets
       </button>
     </form>

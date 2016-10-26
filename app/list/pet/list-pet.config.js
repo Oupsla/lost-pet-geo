@@ -6,7 +6,7 @@
   configListPet.$inject = ['$stateProvider'];
   function configListPet($stateProvider) {
     $stateProvider
-      .state('listPet', {
+      .state('nav.listPet', {
           url: '/listPet',
           templateUrl: 'list/pet/list-pet.html',
           controller: 'ListPetCtrl',

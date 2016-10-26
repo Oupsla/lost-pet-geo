@@ -8,13 +8,16 @@
     let self = this;
 
     function getListAlert() {
+      self.loaders.getList = true;
       ListAlertService.getListAlert().then(function (result) {
         self.listAlert = result;
+      }).finally(function(){
+       self.loaders.getList = false;
       });
     }
 
     function init() {
-      console.log("List alert ");
+      self.loaders = {getList: false};
       getListAlert();
     }
 

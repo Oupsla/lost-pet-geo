@@ -18,7 +18,7 @@
 
     function init() {
       self.account = {
-        id: 3
+        id: "5807394d416656001d4012e7"
       };
 
       getAccount();
