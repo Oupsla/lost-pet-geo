@@ -8,11 +8,15 @@
 
   function configAccountUpdate($stateProvider) {
     $stateProvider
-      .state('accountUpdate', {
+      .state('nav.accountUpdate', {
           url: '/accountUpdate/:accountId',
-          templateUrl: 'account/update/account-update.html',
-          controller: 'AccountUpdateCtrl',
-          controllerAs: 'AccountUpdateCtrl'
+          views: {
+            'menuContent': {
+              templateUrl: 'account/update/account-update.html',
+              controller: 'AccountUpdateCtrl',
+              controllerAs: 'AccountUpdateCtrl'
+            }
+          }
         }
       );
   }

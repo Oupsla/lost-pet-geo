@@ -1,11 +1,8 @@
-<div class="bar bar-header bar-dark">
-  <div class="h1 title">List Alert</div>
-</div>
-<ion-view title="List alert" id="tab-list-alert">
+<ion-view title="Liste alerte" id="tab-list-alert">
   <ion-content padding="true" class="has-header">
     <ion-spinner data-ng-if="ListAlertCtrl.loaders.getList"></ion-spinner>
     <ion-list id="listAlertPet-lost" data-ng-if="!ListAlertCtrl.loaders.getList">
-      <ion-item ui-sref="alert({alertId: alert.id})" ng-repeat="alert in ListAlertCtrl.listAlert track by $index"
+      <ion-item ui-sref="nav.alert({alertId: alert.id})" ng-repeat="alert in ListAlertCtrl.listAlert track by $index"
                 class="item-thumbnail-left positive">
         <img ng-if="alert.photo" ng-src="{{alert.photo}}"/>
         <h2positive>
