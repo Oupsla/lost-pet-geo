@@ -1,0 +1,22 @@
+<ion-view title="Inscription" id="signup">
+  <ion-content class="padding">
+    <form id="inscription-form2" name="signupForm" class="list">
+      <div class="doublemargin">
+        <img class="login-img" src="img/bYldRTCBS2O6EzhNkTi2_Logomakr_1i1kcG.png" width="150" height="auto">
+      </div>
+      <ion-list id="inscription-list15">
+        <label class="item item-input" id="inscription-input3">
+          <input type="email" placeholder="Email" data-ng-model="SignupCtrl.email" required>
+        </label>
+        <label class="item item-input" id="inscription-input4">
+          <input type="text" placeholder="Nom" data-ng-model="SignupCtrl.name" required>
+        </label>
+        <label class="item item-input" id="inscription-input5">
+          <input type="password" placeholder="Mot de passe" data-ng-model="SignupCtrl.password" required>
+        </label>
+      </ion-list>
+      <button id="inscription-button3" class="button button-royal  button-block" data-ng-click="SignupCtrl.signup()" data-ng-disabled="signupForm.$invalid">S'inscrire</button>
+      <button id="inscription-button4" class="button button-positive  button-block button-clear colortext" data-ng-click="SignupCtrl.login()">Se connecter</button>
+    </form>
+  </ion-content>
+</ion-view>

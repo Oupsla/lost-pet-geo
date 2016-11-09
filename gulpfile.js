@@ -15,7 +15,8 @@ var jshint = require('gulp-jshint');
 var paths = {
   sass: ['./scss/**/*.scss'],
   js: ['./app/**/*.module.js', './app/**/*.config.js', './app/**/*.js', '!./app/lib/**/*'],
-  misc: ['./app/**/*', './app/**/*.js', './app/lib/**/*', './app/**/*.html']
+  misc: ['./app/**/*', './app/**/*.js', './app/lib/**/*', './app/**/*.html'],
+  img: './resources/img/**/*'
 };
 
 gulp.task('default', ['babel', 'sass']);
@@ -23,6 +24,11 @@ gulp.task('default', ['babel', 'sass']);
 gulp.task('copy', function () {
   return gulp.src(paths.misc)
         .pipe(gulp.dest('www'));
+});
+
+gulp.task('img', function () {
+  return gulp.src(paths.img)
+        .pipe(gulp.dest('www/img'));
 });
 
 gulp.task('babel', function () {
@@ -56,10 +62,11 @@ gulp.task('sass', function (done) {
     .pipe(jshint.reporter('default'));
 });*/
 
-gulp.task('watch', ['babel', 'sass', 'copy'], function () {
+gulp.task('watch', ['babel', 'sass', 'copy', 'img'], function () {
   gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.js, ['babel']);
   gulp.watch(paths.misc, ['copy']);
+  gulp.watch(paths.img, ['img']);
 });
 
 gulp.task('install', ['git-check'], function () {

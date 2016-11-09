@@ -1,0 +1,20 @@
+<ion-view title="Connexion" id="login">
+  <ion-content class="padding">
+    <form id="login-form1" name="loginForm" class="list">
+      <div class="doublemargin">
+        <img class="login-img" src="img/bYldRTCBS2O6EzhNkTi2_Logomakr_1i1kcG.png" width="150" height="auto">
+      </div>
+      <ion-list id="login-list14">
+        <label class="item item-input" id="login-input1">
+          <input type="email" placeholder="Email" data-ng-model="LoginCtrl.email" required>
+        </label>
+        <label class="item item-input" id="login-input2">
+          <input type="password" placeholder="Mot de Passe" data-ng-model="LoginCtrl.password" required>
+        </label>
+      </ion-list>
+      <div class="spacer" style="height: 40px;"></div>
+      <button id="login-button3" class="button button-royal  button-block" data-ng-click="LoginCtrl.login()" data-ng-disabled="loginForm.$invalid">Connexion</button>
+      <button id="login-button4" class="button button-positive  button-block button-clear colortext" data-ng-click="LoginCtrl.signup()">Créer un compte</button>
+    </form>
+  </ion-content>
+</ion-view>
