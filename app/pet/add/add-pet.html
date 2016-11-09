@@ -1,29 +1,50 @@
 <ion-view title="Ajouter un animal" id="nav-add-pet">
-    <ion-content padding="true" class="has-header">
-      <button class="button button-energized" ng-click="AddPetCtrl.addImage()">
-        Add image
-      </button><br><br>
-      <ion-scroll>
-        <img ng-repeat="image in images" ng-src="{{AddPetCtrl.urlForImage(image)}}" height="200px"/>
-      </ion-scroll>
-        <div>
-            <img ng-src="{{AddPetCtrl.pet.photo}}" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
-        </div>
-        <form id="ajouter-form1" class="list">
-            <ion-toggle toggle-class="toggle-positive" data-ng-model="AddPetCtrl.pet.name"></ion-toggle>
-            <label class="item item-input">
-                <span class="input-label">Race</span>
-                <input type="text" placeholder="Yorkshire" data-ng-model="AddPetCtrl.pet.race">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Couleur</span>
-                <input type="text" placeholder="Noir" data-ng-model="AddPetCtrl.pet.color">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Signes distinctifs</span>
-                <input type="text" placeholder="Collier bleu" data-ng-model="AddPetCtrl.pet.particularity">
-            </label>
-            <button class="button button-balanced button-block">Ajouter</button>
-        </form>
-    </ion-content>
+  <ion-content padding="true" class="has-header">
+    <div>
+
+    </div>
+    <ion-scroll>
+      <img data-ng-repeat="image in images" data-ng-src="{{AddPetCtrl.urlForImage(image)}}" height="200px"/>
+    </ion-scroll>
+    <div>
+      <img data-ng-src="{{AddPetCtrl.pet.photo}}" width="100%" height="auto"
+           style="display: block; margin-left: auto; margin-right: auto;">
+    </div>
+    <form id="ajouter-form1" class="list">
+
+      <ion-spinner data-ng-if="AddPetCtrl.loaders.species || AddPetCtrl.loaders.breeds"></ion-spinner>
+
+      <label class="item item-input item-select" data-ng-show="! AddPetCtrl.loaders.species">
+        <span class="input-label">Espèce</span>
+        <select data-ng-model="AddPetCtrl.pet.species" data-ng-change="AddPetCtrl.getBreeds()">
+          <option data-ng-repeat="species in AddPetCtrl.species">{{species}}</option>
+        </select>
+      </label>
+
+      <label class="item item-input item-select"
+             data-ng-show="! AddPetCtrl.loaders.breeds && AddPetCtrl.breeds[AddPetCtrl.pet.species]">
+        <span class="input-label">Race</span>
+        <select data-ng-model="AddPetCtrl.pet.race" data-ng-show="! AddPetCtrl.loaders.species">
+          <option data-ng-repeat="breeds in AddPetCtrl.breeds[AddPetCtrl.pet.species]">{{breeds}}</option>
+        </select>
+      </label>
+
+      <label class="item item-input">
+        <span class="input-label">Couleur</span>
+        <input type="text" placeholder="Noir" data-ng-model="AddPetCtrl.pet.color">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Signes distinctifs</span>
+        <input type="text" placeholder="Collier bleu" data-ng-model="AddPetCtrl.pet.particularity">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Photo</span>
+        <button class="button button-calm" data-ng-click="AddPetCtrl.addImage()">
+          <i class="ion-ios7-camera"></i> Add image
+        </button>
+      </label>
+
+      <button class="button button-balanced button-block" data-ng-click="AddPetCtrl.addPet()">Ajouter</button>
+    </form>
+  </ion-content>
 </ion-view>
