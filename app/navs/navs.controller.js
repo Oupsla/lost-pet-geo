@@ -5,9 +5,9 @@
     .module('navs')
     .controller('NavsCtrl', navController);
 
-  navController.$inject = ['AccountService'];
+  navController.$inject = ['$scope', '$state', 'AccountService'];
 
-  function navController(AccountService) {
+  function navController($scope, $state, AccountService) {
     let self = this;
 
     self.getAccount = function () {
@@ -31,6 +31,8 @@
       self.getAccount();
       self.today = new Date();
     }
+
+    $scope.$on('unlogged', () => $state.go('login'));
 
     init();
   }
