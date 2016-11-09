@@ -7,6 +7,8 @@
   function addAlertService($http) {
     let self = this;
 
+    var url = "http://lostpet-api.mybluemix.net/api/v1.0/";
+
     self.getSpecies = function () {
       return $http.get(url + "pets/species")
         .then((resp) => resp.data);

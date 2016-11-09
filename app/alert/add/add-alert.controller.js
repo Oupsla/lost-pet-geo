@@ -5,10 +5,35 @@
     .module('addAlert')
     .controller('AddAlertCtrl', addAlertController);
 
-  addAlertController.$inject = ['AddAlertService',  '$ionicPlatform', '$q', '$ionicLoading', '$timeout'];
+  addAlertController.$inject = ['AddAlertService', '$ionicPlatform', '$q', '$ionicLoading', '$timeout'];
 
   function addAlertController(AddAlertService, $ionicPlatform, $q, $ionicLoading, $timeout) {
     let self = this;
+
+    function getSpecies() {
+      console.log("getSpecies");
+      self.loaders.species = true;
+
+      AddAlertService.getSpecies().then(function (result) {
+        self.species = result;
+        console.log(self.species);
+
+      }).finally(function () {
+        self.loaders.species = false;
+      });
+    }
+
+    self.getBreeds = function () {
+      console.log("getBreeds");
+      self.loaders.breeds = true;
+      if (!self.breeds[self.pet.species]) {
+        AddAlertService.getBreeds(self.pet.species).then(function (result) {
+          self.breeds[result.specie] = result.breeds;
+        }).finally(function () {
+          self.loaders.breeds = false;
+        });
+      }
+    };
 
     function addAlert() {
       $ionicLoading.show({
@@ -32,7 +57,7 @@
 
         // Get picture (promise)
         var deferCamera = $q.defer();
-        if(! window.cordova) {
+        if (!window.cordova) {
           $timeout(function () {
             $ionicLoading.hide();
           }, 1000);
@@ -77,5 +102,14 @@
         }
       });
     };
+
+    init();
+
+    function init() {
+      self.loaders = {};
+      self.breeds = {};
+      self.species = [];
+      getSpecies();
+    }
   }
 })();
