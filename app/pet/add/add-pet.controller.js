@@ -1,101 +1,122 @@
 (() => {
-  'use strict';
+    'use strict';
 
-  angular
-    .module('addPet')
-    .controller('AddPetCtrl', addPetController);
+    angular
+      .module('addPet')
+      .controller('AddPetCtrl', addPetController);
 
-  addPetController.$inject = ['PetService'];
+    addPetController.$inject = ['AddPetService', '$ionicPlatform', '$q', '$ionicLoading', '$timeout'];
 
-  function addPetController(PetService) {
-    let self = this;
+    function addPetController(AddPetService, $ionicPlatform, $q, $ionicLoading, $timeout) {
+      let self = this;
 
-    console.log("AddPetCtrl", this);
+      function getSpecies() {
+        console.log("getSpecies");
+        self.loaders.species = true;
 
-    function addPet() {
-      PetService.addPet(self.pet).then(function (result) {
-        console.log(result);
-      });
+        AddPetService.getSpecies().then(function (result) {
+          self.species = result;
+          console.log(self.species);
 
-      self.addImage = function () {
-        // 2
-        var options = {
-          destinationType: Camera.DestinationType.FILE_URI,
-          sourceType: Camera.PictureSourceType.CAMERA, // Camera.PictureSourceType.PHOTOLIBRARY
-          allowEdit: false,
-          encodingType: Camera.EncodingType.JPEG,
-          popoverOptions: CameraPopoverOptions,
-        };
+        }).finally(function () {
+          self.loaders.species = false;
+        });
+      }
 
-        // 3
-        $cordovaCamera.getPicture(options).then(function (imageData) {
+      self.getBreeds = function () {
+        console.log("getBreeds");
+        self.loaders.breeds = true;
+        if (!self.breeds[self.pet.species]) {
+          AddPetService.getBreeds(self.pet.species).then(function (result) {
+            self.breeds[result.specie] = result.breeds;
+          }).finally(function () {
+            self.loaders.breeds = false;
+          });
+        }
+      };
 
-          // 4
-          onImageSuccess(imageData);
+      self.addPet = function () {
+        $ionicLoading.show({
+          template: '<ion-spinner></ion-spinner>'
+        });
 
-          function onImageSuccess(fileURI) {
-            createFileEntry(fileURI);
-          }
-
-          function createFileEntry(fileURI) {
-            window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
-          }
-
-          // 5
-          function copyFile(fileEntry) {
-            var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
-            var newName = makeid() + name;
-
-            window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (fileSystem2) {
-                fileEntry.copyTo(
-                  fileSystem2,
-                  newName,
-                  onCopySuccess,
-                  fail
-                );
-              },
-              fail);
-          }
-
-          // 6
-          function onCopySuccess(entry) {
-            $scope.$apply(function () {
-              $scope.images.push(entry.nativeURL);
-            });
-          }
-
-          function fail(error) {
-            console.log("fail: " + error.code);
-          }
-
-          function makeid() {
-            var text = "";
-            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-            for (var i = 0; i < 5; i++) {
-              text += possible.charAt(Math.floor(Math.random() * possible.length));
-            }
-            return text;
-          }
-
-        }, function (err) {
-          console.log(err);
+        console.log("add pet");
+        AddPetService.addPet(self.pet).then(function (result) {
+          console.log(result);
+        }).finally(function () {
+          $timeout(function () {
+            $ionicLoading.hide();
+          }, 1000);
         });
       };
 
-      self.urlForImage = function (imageName) {
-        var name = imageName.substr(imageName.lastIndexOf('/') + 1);
-        var trueOrigin = cordova.file.dataDirectory + name;
-        return trueOrigin;
+      self.addImage = function () {
+        $ionicPlatform.ready(function () {
+          // to avoid freeze if the location i to long
+          $ionicLoading.show({
+            template: '<ion-spinner></ion-spinner>'
+          });
+
+          // Get picture (promise)
+          var deferCamera = $q.defer();
+          if (!window.cordova) {
+            $timeout(function () {
+              $ionicLoading.hide();
+            }, 1000);
+          }
+          else {
+            navigator.camera.getPicture(function (imageURI) {
+              deferCamera.resolve(imageURI);
+            }, function (err) {
+              deferCamera.reject(err);
+            }, {
+              // base64 image
+              destinationType: Camera.DestinationType.DATA_URL
+            });
+            // deferCamera.resolve("img/canape.jpg");
+
+            // Get location (promise)
+
+            // Wait for all promises and build bulk object
+            $q.all([deferCamera.promise])
+              .then(function (data) {
+                //  $ionicPopup.alert({
+                //   title: 'Picture',
+                //   template: data[0]
+                // });
+
+                if (!data[0]) {
+                  self.modal.hide();
+                  return;
+                }
+
+                // alert(data[0]);
+                self.pet.picture = data[0];
+
+              }, function (err) {
+                $ionicLoading.hide();
+              })
+              .finally(function () {
+                $timeout(function () {
+                  $ionicLoading.hide();
+                }, 1000);
+              });
+          }
+        });
       };
 
       function init() {
+        self.loaders = {};
+        console.log("add pet ctrl");
         self.images = [];
         self.pet = {};
+        self.breeds = {};
+        self.species = [];
+        getSpecies();
       }
 
 
       init();
     }
-  }
-})();
+  })
+();

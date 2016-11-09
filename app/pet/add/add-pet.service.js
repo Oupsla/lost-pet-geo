@@ -3,9 +3,11 @@
     .module('addPet')
     .service('AddPetService', addPetService);
 
-  addPetService.$inject = ['$q'];
-  function addPetService($q) {
+  addPetService.$inject = ['$q', '$http'];
+  function addPetService($q, $http) {
     let self = this;
+    var url = "http://lostpet-api.mybluemix.net/api/v1.0/";
+
     self.addPet = function (id) {
       return $q((resolve, reject) => {
         return resolve({
@@ -15,12 +17,23 @@
           name: 'toutou',
           race: 'bichon',
           color: 'blanc',
-          particularity:'Bla bla bla'
+          particularity: 'Bla bla bla'
           /*vaccins: {
            rage: 'ok'
            }*/
         });
       });
-    }
+    };
+
+    self.getSpecies = function () {
+      return $http.get(url + "pets/species")
+        .then((resp) => resp.data);
+    };
+
+    self.getBreeds = function (species) {
+      return $http.get(url + "pets/species/" + species  +"/breeds")
+        .then((resp) => resp.data);
+    };
+
   }
 })();
