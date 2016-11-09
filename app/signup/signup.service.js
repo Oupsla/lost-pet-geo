@@ -7,8 +7,8 @@
   function signupService($q, $http) {
     let self = this;
 
-    self.signup = function (email, password, name) {
-      return $http.post('http://lostpet-api.mybluemix.net/signup', {email, password, name})
+    self.signup = function (email, password, firstName) {
+      return $http.post('http://lostpet-api.mybluemix.net/signup', {email, password, firstName})
         .then((resp) => resp.data);
     }
 

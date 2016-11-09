@@ -14,8 +14,9 @@
     self.login = function() {
       LoginService.login(self.email, self.password)
         .then((data) => {
-          window.localstorage.setItem('user-data', JSON.stringify(data));
+          window.localStorage.setItem('user-data', JSON.stringify(data));
           $rootScope.$broadcast('LOGIN_SUCCESS');
+          $state.go('nav.listAlert');
         })
         .catch(() => {
           $rootScope.$broadcast('LOGIN_ERROR');
