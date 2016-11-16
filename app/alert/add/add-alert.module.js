@@ -2,5 +2,5 @@
   'use strict';
 
   angular
-    .module('addAlert', []);
+    .module('addAlert', ['ionic', 'ionic-toast']);
 })();
