@@ -40,9 +40,9 @@
       </label>
       <label class="item item-input">
         <span class="input-label">Commentaire</span>
-        <input type="text" placeholder="Entrez un commentaire" data-ng-bind="AddAlertCtrl.pet.comment" data-ng-model="AddAlertCtrl.pet.comment">
+        <input type="text" placeholder="Entrez un commentaire"  data-ng-model="AddAlertCtrl.pet.comment">
       </label>
-      <button class="button button-balanced button-block">Ajouter</button>
+      <button class="button button-balanced button-block" ng-click="showToast('test', 'long', 'bottom')" >Ajouter</button>
     </form>
   </ion-content>
 </ion-view>
