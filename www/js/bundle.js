@@ -41,8 +41,12 @@
 =======
   'use strict';
 
+<<<<<<< HEAD
   angular.module('addAlert', []);
 >>>>>>> creation annonce depuis mes animaux
+=======
+  angular.module('addAlert', ['ionic', 'ionic-toast']);
+>>>>>>> Creation annonce depuis mes animaux, update
 })();
 'use strict';
 
@@ -566,12 +570,17 @@
   angular.module('addAlert').controller('AddAlertCtrl', addAlertController);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   addAlertController.$inject = ['$stateParams', 'AddAlertService', 'PetService'];
   function addAlertController($stateParams, AddAlertService, PetService) {
 =======
   addAlertController.$inject = ['$stateParams', 'AddAlertService'];
   function addAlertController($stateParams, AddAlertService) {
 >>>>>>> creation annonce depuis mes animaux
+=======
+  addAlertController.$inject = ['$stateParams', 'AddAlertService', 'PetService'];
+  function addAlertController($stateParams, AddAlertService, PetService) {
+>>>>>>> Creation annonce depuis mes animaux, update
     var self = this;
 
     function getAlert() {
@@ -580,6 +589,7 @@
       });
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     function init() {
       self.myPetId = $stateParams.petId;
@@ -601,10 +611,14 @@
       });
     }
 
+=======
+>>>>>>> Creation annonce depuis mes animaux, update
     function init() {
       self.myPetId = $stateParams.petId;
-      console.log(self.petId);
-      getMyPet(self.myPetId);
+
+      PetService.getPet(self.myPetId).then(function (result) {
+        self.pet = result;
+      });
     }
 
 >>>>>>> creation annonce depuis mes animaux
@@ -619,6 +633,7 @@
   addAlertService.$inject = ['$q'];
   function addAlertService($q) {
     var self = this;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     self.getMyPet = function (id) {
@@ -635,6 +650,8 @@
       });
     };
 >>>>>>> creation annonce depuis mes animaux
+=======
+>>>>>>> Creation annonce depuis mes animaux, update
 
     self.addAlert = function (id) {
       return $q(function (resolve, reject) {

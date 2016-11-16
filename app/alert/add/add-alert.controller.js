@@ -1,9 +1,9 @@
 (() => {
   'use strict';
 
-angular
-  .module('addAlert')
-  .controller('AddAlertCtrl', addAlertController);
+  angular
+    .module('addAlert')
+    .controller('AddAlertCtrl', addAlertController);
 
   addAlertController.$inject = ['$stateParams', 'AddAlertService', 'PetService',  '$ionicPlatform', '$q', '$ionicLoading', '$timeout'];
   function addAlertController($stateParams, AddAlertService, PetService,  $ionicPlatform, $q, $ionicLoading, $timeout) {
@@ -150,7 +150,6 @@ function addAlertController($stateParams, AddAlertService, $ionicPlatform, $q, $
     getSpecies();
   }
 
-  init();
-
-}
+    init();
+  }
 })();
