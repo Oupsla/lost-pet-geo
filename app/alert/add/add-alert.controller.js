@@ -71,16 +71,6 @@
       }, 500);
     }
 
-    function init() {
-      self.loaders = {};
-      self.breeds = {};
-      self.species = [];
-      self.pet = {};
-      document.addEventListener("deviceready", onDeviceReady, false);
-      getSpecies();
-    }
-
-    init();
 
     function onDeviceReady() {
       self.pictureSource = navigator.camera.PictureSourceType;
@@ -148,5 +138,16 @@
     function onFail() {
       hideIonicLoading();
     }
+
+    function init() {
+      self.loaders = {};
+      self.breeds = {};
+      self.species = [];
+      self.pet = {};
+      document.addEventListener("deviceready", onDeviceReady, false);
+      getSpecies();
+    }
+
+    init();
   }
 })();
