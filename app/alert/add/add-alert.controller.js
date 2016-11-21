@@ -5,26 +5,22 @@
     .module('addAlert')
     .controller('AddAlertCtrl', addAlertController);
 
-  addAlertController.$inject = ['AddAlertService', '$ionicPlatform', '$q', '$ionicLoading', '$timeout', '$ionicPopup'];
+  addAlertController.$inject = ['AddAlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet'];
 
-  function addAlertController(AddAlertService, $ionicPlatform, $q, $ionicLoading, $timeout, $ionicPopup) {
+  function addAlertController(AddAlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet) {
     let self = this;
 
     function getSpecies() {
-      console.log("getSpecies");
       self.loaders.species = true;
 
       AddAlertService.getSpecies().then(function (result) {
         self.species = result;
-        console.log(self.species);
-
       }).finally(function () {
         self.loaders.species = false;
       });
     }
 
     self.getBreeds = function () {
-      console.log("getBreeds");
       self.loaders.breeds = true;
       if (!self.breeds[self.pet.species]) {
         AddAlertService.getBreeds(self.pet.species).then(function (result) {
@@ -37,7 +33,6 @@
 
     function addAlert() {
       showIonicLoading();
-
       AddAlertService.addAlert(self.alert).then(function (result) {
         console.log(result);
       }).finally(function () {
@@ -45,54 +40,23 @@
       });
     }
 
-    self.addImage = function () {
-      /*
-       $ionicPlatform.ready(function () {
-       // to avoid freeze if the location i to long
-       $ionicLoading.show({
-       template: '<ion-spinner></ion-spinner>'
-       });
-
-       // Get picture (promise)
-       var cameraPromise = $q.reject();
-       if (!window.cordova) {
-       $timeout(function () {
-       $ionicLoading.hide();
-       }, 1000);
-       }
-       else {
-       navigator.camera.getPicture(onSuccess, onFail, {
-       quality: 50,
-       destinationType: Camera.DestinationType.FILE_URI
-       });
-       }
-       })*/
+    function addImage() {
       $ionicPlatform.ready(function () {
         if (window.cordova) {
-          showIonicLoading();
-          navigator.camera.getPicture(onSuccess, onFail, {
-            quality: 50,
-            destinationType: Camera.DestinationType.FILE_URI
-          });
+          capturePhoto();
         }
       });
-    };
-
-    function onSuccess(imageURI) {
-      if (imageURI) {
-        $ionicPopup.alert({
-          title: 'Picture',
-          template: imageURI
-        });
-        self.pet.photo = imageURI;
-      }
-
-      hideIonicLoading();
+      return true;
     }
 
-    function onFail(message) {
-      alert('Failed because: ' + message);
-      hideIonicLoading()
+    function importPhoto() {
+      $ionicPlatform.ready(function () {
+        if (window.cordova) {
+          var source = self.pictureSource.PHOTOLIBRARY;
+          getPhoto(source);
+        }
+      });
+      return true;
     }
 
     function showIonicLoading() {
@@ -111,10 +75,78 @@
       self.loaders = {};
       self.breeds = {};
       self.species = [];
+      self.pet = {};
+      document.addEventListener("deviceready", onDeviceReady, false);
       getSpecies();
     }
 
     init();
 
+    function onDeviceReady() {
+      self.pictureSource = navigator.camera.PictureSourceType;
+      self.destinationType = navigator.camera.DestinationType;
+    }
+
+    function onPhotoDataSuccess(imageData) {
+      self.pet.photo = "data:image/jpeg;base64," + imageData;
+      hideIonicLoading();
+    }
+
+    function capturePhoto() {
+      showIonicLoading();
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+        quality: 50,
+        destinationType: self.destinationType.DATA_URL
+      });
+    }
+
+    function getPhoto(source) {
+      showIonicLoading();
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+        quality: 50,
+        destinationType: self.destinationType.DATA_URL,
+        sourceType: source
+      });
+    }
+
+    function deletePicture() {
+      self.pet.photo = "";
+      return true;
+    }
+
+    self.takePhoto = function () {
+      var opts = {
+        buttons: [
+          {text: 'Prendre une photo'},
+          {text: 'Photo de la librairie'}
+        ],
+        titleText: 'Photo',
+        cancelText: 'Annuler',
+        cancel: function () {
+          return true;
+        },
+        buttonClicked: function (index) {
+          if (index === 0) {
+            return addImage();
+          }
+
+          if (index === 1) {
+            return importPhoto();
+          }
+
+          return true;
+        }
+      };
+      if (self.pet.photo) {
+        opts.destructiveText = "Supprimer";
+        opts.destructiveButtonClicked = deletePicture;
+      }
+
+      $ionicActionSheet.show(opts);
+    };
+
+    function onFail() {
+      hideIonicLoading();
+    }
   }
 })();
