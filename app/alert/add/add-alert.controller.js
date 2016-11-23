@@ -79,7 +79,7 @@
     }
 
     function onPhotoDataSuccess(imageData) {
-      self.pet.photo = "data:image/jpeg;base64," + imageData;
+      self.pet.photo = 'data:image/jpeg;base64,' + imageData;
       hideIonicLoading();
     }
 
@@ -101,7 +101,7 @@
     }
 
     function deletePicture() {
-      self.pet.photo = "";
+      self.pet.photo = '';
       return true;
     }
 
@@ -129,7 +129,7 @@
         }
       };
       if (self.pet.photo) {
-        opts.destructiveText = "Supprimer";
+        opts.destructiveText = 'Supprimer';
         opts.destructiveButtonClicked = deletePicture;
       }
 
@@ -150,7 +150,7 @@
       self.breeds = {};
       self.species = [];
       self.pet = {};
-      document.addEventListener("deviceready", onDeviceReady, false);
+      document.addEventListener('deviceready', onDeviceReady, false);
       getSpecies();
     }
 
