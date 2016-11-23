@@ -21,7 +21,7 @@
       </label>
 
       <label class="item item-input item-select"
-             data-ng-show="! AddPetCtrl.loaders.breeds && AddPetCtrl.breeds[AddPetCtrl.pet.species]">
+             data-ng-show="!AddPetCtrl.loaders.breeds && AddPetCtrl.breeds[AddPetCtrl.pet.species]">
         <span class="input-label">Race</span>
         <select data-ng-model="AddPetCtrl.pet.race" data-ng-show="! AddPetCtrl.loaders.species">
           <option data-ng-repeat="breeds in AddPetCtrl.breeds[AddPetCtrl.pet.species]">{{breeds}}</option>
