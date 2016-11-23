@@ -3,16 +3,30 @@
     .module('listAlert')
     .controller('ListAlertCtrl', listAlertController);
 
-  listAlertController.$inject = ['ListAlertService'];
-  function listAlertController(ListAlertService) {
+  listAlertController.$inject = ['AlertService'];
+  function listAlertController(AlertService) {
     let self = this;
+
+    self.delete = function (item) {
+      console.log("delete " + item);
+      AlertService.delete(item.id);
+    };
+
+    self.update = function (item) {
+      console.log("update " + item);
+      AlertService.update(item);
+    };
 
     function getListAlert() {
       self.loaders.getList = true;
-      ListAlertService.getListAlert().then(function (result) {
+      AlertService.getListAlert().then(function (result) {
+        for (var index in result) {
+          result[index].isMyAlert = true;
+        }
+        console.log(result);
         self.listAlert = result;
-      }).finally(function(){
-       self.loaders.getList = false;
+      }).finally(function () {
+        self.loaders.getList = false;
       });
     }
 

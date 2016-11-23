@@ -3,32 +3,28 @@
     .module('alert')
     .service('AlertService', alertService);
 
-  alertService.$inject = ['$q'];
-  function alertService($q) {
+  alertService.$inject = ['$http'];
+  function alertService($http) {
     var self = this;
+    var url = "http://lostpet-api.mybluemix.net/api/v1.0/";
+    self.getListAlert = function () {
+      return $http.get(url + "alerts/")
+        .then((resp) => resp.data);
+    };
 
     self.getAlert = function (id) {
+      return $http.get(url + "alerts/" + id)
+        .then((resp) => resp.data);
+    };
 
-      return $q((resolve, reject) => {
-        return resolve({
-          id: id,
-          state: 'Perdu',
-          photo: 'http://www.apagi.fr/media/filer_public/37/85/3785774d-1d65-4a7c-8f44-e6175f92a603/jumper-chien-male-yorkshire-noir-et-feu-1.jpg',
-          date: '10-08-2016',
-          comment: "J'ai perdu mon chien ... :",
-          pet: {
-            details: {
-              type: 'chien',
-              name: 'toutou',
-              race: 'bichon',
-              color: 'blanc'
-            }
-            /*vaccins: {
-             rage: 'ok'
-             }*/
-          }
-        });
-      });
-    }
+    self.delete = function(id) {
+      return $http.delete(url + "delete/alerts/"  + id)
+        .then((resp) => resp.data);
+    };
+
+    self.update = function(alert) {
+      return $http.post(url + "delete/alerts/"  + alert.id + "/update/", alert)
+        .then((resp) => resp.data);
+    };
   }
 })();

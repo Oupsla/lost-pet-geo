@@ -1,11 +1,13 @@
 <ion-view title="Liste alerte" id="tab-list-alert">
   <ion-content padding="true" class="has-header">
     <ion-spinner data-ng-if="ListAlertCtrl.loaders.getList"></ion-spinner>
-    <ion-list id="listAlertPet-lost" data-ng-if="!ListAlertCtrl.loaders.getList">
+    <ion-list can-swipe="true" id="listAlertPet-lost" data-ng-if="!ListAlertCtrl.loaders.getList">
       <ion-item ui-sref="nav.alert({alertId: alert.id})" ng-repeat="alert in ListAlertCtrl.listAlert track by $index"
                 class="item-thumbnail-left positive">
+
         <img ng-if="alert.photo" ng-src="{{alert.photo}}"/>
         <h2positive>
+          <p data-ng-bind="alert.isMyAlert"></p>
           <p data-ng-bind="alert.state"></p>
           <p data-ng-bind="alert.date"></p>
           <p>
@@ -13,7 +15,17 @@
             <span data-ng-bind="alert.pet.type"></span>
           </p>
         </h2positive>
+        <ion-option-button data-ng-if="alert.isMyAlert" class="button-assertive"
+                           ng-click="ListAlertCtrl.delete(alert)">
+          Sup
+        </ion-option-button>
+        <ion-option-button data-ng-if="alert.isMyAlert" class="button-positive"
+                           ng-click="ListAlertCtrl.update(alert)">
+          Màj
+        </ion-option-button>
+
       </ion-item>
     </ion-list>
+
   </ion-content>
 </ion-view>

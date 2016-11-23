@@ -10,9 +10,7 @@
            style="display: block; margin-left: auto; margin-right: auto;" data-ng-click="AddPetCtrl.takePhoto();">
     </label>
     <form id="ajouter-form1" class="list">
-
       <ion-spinner data-ng-if="AddPetCtrl.loaders.species || AddPetCtrl.loaders.breeds"></ion-spinner>
-
       <label class="item item-input item-select" data-ng-show="! AddPetCtrl.loaders.species">
         <span class="input-label">Espèce</span>
         <select data-ng-model="AddPetCtrl.pet.species" data-ng-change="AddPetCtrl.getBreeds()">

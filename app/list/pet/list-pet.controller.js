@@ -3,12 +3,12 @@
     .module('listPet')
     .controller('ListPetCtrl', listPetController);
 
-  listPetController.$inject = ['$stateParams', 'ListPetService'];
-  function listPetController($stateParams, ListPetService) {
+  listPetController.$inject = ['$stateParams', 'PetService'];
+  function listPetController($stateParams, PetService) {
     let self = this;
 
     function getListPet() {
-      ListPetService.getListPet(self.accountId).then(function(result) {
+      PetService.getListPet(self.accountId).then(function(result) {
        self.listPet = result;
        });
     }
