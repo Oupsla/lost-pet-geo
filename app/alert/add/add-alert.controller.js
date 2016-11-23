@@ -5,9 +5,10 @@
     .module('addAlert')
     .controller('AddAlertCtrl', addAlertController);
 
-  addAlertController.$inject = ['AddAlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet'];
+  addAlertController.$inject = ['$stateParams', 'AddAlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet'];
 
-  function addAlertController(AddAlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet) {
+  function addAlertController($stateParams, AddAlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet) {
+
     let self = this;
 
     function getSpecies() {
@@ -78,7 +79,7 @@
     }
 
     function onPhotoDataSuccess(imageData) {
-      self.pet.photo = "data:image/jpeg;base64," + imageData;
+      self.pet.photo = 'data:image/jpeg;base64,' + imageData;
       hideIonicLoading();
     }
 
@@ -100,7 +101,7 @@
     }
 
     function deletePicture() {
-      self.pet.photo = "";
+      self.pet.photo = '';
       return true;
     }
 
@@ -128,7 +129,7 @@
         }
       };
       if (self.pet.photo) {
-        opts.destructiveText = "Supprimer";
+        opts.destructiveText = 'Supprimer';
         opts.destructiveButtonClicked = deletePicture;
       }
 
@@ -140,11 +141,16 @@
     }
 
     function init() {
+      self.myPetId = $stateParams.petId;
+      PetService.getPet(self.myPetId).then(function(result){
+        self.pet = result;
+      });
+
       self.loaders = {};
       self.breeds = {};
       self.species = [];
       self.pet = {};
-      document.addEventListener("deviceready", onDeviceReady, false);
+      document.addEventListener('deviceready', onDeviceReady, false);
       getSpecies();
     }
 
