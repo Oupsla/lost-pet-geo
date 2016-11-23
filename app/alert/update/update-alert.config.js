@@ -1,20 +1,20 @@
 (() => {
   'use strict';
   angular
-    .module('addAlert')
-    .config(configAddAlert);
+    .module('updateAlert')
+    .config(configUpdateAlert);
 
-  configAddAlert.$inject = ['$stateProvider'];
+  configUpdateAlert.$inject = ['$stateProvider'];
 
-  function configAddAlert($stateProvider) {
+  function configUpdateAlert($stateProvider) {
     $stateProvider
-      .state('nav.addAlert', {
-        url: '/alert/add',
+      .state('nav.updateAlert', {
+        url: '/alert/update',
         views: {
           'menuContent': {
-            templateUrl: 'alert/add/add-alert.html',
-            controller: 'AddAlertCtrl',
-            controllerAs: 'AddAlertCtrl'
+            templateUrl: 'alert/update/update-alert.html',
+            controller: 'UpdateAlertCtrl',
+            controllerAs: 'UpdateAlertCtrl'
           }
         }
       });

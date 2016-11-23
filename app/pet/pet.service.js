@@ -6,7 +6,7 @@
   petService.$inject = ['$http'];
   function petService($http) {
     var self = this;
-    var url = "http://lostpet-api.mybluemix.net/api/v1.0/users/";
+    var url = "http://lostpet-api.mybluemix.net/api/v1.0/";
 
     self.getListPet = function (accountId) {
       return $http.get(url + "users/" + accountId + "/pets/")

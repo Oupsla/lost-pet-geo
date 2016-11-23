@@ -5,9 +5,9 @@
     .module('addAlert')
     .controller('AddAlertCtrl', addAlertController);
 
-  addAlertController.$inject = ['$stateParams', 'AddAlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet'];
+  addAlertController.$inject = ['$stateParams', 'AddAlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService'];
 
-  function addAlertController($stateParams, AddAlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet) {
+  function addAlertController($stateParams, AddAlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService) {
 
     let self = this;
 
