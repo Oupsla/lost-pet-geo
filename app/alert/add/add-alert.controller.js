@@ -19,8 +19,10 @@
           self.pet.species = {};
           for (var index in self.species) {
             var species = self.species[index];
+
             if (species._id === self.pet.speciesId) {
               self.pet.species = species;
+              return;
             }
           }
         }
@@ -37,11 +39,12 @@
           if (self.pet.breedId) {
             self.pet.breed = {};
             for (var index in self.breeds) {
-              var breed = self.species[index];
+              var breed = self.breeds[index];
               if (breed._id === self.pet.breedId) {
                 self.pet.breed = breed;
               }
             }
+          }
         }).finally(function () {
           self.loaders.breeds = false;
         });

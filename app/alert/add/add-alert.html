@@ -16,6 +16,7 @@
 
       <label class="item item-input item-select" data-ng-show="! AddAlertCtrl.loaders.species">
         <div class="input-label">Espèce</div>
+        {{AddAlertCtrl.pet.species}}
         <select data-ng-model="AddAlertCtrl.pet.species" data-ng-change="AddAlertCtrl.getBreeds()">
           <option data-ng-repeat="species in AddAlertCtrl.species">{{species.name}}</option>
         </select>
