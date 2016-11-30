@@ -14,7 +14,7 @@
     function getSpecies() {
       self.loaders.species = true;
 
-      AddAlertService.getSpecies().then(function (result) {
+      PetService.getSpecies().then(function (result) {
         self.species = result;
       }).finally(function () {
         self.loaders.species = false;
@@ -24,8 +24,8 @@
     self.getBreeds = function () {
       self.loaders.breeds = true;
       if (!self.breeds[self.pet.species]) {
-        AddAlertService.getBreeds(self.pet.species).then(function (result) {
-          self.breeds[result.specie] = result.breeds;
+        PetService.getBreeds(self.pet.species).then(function (result) {
+          self.breeds[result.species] = result.breeds;
         }).finally(function () {
           self.loaders.breeds = false;
         });

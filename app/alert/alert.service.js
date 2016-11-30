@@ -22,8 +22,13 @@
         .then((resp) => resp.data);
     };
 
-    self.update = function(alert) {
-      return $http.post(url + "delete/alerts/"  + alert.id + "/update/", alert)
+    self.addAlert = function (alert) {
+      return $http.post(url + "alert/add", alert)
+        .then((resp) => resp.data);
+    };
+
+    self.update = function (alert) {
+      return $http.post(url + "alert/update", alert)
         .then((resp) => resp.data);
     };
   }

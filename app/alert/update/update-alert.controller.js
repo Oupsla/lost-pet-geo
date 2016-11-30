@@ -5,15 +5,15 @@
     .module('updateAlert')
     .controller('UpdateAlertCtrl', updateAlertController);
 
-  updateAlertController.$inject = ['UpdateAlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet'];
+  updateAlertController.$inject = ['UpdateAlertService', 'PetService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet'];
 
-  function updateAlertController(UpdateAlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet) {
+  function updateAlertController(UpdateAlertService, PetService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet) {
     let self = this;
 
     function getSpecies() {
       self.loaders.species = true;
 
-      UpdateAlertService.getSpecies().then(function (result) {
+      PetService.getSpecies().then(function (result) {
         self.species = result;
       }).finally(function () {
         self.loaders.species = false;
@@ -23,8 +23,8 @@
     self.getBreeds = function () {
       self.loaders.breeds = true;
       if (!self.breeds[self.pet.species]) {
-        UpdateAlertService.getBreeds(self.pet.species).then(function (result) {
-          self.breeds[result.specie] = result.breeds;
+        PetService.getBreeds(self.pet.species).then(function (result) {
+          self.breeds[result.species] = result.breeds;
         }).finally(function () {
           self.loaders.breeds = false;
         });
