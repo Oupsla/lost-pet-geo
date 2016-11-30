@@ -9,6 +9,7 @@
 
   function addAlertController($stateParams, AddAlertService, $ionicPlatform, $q, $ionicLoading, $timeout, PetService) {
     let self = this;
+    self.myPetId = $stateParams.petId;
 
     function getSpecies() {
       self.loaders.species = true;
@@ -36,7 +37,6 @@
         template: '<ion-spinner></ion-spinner>'
       });
       AddAlertService.addAlert(self.alert).then(function (result) {
-        console.log(result);
       }).finally(function () {
         $timeout(function () {
           $ionicLoading.hide();
@@ -102,10 +102,11 @@
     init();
 
     function init() {
-      self.myPetId = $stateParams.petId;
-      PetService.getPet(self.myPetId).then(function(result){
-        self.pet = result;
-      });
+      if(self.myPetId != ""){
+        PetService.getPet(self.myPetId).then(function(result){
+          self.pet = result;
+       });
+     }
 
       self.loaders = {};
       self.breeds = {};

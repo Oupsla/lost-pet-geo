@@ -9,7 +9,7 @@
   function configAddAlert($stateProvider) {
     $stateProvider
       .state('nav.addAlert', {
-        url: '/alert/add',
+        url: '/alert/add/:petId',
         views: {
           'menuContent': {
             templateUrl: 'alert/add/add-alert.html',
