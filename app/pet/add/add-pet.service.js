@@ -9,7 +9,7 @@
     var url = "http://lostpet-api.mybluemix.net/api/v1.0/";
 
     self.addPet = function (pet) {
-      return $http.post(url + "pet/add", pet)
+      return $http.post(url + "pets", pet)
         .then((resp) => resp.data);
     };
 

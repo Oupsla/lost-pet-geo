@@ -13,16 +13,16 @@
       <ion-spinner data-ng-if="AddPetCtrl.loaders.species || AddPetCtrl.loaders.breeds"></ion-spinner>
       <label class="item item-input item-select" data-ng-show="! AddPetCtrl.loaders.species">
         <span class="input-label">Espèce</span>
-        <select data-ng-model="AddPetCtrl.pet.species" data-ng-change="AddPetCtrl.getBreeds()">
-          <option data-ng-repeat="species in AddPetCtrl.species">{{species}}</option>
+        <select data-ng-model="AddPetCtrl.pet.species" data-ng-change="AddPetCtrl.getBreeds()"
+                data-ng-options="species.name for species in AddPetCtrl.species">
         </select>
       </label>
 
       <label class="item item-input item-select"
-             data-ng-show="!AddPetCtrl.loaders.breeds && AddPetCtrl.breeds[AddPetCtrl.pet.species]">
+             data-ng-show="!AddPetCtrl.loaders.breeds && AddPetCtrl.breeds[AddPetCtrl.pet.species._id]">
         <span class="input-label">Race</span>
-        <select data-ng-model="AddPetCtrl.pet.race" data-ng-show="! AddPetCtrl.loaders.species">
-          <option data-ng-repeat="breeds in AddPetCtrl.breeds[AddPetCtrl.pet.species]">{{breeds}}</option>
+        <select data-ng-model="AddPetCtrl.pet.breeds"
+                data-ng-options="breeds.name for breeds in AddPetCtrl.breeds[AddPetCtrl.pet.species._id]">
         </select>
       </label>
 
