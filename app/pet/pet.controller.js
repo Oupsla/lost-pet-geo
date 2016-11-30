@@ -11,12 +11,11 @@
     function getPet(id) {
       PetService.getPet(id).then(function (result) {
         self.pet = result;
-        console.log(result);
       });
     }
 
     function init() {
-      getPet($stateParams.petId);
+      getPet(self.petId);
     }
 
     init();

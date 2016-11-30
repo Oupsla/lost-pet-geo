@@ -5,11 +5,12 @@
     .module('addAlert')
     .controller('AddAlertCtrl', addAlertController);
 
-  addAlertController.$inject = ['$stateParams', 'AddAlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet'];
+  addAlertController.$inject = ['$stateParams', 'AddAlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService'];
 
-  function addAlertController($stateParams, AddAlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet) {
+  function addAlertController($stateParams, AddAlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService) {
 
     let self = this;
+    self.myPetId = $stateParams.petId;
 
     function getSpecies() {
       self.loaders.species = true;
@@ -35,7 +36,6 @@
     function addAlert() {
       showIonicLoading();
       AddAlertService.addAlert(self.alert).then(function (result) {
-        console.log(result);
       }).finally(function () {
         hideIonicLoading();
       });
@@ -141,10 +141,11 @@
     }
 
     function init() {
-      self.myPetId = $stateParams.petId;
-      PetService.getPet(self.myPetId).then(function(result){
-        self.pet = result;
-      });
+      if(self.myPetId != ""){
+        PetService.getPet(self.myPetId).then(function(result){
+          self.pet = result;
+       });
+     }
 
       self.loaders = {};
       self.breeds = {};
