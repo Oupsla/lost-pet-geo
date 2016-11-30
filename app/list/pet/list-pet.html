@@ -5,9 +5,8 @@
                 ng-repeat="pet in ListPetCtrl.listPet track by $index" class="item-thumbnail-left positive">
         <img ng-if="pet.photo" data-ng-src="{{pet.photo}}"/>
         <h2positive>
-          <div data-ng-repeat="(key, value) in pet.pet">
-            <p data-ng-if="value">{{key}}: {{value}}</p>
-          </div>
+            <p>Nom : {{pet.name}}</p>
+            <p>Couleur : {{pet.color}}</p>
         </h2positive>
       </ion-item>
     </ion-list>

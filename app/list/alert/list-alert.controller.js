@@ -23,7 +23,6 @@
         for (var index in result) {
           result[index].isMyAlert = true;
         }
-        console.log(result);
         self.listAlert = result;
       }).finally(function () {
         self.loaders.getList = false;

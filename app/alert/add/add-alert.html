@@ -17,15 +17,15 @@
       <label class="item item-input item-select" data-ng-show="! AddAlertCtrl.loaders.species">
         <div class="input-label">Espèce</div>
         <select data-ng-model="AddAlertCtrl.pet.species" data-ng-change="AddAlertCtrl.getBreeds()">
-          <option data-ng-repeat="species in AddAlertCtrl.species">{{species}}</option>
+          <option data-ng-repeat="species in AddAlertCtrl.species">{{species.name}}</option>
         </select>
       </label>
 
       <label class="item item-input item-select"
              data-ng-show="! AddAlertCtrl.loaders.breeds && AddAlertCtrl.breeds[AddAlertCtrl.pet.species]">
         <div class="input-label">Race</div>
-        <select data-ng-model="AddAlertCtrl.pet.race" data-ng-show="! AddAlertCtrl.loaders.species">
-          <option data-ng-repeat="breeds in AddAlertCtrl.breeds[AddAlertCtrl.pet.species]">{{breeds}}</option>
+        <select data-ng-model="AddAlertCtrl.pet.breed" data-ng-show="! AddAlertCtrl.loaders.species">
+          <option data-ng-repeat="breeds in AddAlertCtrl.breeds[AddAlertCtrl.pet.species]">{{breeds.name}}</option>
         </select>
       </label>
 

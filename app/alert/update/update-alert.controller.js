@@ -5,9 +5,9 @@
     .module('updateAlert')
     .controller('UpdateAlertCtrl', updateAlertController);
 
-  updateAlertController.$inject = ['UpdateAlertService', 'PetService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet'];
+  updateAlertController.$inject = ['AlertService', 'PetService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet'];
 
-  function updateAlertController(UpdateAlertService, PetService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet) {
+  function updateAlertController(AlertService, PetService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet) {
     let self = this;
 
     function getSpecies() {
@@ -33,7 +33,7 @@
 
     function updateAlert() {
       showIonicLoading();
-      UpdateAlertService.updateAlert(self.alert).then(function (result) {
+      AlertService.updateAlert(self.alert).then(function (result) {
         console.log(result);
       }).finally(function () {
         hideIonicLoading();

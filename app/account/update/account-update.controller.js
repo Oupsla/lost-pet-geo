@@ -24,7 +24,7 @@
 
     function init() {
       self.account = {
-        id: $stateParams.accountId
+        id: $stateParams.userId
       };
 
       getAccount();

@@ -8,14 +8,26 @@
     let self = this;
 
     function getListPet() {
-      PetService.getListPet(self.accountId).then(function(result) {
-       self.listPet = result;
+      PetService.getListPet(self.userId).then(function(result) {
+         self.listPet = result;
+        console.log(self.listPet);
        });
     }
 
+    function getSpecies(id) {
+      self.loaders.species = true;
+
+      PetService.getSpecies(id).then(function (result) {
+        self.species = result;
+      }).finally(function () {
+        self.loaders.species = false;
+      });
+    }
+
     function init() {
-      self.accountId = $stateParams.accountId;
-      self.accountId = '5807394d416656001d4012e7';
+      console.log($stateParams);
+      self.userId = $stateParams.userId;
+      self.userId = '5807394d416656001d4012e7';
       getListPet();
     }
 

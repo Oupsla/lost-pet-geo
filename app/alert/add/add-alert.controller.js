@@ -5,17 +5,25 @@
     .module('addAlert')
     .controller('AddAlertCtrl', addAlertController);
 
-  addAlertController.$inject = ['$stateParams', 'AddAlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService'];
+  addAlertController.$inject = ['$stateParams', 'AlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService'];
 
-  function addAlertController($stateParams, AddAlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService) {
+  function addAlertController($stateParams, AlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService) {
 
     let self = this;
 
     function getSpecies() {
       self.loaders.species = true;
-
       PetService.getSpecies().then(function (result) {
         self.species = result;
+        if (self.pet.speciesId) {
+          self.pet.species = {};
+          for (var index in self.species) {
+            var species = self.species[index];
+            if (species._id === self.pet.speciesId) {
+              self.pet.species = species;
+            }
+          }
+        }
       }).finally(function () {
         self.loaders.species = false;
       });
@@ -26,6 +34,14 @@
       if (!self.breeds[self.pet.species]) {
         PetService.getBreeds(self.pet.species).then(function (result) {
           self.breeds[result.species] = result.breeds;
+          if (self.pet.breedId) {
+            self.pet.breed = {};
+            for (var index in self.breeds) {
+              var breed = self.species[index];
+              if (breed._id === self.pet.breedId) {
+                self.pet.breed = breed;
+              }
+            }
         }).finally(function () {
           self.loaders.breeds = false;
         });
@@ -34,7 +50,7 @@
 
     function addAlert() {
       showIonicLoading();
-      AddAlertService.addAlert(self.alert).then(function (result) {
+      AlertService.addAlert(self.alert).then(function (result) {
         console.log(result);
       }).finally(function () {
         hideIonicLoading();
@@ -141,17 +157,24 @@
     }
 
     function init() {
-      self.myPetId = $stateParams.petId;
-      PetService.getPet(self.myPetId).then(function(result){
-        self.pet = result;
-      });
-
       self.loaders = {};
       self.breeds = {};
       self.species = [];
       self.pet = {};
       document.addEventListener('deviceready', onDeviceReady, false);
-      getSpecies();
+
+      self.myPetId = $stateParams.petId;
+      if (self.myPetId) {
+        PetService.getPet(self.myPetId).then(function (result) {
+          self.pet = result;
+          getSpecies();
+        });
+      }
+      else {
+        getSpecies();
+      }
+
+
     }
 
     init();
