@@ -3,8 +3,8 @@
     .module('account')
     .service('AccountService', accountService);
 
-  accountService.$inject = ['$q', '$http'];
-  function accountService($q, $http) {
+  accountService.$inject = ['$http'];
+  function accountService($http) {
     var self = this;
 
     self.getAccount = function (id) {

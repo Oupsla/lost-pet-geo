@@ -5,15 +5,15 @@
     .module('addPet')
     .controller('AddPetCtrl', addPetController);
 
-  addPetController.$inject = ['AddPetService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet'];
+  addPetController.$inject = ['PetService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet'];
 
-  function addPetController(AddPetService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet) {
+  function addPetController(PetService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet) {
     let self = this;
 
     function getSpecies() {
       self.loaders.species = true;
 
-      AddPetService.getSpecies().then(function (result) {
+      PetService.getSpecies().then(function (result) {
         self.species = result;
       }).finally(function () {
         self.loaders.species = false;
@@ -23,7 +23,7 @@
     self.getBreeds = function () {
       self.loaders.breeds = true;
       if (!self.breeds[self.pet.species._id]) {
-        AddPetService.getBreeds(self.pet.species._id).then(function (result) {
+        PetService.getBreeds(self.pet.species._id).then(function (result) {
           self.breeds[self.pet.species._id] = result;
         }).finally(function () {
           self.loaders.breeds = false;
@@ -33,7 +33,7 @@
 
     self.addPet = function () {
       showIonicLoading();
-      AddPetService.addPet(self.pet).then(function (result) {
+      PetService.addPet(self.pet).then(function (result) {
         console.log(result);
       }).finally(function () {
         hideIonicLoading();

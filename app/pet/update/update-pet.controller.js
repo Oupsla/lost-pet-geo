@@ -5,15 +5,15 @@
     .module('updatePet')
     .controller('UpdatePetCtrl', updatePetController);
 
-  updatePetController.$inject = ['UpdatePetService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', '$stateParams'];
+  updatePetController.$inject = ['$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', '$stateParams'];
 
-  function updatePetController(UpdatePetService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, $stateParams) {
+  function updatePetController($ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, $stateParams) {
     let self = this;
 
     function getSpecies() {
       self.loaders.species = true;
 
-      UpdatePetService.getSpecies().then(function (result) {
+      PetService.getSpecies().then(function (result) {
         self.species = result;
       }).finally(function () {
         self.loaders.species = false;
@@ -23,7 +23,7 @@
     self.getBreeds = function () {
       self.loaders.breeds = true;
       if (!self.breeds[self.pet.species]) {
-        UpdatePetService.getBreeds(self.pet.species).then(function (result) {
+        PetService.getBreeds(self.pet.species).then(function (result) {
           self.breeds[result.specie] = result.breeds;
         }).finally(function () {
           self.loaders.breeds = false;
@@ -36,7 +36,7 @@
         template: '<ion-spinner></ion-spinner>'
       });
 
-      UpdatePetService.updatePet(self.pet).then(function (result) {
+      PetService.updatePet(self.pet).then(function (result) {
         console.log(result);
       }).finally(function () {
         $timeout(function () {
