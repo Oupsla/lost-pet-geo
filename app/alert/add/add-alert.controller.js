@@ -38,7 +38,7 @@
       self.alert.breedId = self.alert.pet.breed._id;
       self.alert.speciesId = self.alert.pet.species._id;
       AlertService.addAlert(self.alert).then(function (result) {
-        console.log(result);
+        reset();
       }).finally(function () {
         hideIonicLoading();
       });
@@ -147,26 +147,28 @@
       self.userId = AccountService.getAccountId();
     }
 
-    function init() {
-      getAccountId();
-
+    function reset() {
       self.loaders = {};
       self.breeds = {};
       self.species = [];
       self.alert = {userId: self.userId, pet: {}};
-      document.addEventListener('deviceready', onDeviceReady, false);
-
       self.myPetId = $stateParams.petId;
       if (self.myPetId) {
         PetService.getPet(self.myPetId).then(function (result) {
           self.alert.pet = result;
           getSpecies();
-          getBreeds();
+          self.getBreeds();
         });
       }
       else {
         getSpecies();
       }
+    }
+
+    function init() {
+      getAccountId();
+      document.addEventListener('deviceready', onDeviceReady, false);
+      reset();
     }
 
     init();

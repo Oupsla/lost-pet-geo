@@ -5,7 +5,7 @@
 
   alertService.$inject = ['$http'];
   function alertService($http) {
-    var self = this;
+    let self = this;
     var url = "http://lostpet-api.mybluemix.net/api/v1.0/";
     self.getListAlert = function () {
       return $http.get(url + "alerts/")

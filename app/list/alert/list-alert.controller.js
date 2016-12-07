@@ -8,23 +8,31 @@
     let self = this;
 
     self.delete = function (item) {
-      console.log("delete " + item);
       AlertService.delete(item._id);
     };
 
     self.update = function (item) {
-      console.log("update " + item);
       AlertService.update(item);
     };
 
     function getListAlert() {
       self.loaders.getList = true;
-      AlertService.getListAlert().then(function (result) {
-        for (var index in result) {
-          if (result[index].userId === self.userId) {
-            result[index].isMyAlert = true;
+      AlertService.getListAlert().then(function (results) {
+
+        if (results.length) {
+          for (var index in results) {
+            var result = results[index];
+
+            if (result.state === 'Perdu') {
+              result.class = "assertive";
+            }
+
+            if (result.userId === self.userId) {
+              result.isMyAlert = true;
+            }
           }
         }
+
         self.listAlert = result;
       }).finally(function () {
         self.loaders.getList = false;
@@ -36,7 +44,7 @@
     }
 
     function init() {
-      self.loaders = {getList: false};
+      self.loaders = {getList: true};
       getAccountId();
       getListAlert();
     }

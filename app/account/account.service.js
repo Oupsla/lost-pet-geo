@@ -5,7 +5,7 @@
 
   accountService.$inject = ['$http'];
   function accountService($http) {
-    var self = this;
+    let self = this;
 
     self.getAccountId = function(){
       return "584532c4926c47001d9209bb";

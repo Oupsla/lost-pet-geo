@@ -148,19 +148,26 @@
     function getPet(id) {
       PetService.getPet(id).then(function (result) {
         self.pet = result;
+        console.log(result);
       });
     }
 
-    function init() {
+    function reset() {
       self.loaders = {};
       self.images = [];
-      self.breeds = {};
-      self.species = [];
       getPet($stateParams.petId);
+    }
 
-      document.updateEventListener("deviceready", onDeviceReady, false);
-
+    function resetSpecies() {
+      self.species = [];
       getSpecies();
+    }
+
+    function init() {
+      self.breeds = {};
+      console.log($stateParams);
+      reset();
+      resetSpecies();
     }
 
 

@@ -3,14 +3,18 @@
     .module('listPet')
     .controller('ListPetCtrl', listPetController);
 
-  listPetController.$inject = ['$stateParams', 'PetService'];
-  function listPetController($stateParams, PetService) {
+  listPetController.$inject = ['$stateParams', 'PetService', '$state'];
+  function listPetController($stateParams, PetService, $state) {
     let self = this;
 
     function getListPet() {
+      self.listPet = [];
+      self.loaders.getList = true;
       PetService.getListPet(self.userId).then(function (result) {
         self.listPet = result;
-        console.log(self.listPet);
+      }).finally(function () {
+      }).finally(function () {
+        self.loaders.getList = false;
       });
     }
 
@@ -24,16 +28,19 @@
       });
     }
 
-    self.update = function () {
-
+    self.delete = function (id) {
+      PetService.deletePet(id).then(function () {
+        reset();
+      });
     };
 
-    self.delete = function () {
-
-    };
+    function reset() {
+      getListPet();
+    }
 
     function init() {
-      console.log($stateParams);
+      self.loaders = {getList: true};
+
       self.userId = $stateParams.userId;
       self.userId = '584532c4926c47001d9209bb';
       getListPet();

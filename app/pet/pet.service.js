@@ -5,7 +5,7 @@
 
   petService.$inject = ['$http'];
   function petService($http) {
-    var self = this;
+    let self = this;
     var url = "http://lostpet-api.mybluemix.net/api/v1.0/";
 
     self.getListPet = function (userId) {
@@ -29,12 +29,16 @@
     };
 
     self.updatePet = function (pet) {
-      return $http.post(url + "pet/update", pet)
+      return $http.put(url + "pets/" + pet._id, pet)
+        .then((resp) => resp.data);
+    };
+
+    self.deletePet = function (id) {
+      return $http.delete(url + "pets/" + id)
         .then((resp) => resp.data);
     };
 
     self.addPet = function (pet) {
-
       return $http.post(url + "pets", pet)
         .then((resp) => resp.data);
     };

@@ -36,7 +36,7 @@
       self.pet.breedId = self.pet.breed._id;
       self.pet.speciesId = self.pet.species._id;
       PetService.addPet(self.pet).then(function (result) {
-        $state.go("nav.pet", {petId : result._id} );
+        $state.go("nav.pet", {petId: result._id});
       }).finally(function () {
         hideIonicLoading();
       });
@@ -145,14 +145,18 @@
       self.userId = AccountService.getAccountId();
     }
 
-    function init() {
-      getAccountId();
+    function reset() {
       self.loaders = {};
       self.images = [];
       self.pet = {userId: self.userId};
       self.breeds = {};
-      document.addEventListener('deviceready', onDeviceReady, false);
       getSpecies();
+    }
+
+    function init() {
+      getAccountId();
+      reset();
+      document.addEventListener('deviceready', onDeviceReady, false);
     }
 
 
