@@ -11,10 +11,7 @@
     let self = this;
 
     self.getAccount = function () {
-      AccountService.getAccount(self.nav.id).then(function (result) {
-        result.firstName = 'Benjamin';
-        result.lastName = 'Coenen';
-        result.photo = 'http://www.freeiconspng.com/uploads/account-profile-icon-1.png';
+      AccountService.getAccount(self.nav._id).then(function (result) {
         self.account = result;
       });
     };
@@ -23,9 +20,15 @@
       console.log('disconnect');
     };
 
+    function getAccountId() {
+      self.userId = AccountService.getAccountId();
+    }
+
     function init() {
+      getAccountId();
+
       self.nav = {
-        id: '5807394d416656001d4012e7'
+        _id: self.userId
       };
 
       self.getAccount();

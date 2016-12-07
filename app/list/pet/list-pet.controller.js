@@ -27,7 +27,7 @@
     function init() {
       console.log($stateParams);
       self.userId = $stateParams.userId;
-      self.userId = '5807394d416656001d4012e7';
+      self.userId = '584532c4926c47001d9209bb';
       getListPet();
     }
 

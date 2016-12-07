@@ -11,10 +11,12 @@
 
       AlertService.getAlert(id).then(function (result) {
         self.alert = result;
+        console.log(result);
       });
     }
 
     function init() {
+      console.log($stateParams.alertId);
       getAlert($stateParams.alertId);
     }
 

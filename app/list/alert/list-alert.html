@@ -2,14 +2,12 @@
   <ion-content padding="true" class="has-header">
     <ion-spinner data-ng-if="ListAlertCtrl.loaders.getList"></ion-spinner>
     <ion-list can-swipe="true" id="listAlertPet-lost" data-ng-if="!ListAlertCtrl.loaders.getList">
-      <ion-item ui-sref="nav.alert({alertId: alert.id})" ng-repeat="alert in ListAlertCtrl.listAlert track by $index"
+      <ion-item ui-sref="nav.alert({alertId: alert._id})" ng-repeat="alert in ListAlertCtrl.listAlert track by $index"
                 class="item-thumbnail-left positive">
-
         <img ng-if="alert.photo" ng-src="{{alert.photo}}"/>
         <h2positive>
-          <p data-ng-bind="alert.isMyAlert"></p>
           <p data-ng-bind="alert.state"></p>
-          <p data-ng-bind="alert.date"></p>
+          <p data-ng-bind="alert.date | date"></p>
           <p>
             <span data-ng-bind="alert.pet.species"></span>
             <span data-ng-bind="alert.pet.breeds"></span>

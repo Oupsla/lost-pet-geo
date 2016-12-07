@@ -1,5 +1,9 @@
 <ion-view title="Ajouter un animal" id="nav-add-pet">
   <ion-content padding="true" class="has-header">
+    <label class="item item-input">
+      <span class="input-label">Nom</span>
+      <input type="text" placeholder="Ouaf" data-ng-model="AddPetCtrl.pet.name">
+    </label>
     <button data-ng-if="! AddPetCtrl.pet.photo" class="button button-block button-calm"
             data-ng-click="AddPetCtrl.takePhoto()">
       <i class="ion-ios-camera"></i> Ajouter une photo
@@ -21,8 +25,7 @@
       <label class="item item-input item-select"
              data-ng-show="!AddPetCtrl.loaders.breeds && AddPetCtrl.breeds[AddPetCtrl.pet.species._id]">
         <span class="input-label">Race</span>
-        <select data-ng-model="AddPetCtrl.pet.breeds"
-                data-ng-options="breeds.name for breeds in AddPetCtrl.breeds[AddPetCtrl.pet.species._id]">
+        <select data-ng-model="AddPetCtrl.pet.breed" data-ng-options="breeds.name for breeds in AddPetCtrl.breeds[AddPetCtrl.pet.species._id]">
         </select>
       </label>
 

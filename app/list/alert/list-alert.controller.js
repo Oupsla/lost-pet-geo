@@ -9,7 +9,7 @@
 
     self.delete = function (item) {
       console.log("delete " + item);
-      AlertService.delete(item.id);
+      AlertService.delete(item._id);
     };
 
     self.update = function (item) {
@@ -24,6 +24,7 @@
           result[index].isMyAlert = true;
         }
         self.listAlert = result;
+        console.log(result);
       }).finally(function () {
         self.loaders.getList = false;
       });

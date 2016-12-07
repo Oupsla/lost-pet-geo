@@ -22,14 +22,15 @@
 
     self.getBreeds = function () {
       self.loaders.breeds = true;
-      if (!self.breeds[self.pet.species]) {
-        PetService.getBreeds(self.pet.species).then(function (result) {
-          self.breeds[result.specie] = result.breeds;
+      if (!self.breeds[self.pet.species._id]) {
+        PetService.getBreeds(self.pet.species._id).then(function (result) {
+          self.breeds[self.pet.species._id] = result;
         }).finally(function () {
           self.loaders.breeds = false;
         });
       }
     };
+
 
     self.updatePet = function () {
       $ionicLoading.show({

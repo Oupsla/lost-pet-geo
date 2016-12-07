@@ -5,9 +5,9 @@
     .module('addAlert')
     .controller('AddAlertCtrl', addAlertController);
 
-  addAlertController.$inject = ['$stateParams', 'AlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService'];
+  addAlertController.$inject = ['$stateParams', 'AlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', 'AccountService'];
 
-  function addAlertController($stateParams, AlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService) {
+  function addAlertController($stateParams, AlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, AccountService) {
     let self = this;
     self.myPetId = $stateParams.petId;
 
@@ -159,24 +159,25 @@
       hideIonicLoading();
     }
 
+    function getAccountId() {
+      self.userId = AccountService.getAccountId();
+    }
+
     function init() {
-      if(self.myPetId != ""){
-        PetService.getPet(self.myPetId).then(function(result){
-          self.pet = result;
-       });
-     }
+      getAccountId();
 
       self.loaders = {};
       self.breeds = {};
       self.species = [];
-      self.pet = {};
+      self.alert = {userId: self.userId, pet: {}};
       document.addEventListener('deviceready', onDeviceReady, false);
 
       self.myPetId = $stateParams.petId;
       if (self.myPetId) {
         PetService.getPet(self.myPetId).then(function (result) {
-          self.pet = result;
+          self.alert.pet = result;
           getSpecies();
+          getBreeds();
         });
       }
       else {
