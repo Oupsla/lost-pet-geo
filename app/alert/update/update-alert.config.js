@@ -9,7 +9,7 @@
   function configUpdateAlert($stateProvider) {
     $stateProvider
       .state('nav.updateAlert', {
-        url: '/alert/update',
+        url: '/alert/update/:alertId',
         views: {
           'menuContent': {
             templateUrl: 'alert/update/update-alert.html',

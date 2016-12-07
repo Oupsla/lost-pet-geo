@@ -1,4 +1,9 @@
 <ion-view title="Alerte Animal {{AlertCtrl.alert.pet.name}}" id="alert">
+  <ion-nav-buttons side="right">
+    <button class="button" ui-sref="nav.updateAlert({alertId : AlertCtrl.alert._id})">
+      <i class="ion-edit"></i>
+    </button>
+  </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
     <div class="list card">
       <div class="item item-avatar">

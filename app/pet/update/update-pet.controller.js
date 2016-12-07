@@ -10,21 +10,37 @@
   function updatePetController($ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, $stateParams) {
     let self = this;
 
-    function getSpecies() {
+    function getSpecies(id) {
       self.loaders.species = true;
 
-      PetService.getSpecies().then(function (result) {
-        self.species = result;
+      PetService.getSpecies(id).then(function (results) {
+        if(id) {
+          for (var index in results) {
+            var result = results[index];
+            if (result._id === id) {
+              self.pet.species = result;
+            }
+          }
+        }
+        self.species = results;
       }).finally(function () {
         self.loaders.species = false;
       });
     }
 
-    self.getBreeds = function () {
+    self.getBreeds = function (id) {
       self.loaders.breeds = true;
       if (!self.breeds[self.pet.species._id]) {
-        PetService.getBreeds(self.pet.species._id).then(function (result) {
-          self.breeds[self.pet.species._id] = result;
+        PetService.getBreeds(self.pet.species._id).then(function (results) {
+          if(id){
+            for (var index in results) {
+              var result = results[index];
+              if (result._id === id) {
+                self.pet.breed = result;
+              }
+            }
+          }
+          self.breeds[self.pet.species._id] = results;
         }).finally(function () {
           self.loaders.breeds = false;
         });
@@ -145,29 +161,28 @@
       hideIonicLoading();
     }
 
-    function getPet(id) {
-      PetService.getPet(id).then(function (result) {
+    function getPet() {
+      PetService.getPet(self.petId).then(function (result) {
         self.pet = result;
-        console.log(result);
+        resetSpecies(self.pet.speciesId);
       });
     }
 
     function reset() {
       self.loaders = {};
       self.images = [];
-      getPet($stateParams.petId);
+      getPet();
     }
 
-    function resetSpecies() {
+    function resetSpecies(id) {
       self.species = [];
-      getSpecies();
+      getSpecies(id);
     }
 
     function init() {
       self.breeds = {};
-      console.log($stateParams);
+      self.petId = $stateParams.petId;
       reset();
-      resetSpecies();
     }
 
 

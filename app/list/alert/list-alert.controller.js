@@ -33,7 +33,7 @@
           }
         }
 
-        self.listAlert = result;
+        self.listAlert = results;
       }).finally(function () {
         self.loaders.getList = false;
       });
