@@ -8,10 +8,10 @@
     let self = this;
 
     function getListPet() {
-      PetService.getListPet(self.userId).then(function(result) {
-         self.listPet = result;
+      PetService.getListPet(self.userId).then(function (result) {
+        self.listPet = result;
         console.log(self.listPet);
-       });
+      });
     }
 
     function getSpecies(id) {
@@ -23,6 +23,14 @@
         self.loaders.species = false;
       });
     }
+
+    self.update = function () {
+
+    };
+
+    self.delete = function () {
+
+    };
 
     function init() {
       console.log($stateParams);

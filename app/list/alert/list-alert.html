@@ -6,20 +6,20 @@
                 class="item-thumbnail-left positive">
         <img ng-if="alert.photo" ng-src="{{alert.photo}}"/>
         <h2positive>
-          <p data-ng-bind="alert.state"></p>
-          <p data-ng-bind="alert.date | date"></p>
+          <p color="primary" data-ng-bind="alert.state" ng-class="alert.class"></p>
           <p>
-            <span data-ng-bind="alert.pet.species"></span>
-            <span data-ng-bind="alert.pet.breeds"></span>
+            <span data-ng-bind="alert.pet.species.name"></span>
+            <span data-ng-bind="alert.pet.breed.name"></span>
           </p>
+          <p data-ng-bind="alert.date | date"></p>
         </h2positive>
         <ion-option-button data-ng-if="alert.isMyAlert" class="button-assertive"
                            ng-click="ListAlertCtrl.delete(alert)">
-          Sup
+          <i class="ion-minus-circled"></i> Sup
         </ion-option-button>
         <ion-option-button data-ng-if="alert.isMyAlert" class="button-positive"
                            ng-click="ListAlertCtrl.update(alert)">
-          Màj
+          <i class="ion-edit"></i> Màj
         </ion-option-button>
 
       </ion-item>

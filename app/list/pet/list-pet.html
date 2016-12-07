@@ -1,6 +1,6 @@
 <ion-view title="Mes animaux" id="tab-list-pet">
   <ion-content padding="true" class="has-header">
-    <ion-list id="listPet" can-swipe="true">
+    <ion-list can-swipe="true" id="listPet" can-swipe="true">
       <ion-item ui-sref="nav.pet({petId: pet._id})" show-delete="true"
                 ng-repeat="pet in ListPetCtrl.listPet track by $index" class="item-thumbnail-left positive">
         <img ng-if="pet.photo" data-ng-src="{{pet.photo}}"/>
@@ -8,6 +8,14 @@
             <p>Nom : {{pet.name}}</p>
             <p>Couleur : {{pet.color}}</p>
         </h2positive>
+        <ion-option-button data-ng-if="alert.isMyAlert" class="button-assertive"
+                           ng-click="ListPetCtrl.delete(alert)">
+          Sup
+        </ion-option-button>
+        <ion-option-button data-ng-if="alert.isMyAlert" class="button-positive"
+                           ui-sref="nav.updatePet{alert.pet._id}">
+          Màj
+        </ion-option-button>
       </ion-item>
     </ion-list>
   </ion-content>

@@ -3,8 +3,8 @@
     .module('listAlert')
     .controller('ListAlertCtrl', listAlertController);
 
-  listAlertController.$inject = ['AlertService'];
-  function listAlertController(AlertService) {
+  listAlertController.$inject = ['AlertService', 'AccountService'];
+  function listAlertController(AlertService, AccountService) {
     let self = this;
 
     self.delete = function (item) {
@@ -21,17 +21,23 @@
       self.loaders.getList = true;
       AlertService.getListAlert().then(function (result) {
         for (var index in result) {
-          result[index].isMyAlert = true;
+          if (result[index].userId === self.userId) {
+            result[index].isMyAlert = true;
+          }
         }
         self.listAlert = result;
-        console.log(result);
       }).finally(function () {
         self.loaders.getList = false;
       });
     }
 
+    function getAccountId() {
+      self.userId = AccountService.getAccountId();
+    }
+
     function init() {
       self.loaders = {getList: false};
+      getAccountId();
       getListAlert();
     }
 
