@@ -16,10 +16,13 @@
       });
     }
 
+    function getAccountId() {
+      self.account.id = AccountService.getAccountId();
+    }
+
     function init() {
-      self.account = {
-        id: "584532c4926c47001d9209bb"
-      };
+      self.account = {};
+      getAccountId();
 
       getAccount();
       self.today = new Date();

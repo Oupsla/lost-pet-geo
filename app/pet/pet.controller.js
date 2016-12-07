@@ -6,7 +6,7 @@
   alertController.$inject = ['$stateParams', 'PetService'];
   function alertController($stateParams, PetService) {
     let self = this;
-    self.petId = $stateParams.petId;
+
 
     function getPet(id) {
       PetService.getPet(id).then(function (result) {
@@ -14,7 +14,14 @@
       });
     }
 
+    self.deletePet = function () {
+      PetService.deletePet(self.petId).then(function () {
+        $state.go("nav.listPet");
+      });
+    };
+
     function init() {
+      self.petId = $stateParams.petId;
       getPet(self.petId);
     }
 

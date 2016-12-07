@@ -1,13 +1,36 @@
 <ion-view title="Mes animaux" id="tab-list-pet">
+  <ion-nav-buttons side="right">
+    <button class="button" ui-sref="nav.addPet">
+      <i class="ion-plus-circled"></i>
+    </button>
+  </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
-    <ion-list id="listPet">
-      <ion-item ui-sref="nav.pet({petId: pet._id})"  ng-repeat="pet in ListPetCtrl.listPet track by $index" class="item-thumbnail-left positive">
+    <ion-spinner data-ng-if="ListAlertCtrl.loaders.getList"></ion-spinner>
+    <ion-list data-ng-if="!ListPetCtrl.listPet.length && !ListAlertCtrl.loaders.getList">
+      <ion-item>
+        Pas encore d'animaux
+        <button class="button button-full button-balanced" ui-sref="nav.addPet">
+          <i class="ion-plus-circled"></i> &nbsp;
+          Ajouter un animal
+        </button>
+      </ion-item>
+    </ion-list>
+    <ion-list can-swipe="true" id="listPet" can-swipe="true" data-ng-if="ListPetCtrl.listPet.length && !ListAlertCtrl.loaders.getList">
+      <ion-item ui-sref="nav.pet({petId: pet._id})" show-delete="true"
+                ng-repeat="pet in ListPetCtrl.listPet track by $index" class="item-thumbnail-left positive">
         <img ng-if="pet.photo" data-ng-src="{{pet.photo}}"/>
         <h2positive>
-          <div data-ng-repeat="(key, value) in pet.pet">
-             <p data-ng-if="value">{{key}}: {{value}}</p>
-          </div>
+          <p>Nom : {{pet.name}}</p>
+          <p>Couleur : {{pet.color}}</p>
         </h2positive>
+        <ion-option-button class="button-assertive"
+                           ng-click="ListPetCtrl.delete(pet._id)">
+          <i class="ion-minus-circled"></i>&nbsp; Sup
+        </ion-option-button>
+
+        <ion-option-button class="button-positive" ui-sref="nav.updatePet({petId : pet._id})">
+          <i class="ion-edit"></i>&nbsp; Màj
+        </ion-option-button>
       </ion-item>
     </ion-list>
   </ion-content>

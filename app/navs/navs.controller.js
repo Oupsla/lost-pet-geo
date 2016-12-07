@@ -4,17 +4,13 @@
   angular
     .module('navs')
     .controller('NavsCtrl', navController);
-
   navController.$inject = ['AccountService'];
 
   function navController(AccountService) {
     let self = this;
 
     self.getAccount = function () {
-      AccountService.getAccount(self.nav.id).then(function (result) {
-        result.firstName = 'Benjamin';
-        result.lastName = 'Coenen';
-        result.photo = 'http://www.freeiconspng.com/uploads/account-profile-icon-1.png';
+      AccountService.getAccount(self.nav._id).then(function (result) {
         self.account = result;
       });
     };
@@ -23,9 +19,15 @@
       console.log('disconnect');
     };
 
+    function getAccountId() {
+      self.userId = AccountService.getAccountId();
+    }
+
     function init() {
+      getAccountId();
+
       self.nav = {
-        id: '584532c4926c47001d9209bb'
+        _id: self.userId
       };
 
       self.getAccount();

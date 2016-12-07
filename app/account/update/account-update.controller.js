@@ -8,7 +8,7 @@
   accountUpdateController.$inject = ['$state', '$stateParams', 'AccountService'];
 
   function accountUpdateController($state, $stateParams, AccountService) {
-    var self = this;
+    let self = this;
 
     function getAccount() {
       AccountService.getAccount(self.account.id).then(function (result) {
@@ -24,7 +24,7 @@
 
     function init() {
       self.account = {
-        id: $stateParams.accountId
+        id: $stateParams.userId
       };
 
       getAccount();

@@ -2,17 +2,17 @@
   'use strict';
 
   angular
-    .module('addPet')
-    .controller('AddPetCtrl', addPetController);
+    .module('updateAlert')
+    .controller('UpdateAlertCtrl', updateAlertController);
 
-  addPetController.$inject = ['PetService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'AccountService', '$state'];
+  updateAlertController.$inject = ['AlertService', 'PetService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet'];
 
-  function addPetController(PetService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, AccountService, $state) {
+  function updateAlertController(AlertService, PetService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet) {
     let self = this;
 
     function getSpecies() {
       self.loaders.species = true;
-      self.species = [];
+
       PetService.getSpecies().then(function (result) {
         self.species = result;
       }).finally(function () {
@@ -22,27 +22,25 @@
 
     self.getBreeds = function () {
       self.loaders.breeds = true;
-      if (!self.breeds[self.pet.species._id]) {
-        PetService.getBreeds(self.pet.species._id).then(function (result) {
-          self.breeds[self.pet.species._id] = result;
+      if (!self.breeds[self.pet.species]) {
+        PetService.getBreeds(self.pet.species).then(function (result) {
+          self.breeds[result.species] = result.breeds;
         }).finally(function () {
           self.loaders.breeds = false;
         });
       }
     };
 
-    self.addPet = function () {
+    function updateAlert() {
       showIonicLoading();
-      self.pet.breedId = self.pet.breed._id;
-      self.pet.speciesId = self.pet.species._id;
-      PetService.addPet(self.pet).then(function (result) {
-        $state.go("nav.pet", {petId: result._id});
+      AlertService.updateAlert(self.alert).then(function (result) {
+        console.log(result);
       }).finally(function () {
         hideIonicLoading();
       });
-    };
+    }
 
-    function addImage() {
+    function updateImage() {
       $ionicPlatform.ready(function () {
         if (window.cordova) {
           capturePhoto();
@@ -80,7 +78,7 @@
     }
 
     function onPhotoDataSuccess(imageData) {
-      self.pet.photo = 'data:image/jpeg;base64,' + imageData;
+      self.pet.photo = "data:image/jpeg;base64," + imageData;
       hideIonicLoading();
     }
 
@@ -102,7 +100,7 @@
     }
 
     function deletePicture() {
-      self.pet.photo = '';
+      self.pet.photo = "";
       return true;
     }
 
@@ -119,7 +117,7 @@
         },
         buttonClicked: function (index) {
           if (index === 0) {
-            return addImage();
+            return updateImage();
           }
 
           if (index === 1) {
@@ -130,7 +128,7 @@
         }
       };
       if (self.pet.photo) {
-        opts.destructiveText = 'Supprimer';
+        opts.destructiveText = "Supprimer";
         opts.destructiveButtonClicked = deletePicture;
       }
 
@@ -141,26 +139,15 @@
       hideIonicLoading();
     }
 
-    function getAccountId() {
-      self.userId = AccountService.getAccountId();
-    }
-
-    function reset() {
+    function init() {
       self.loaders = {};
-      self.images = [];
-      self.pet = {userId: self.userId};
       self.breeds = {};
+      self.species = [];
+      self.pet = {};
+      document.updateEventListener("deviceready", onDeviceReady, false);
       getSpecies();
     }
 
-    function init() {
-      getAccountId();
-      reset();
-      document.addEventListener('deviceready', onDeviceReady, false);
-    }
-
-
     init();
   }
-})
-();
+})();

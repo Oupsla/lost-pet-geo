@@ -2,17 +2,17 @@
   'use strict';
 
   angular
-    .module('addPet')
-    .controller('AddPetCtrl', addPetController);
+    .module('updatePet')
+    .controller('UpdatePetCtrl', updatePetController);
 
-  addPetController.$inject = ['PetService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'AccountService', '$state'];
+  updatePetController.$inject = ['$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', '$stateParams'];
 
-  function addPetController(PetService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, AccountService, $state) {
+  function updatePetController($ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, $stateParams) {
     let self = this;
 
     function getSpecies() {
       self.loaders.species = true;
-      self.species = [];
+
       PetService.getSpecies().then(function (result) {
         self.species = result;
       }).finally(function () {
@@ -31,18 +31,22 @@
       }
     };
 
-    self.addPet = function () {
-      showIonicLoading();
-      self.pet.breedId = self.pet.breed._id;
-      self.pet.speciesId = self.pet.species._id;
-      PetService.addPet(self.pet).then(function (result) {
-        $state.go("nav.pet", {petId: result._id});
+
+    self.updatePet = function () {
+      $ionicLoading.show({
+        template: '<ion-spinner></ion-spinner>'
+      });
+
+      PetService.updatePet(self.pet).then(function (result) {
+        console.log(result);
       }).finally(function () {
-        hideIonicLoading();
+        $timeout(function () {
+          $ionicLoading.hide();
+        }, 1000);
       });
     };
 
-    function addImage() {
+    function updateImage() {
       $ionicPlatform.ready(function () {
         if (window.cordova) {
           capturePhoto();
@@ -80,7 +84,7 @@
     }
 
     function onPhotoDataSuccess(imageData) {
-      self.pet.photo = 'data:image/jpeg;base64,' + imageData;
+      self.pet.photo = "data:image/jpeg;base64," + imageData;
       hideIonicLoading();
     }
 
@@ -102,7 +106,7 @@
     }
 
     function deletePicture() {
-      self.pet.photo = '';
+      self.pet.photo = "";
       return true;
     }
 
@@ -119,7 +123,7 @@
         },
         buttonClicked: function (index) {
           if (index === 0) {
-            return addImage();
+            return updateImage();
           }
 
           if (index === 1) {
@@ -130,7 +134,7 @@
         }
       };
       if (self.pet.photo) {
-        opts.destructiveText = 'Supprimer';
+        opts.destructiveText = "Supprimer";
         opts.destructiveButtonClicked = deletePicture;
       }
 
@@ -141,22 +145,29 @@
       hideIonicLoading();
     }
 
-    function getAccountId() {
-      self.userId = AccountService.getAccountId();
+    function getPet(id) {
+      PetService.getPet(id).then(function (result) {
+        self.pet = result;
+        console.log(result);
+      });
     }
 
     function reset() {
       self.loaders = {};
       self.images = [];
-      self.pet = {userId: self.userId};
-      self.breeds = {};
+      getPet($stateParams.petId);
+    }
+
+    function resetSpecies() {
+      self.species = [];
       getSpecies();
     }
 
     function init() {
-      getAccountId();
+      self.breeds = {};
+      console.log($stateParams);
       reset();
-      document.addEventListener('deviceready', onDeviceReady, false);
+      resetSpecies();
     }
 
 

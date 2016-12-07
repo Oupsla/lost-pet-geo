@@ -1,18 +1,36 @@
 <ion-view title="Liste alerte" id="tab-list-alert">
+  <ion-nav-buttons side="right">
+    <button class="button" ui-sref="nav.addAlert">
+      <i class="ion-plus-circled"></i>
+    </button>
+  </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
     <ion-spinner data-ng-if="ListAlertCtrl.loaders.getList"></ion-spinner>
-    <ion-list id="listAlertPet-lost" data-ng-if="!ListAlertCtrl.loaders.getList">
-      <ion-item ui-sref="nav.alert({alertId: alert.id})" ng-repeat="alert in ListAlertCtrl.listAlert track by $index"
-                class="item-thumbnail-left positive">
+    <ion-list data-ng-if="!ListAlertCtrl.loaders.getList && !ListAlertCtrl.listAlert.length">
+      <ion-item class="primary">
+        Pas d'alerte
+      </ion-item>
+    </ion-list>
+    <ion-list can-swipe="true" id="listAlertPet-lost" data-ng-if="!ListAlertCtrl.loaders.getList">
+      <ion-item ui-sref="nav.alert({alertId: alert._id})" ng-repeat="alert in ListAlertCtrl.listAlert track by $index"
+                class="item-thumbnail-left" ng-class="alert.class">
         <img ng-if="alert.photo" ng-src="{{alert.photo}}"/>
         <h2positive>
           <p data-ng-bind="alert.state"></p>
-          <p data-ng-bind="alert.date"></p>
           <p>
-            <span data-ng-bind="alert.pet.race"></span>
-            <span data-ng-bind="alert.pet.type"></span>
+            <span data-ng-bind="alert.pet.species.name"></span>
+            <span data-ng-bind="alert.pet.breed.name"></span>
           </p>
+          <p data-ng-bind="alert.date | date"></p>
         </h2positive>
+        <ion-option-button data-ng-if="alert.isMyAlert" class="button-assertive"
+                           ng-click="ListAlertCtrl.delete(alert)">
+          <i class="ion-minus-circled"></i>&nbsp; Sup
+        </ion-option-button>
+        <ion-option-button data-ng-if="alert.isMyAlert" class="button-positive"
+                           ng-click="ListAlertCtrl.update(alert)">
+          <i class="ion-edit"></i>&nbsp; Màj
+        </ion-option-button>
       </ion-item>
     </ion-list>
   </ion-content>

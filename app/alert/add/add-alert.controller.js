@@ -5,41 +5,57 @@
     .module('addAlert')
     .controller('AddAlertCtrl', addAlertController);
 
-  addAlertController.$inject = ['$stateParams', 'AddAlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService'];
+  addAlertController.$inject = ['$stateParams', 'AlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', 'AccountService'];
 
-  function addAlertController($stateParams, AddAlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService) {
-
+  function addAlertController($stateParams, AlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, AccountService) {
     let self = this;
     self.myPetId = $stateParams.petId;
 
-    function getSpecies() {
+    function getSpecies(id) {
       self.loaders.species = true;
-
-      AddAlertService.getSpecies().then(function (result) {
+      self.species = [];
+      PetService.getSpecies().then(function (result) {
+        if(id) {
+          for (var index in result) {
+            if (result[index]._id === id) {
+              self.alert.pet.species = result[index];
+            }
+          }
+        }
         self.species = result;
       }).finally(function () {
         self.loaders.species = false;
       });
     }
 
-    self.getBreeds = function () {
+    self.getBreeds = function (id) {
       self.loaders.breeds = true;
-      if (!self.breeds[self.pet.species]) {
-        AddAlertService.getBreeds(self.pet.species).then(function (result) {
-          self.breeds[result.specie] = result.breeds;
+      if (!self.breeds[self.alert.pet.species._id]) {
+        PetService.getBreeds(self.alert.pet.species._id).then(function (result) {
+          if(id) {
+            for (var index in result) {
+              if (result[index]._id === id) {
+                self.alert.pet.breed = result[index];
+              }
+            }
+          }
+          self.breeds[self.alert.pet.species._id] = result;
         }).finally(function () {
           self.loaders.breeds = false;
         });
       }
     };
 
-    function addAlert() {
+    self.addAlert = function () {
       showIonicLoading();
-      AddAlertService.addAlert(self.alert).then(function (result) {
+      self.alert.breedId = self.alert.pet.breed._id;
+      self.alert.speciesId = self.alert.pet.species._id;
+      AlertService.addAlert(self.alert).then(function (result) {
+        reset();
       }).finally(function () {
         hideIonicLoading();
       });
-    }
+    };
 
     function addImage() {
       $ionicPlatform.ready(function () {
@@ -79,7 +95,7 @@
     }
 
     function onPhotoDataSuccess(imageData) {
-      self.pet.photo = 'data:image/jpeg;base64,' + imageData;
+      self.alert.pet.photo = 'data:image/jpeg;base64,' + imageData;
       hideIonicLoading();
     }
 
@@ -101,7 +117,7 @@
     }
 
     function deletePicture() {
-      self.pet.photo = '';
+      self.alert.pet.photo = '';
       return true;
     }
 
@@ -128,7 +144,7 @@
           return true;
         }
       };
-      if (self.pet.photo) {
+      if (self.alert.pet.photo) {
         opts.destructiveText = 'Supprimer';
         opts.destructiveButtonClicked = deletePicture;
       }
@@ -140,19 +156,32 @@
       hideIonicLoading();
     }
 
-    function init() {
-      if(self.myPetId != ""){
-        PetService.getPet(self.myPetId).then(function(result){
-          self.pet = result;
-       });
-     }
+    function getAccountId() {
+      self.userId = AccountService.getAccountId();
+    }
 
+    function reset() {
       self.loaders = {};
       self.breeds = {};
       self.species = [];
-      self.pet = {};
+      self.alert = {userId: self.userId, pet: {}};
+      self.myPetId = $stateParams.petId;
+      if (self.myPetId) {
+        PetService.getPet(self.myPetId).then(function (result) {
+          self.alert.pet = result;
+          getSpecies(self.alert.pet.speciesId);
+          self.getBreeds(self.alert.pet.breedId);
+        });
+      }
+      else {
+        getSpecies();
+      }
+    }
+
+    function init() {
+      getAccountId();
       document.addEventListener('deviceready', onDeviceReady, false);
-      getSpecies();
+      reset();
     }
 
     init();

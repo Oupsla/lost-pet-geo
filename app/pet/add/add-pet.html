@@ -1,43 +1,51 @@
 <ion-view title="Ajouter un animal" id="nav-add-pet">
   <ion-content padding="true" class="has-header">
-    <button data-ng-if="! AddPetCtrl.pet.photo" class="button button-block button-calm"
-            data-ng-click="AddPetCtrl.takePhoto()">
-      <i class="ion-ios-camera"></i> Ajouter une photo
-    </button>
-    <label class="item item-input" data-ng-if="AddPetCtrl.pet.photo"
-           data-ng-click="AddPetCtrl.takePhoto();">
-      <img data-ng-src="{{AddPetCtrl.pet.photo}}" width="50%" height="auto"
-           style="display: block; margin-left: auto; margin-right: auto;" data-ng-click="AddPetCtrl.takePhoto();">
-    </label>
-    <form id="ajouter-form1" class="list">
 
+    <form name="AddPetCtrl.addForm" class="list">
+      <button data-ng-if="! AddPetCtrl.pet.photo" class="button button-block button-royal"
+              data-ng-click="AddPetCtrl.takePhoto()">
+        <i class="ion-ios-camera"></i> Ajouter une photo
+      </button>
+      <label class="item item-input" data-ng-if="AddPetCtrl.pet.photo"
+             data-ng-click="AddPetCtrl.takePhoto();">
+        <img data-ng-src="{{AddPetCtrl.pet.photo}}" width="50%" height="auto"
+             style="display: block; margin-left: auto; margin-right: auto;" data-ng-click="AddPetCtrl.takePhoto();">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Nom</span>
+        <input required type="text" placeholder="Ouaf" data-ng-model="AddPetCtrl.pet.name">
+      </label>
       <ion-spinner data-ng-if="AddPetCtrl.loaders.species || AddPetCtrl.loaders.breeds"></ion-spinner>
-
       <label class="item item-input item-select" data-ng-show="! AddPetCtrl.loaders.species">
         <span class="input-label">Espèce</span>
-        <select data-ng-model="AddPetCtrl.pet.species" data-ng-change="AddPetCtrl.getBreeds()">
-          <option data-ng-repeat="species in AddPetCtrl.species">{{species}}</option>
+        <select required data-ng-model="AddPetCtrl.pet.species" data-ng-change="AddPetCtrl.getBreeds()"
+                data-ng-options="species.name for species in AddPetCtrl.species">
         </select>
       </label>
 
       <label class="item item-input item-select"
-             data-ng-show="!AddPetCtrl.loaders.breeds && AddPetCtrl.breeds[AddPetCtrl.pet.species]">
+             data-ng-show="!AddPetCtrl.loaders.breeds && AddPetCtrl.breeds[AddPetCtrl.pet.species._id]">
         <span class="input-label">Race</span>
-        <select data-ng-model="AddPetCtrl.pet.race" data-ng-show="! AddPetCtrl.loaders.species">
-          <option data-ng-repeat="breeds in AddPetCtrl.breeds[AddPetCtrl.pet.species]">{{breeds}}</option>
+        <select required data-ng-model="AddPetCtrl.pet.breed"
+                data-ng-options="breeds.name for breeds in AddPetCtrl.breeds[AddPetCtrl.pet.species._id]">
         </select>
       </label>
 
       <label class="item item-input">
         <span class="input-label">Couleur</span>
-        <input type="text" placeholder="Noir" data-ng-model="AddPetCtrl.pet.color">
+        <input required type="text" placeholder="Noir" data-ng-model="AddPetCtrl.pet.color">
       </label>
       <label class="item item-input">
         <span class="input-label">Signes distinctifs</span>
         <input type="text" placeholder="Collier bleu" data-ng-model="AddPetCtrl.pet.particularity">
       </label>
 
-      <button class="button button-balanced button-block" data-ng-click="AddPetCtrl.addPet()">Ajouter</button>
+      <button class="button button-balanced button-block"
+              data-ng-disabled="AddPetCtrl.addForm.$invalid || AddPetCtrl.loaders.breeds || AddPetCtrl.loaders.species"
+              data-ng-click="AddPetCtrl.addPet()">
+        <i class="ion-plus"></i>&nbsp;
+        Ajouter
+      </button>
     </form>
   </ion-content>
 </ion-view>

@@ -9,7 +9,7 @@
   function configAccountUpdate($stateProvider) {
     $stateProvider
       .state('nav.accountUpdate', {
-          url: '/accountUpdate/:accountId',
+          url: '/accountUpdate/:userId',
           views: {
             'menuContent': {
               templateUrl: 'account/update/account-update.html',
