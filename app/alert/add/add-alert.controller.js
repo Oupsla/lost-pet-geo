@@ -11,20 +11,34 @@
     let self = this;
     self.myPetId = $stateParams.petId;
 
-    function getSpecies() {
+    function getSpecies(id) {
       self.loaders.species = true;
       self.species = [];
       PetService.getSpecies().then(function (result) {
+        if(id) {
+          for (var index in result) {
+            if (result[index]._id === id) {
+              self.alert.pet.species = result[index];
+            }
+          }
+        }
         self.species = result;
       }).finally(function () {
         self.loaders.species = false;
       });
     }
 
-    self.getBreeds = function () {
+    self.getBreeds = function (id) {
       self.loaders.breeds = true;
       if (!self.breeds[self.alert.pet.species._id]) {
         PetService.getBreeds(self.alert.pet.species._id).then(function (result) {
+          if(id) {
+            for (var index in result) {
+              if (result[index]._id === id) {
+                self.alert.pet.breed = result[index];
+              }
+            }
+          }
           self.breeds[self.alert.pet.species._id] = result;
         }).finally(function () {
           self.loaders.breeds = false;
@@ -155,8 +169,8 @@
       if (self.myPetId) {
         PetService.getPet(self.myPetId).then(function (result) {
           self.alert.pet = result;
-          getSpecies();
-          self.getBreeds();
+          getSpecies(self.alert.pet.speciesId);
+          self.getBreeds(self.alert.pet.breedId);
         });
       }
       else {

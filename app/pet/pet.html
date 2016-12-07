@@ -12,12 +12,15 @@
         <p>Race:
           <span data-ng-bind="PetCtrl.pet.breed.name"></span>
         </p>
-        <p>Color:
+        <p>Couleur:
           <span data-ng-bind="PetCtrl.pet.color"></span>
         </p>
+        <p>Signes distinctif:
+          <span data-ng-bind="PetCtrl.pet.particularity"></span>
+        </p>
       </div>
-      <button id="lost-button1" ui-sref="nav.addAlert({petId:PetCtrl.pet._id})"
-              class="button button-balanced  button-block">Je l'ai perdu
+      <button ui-sref="nav.addAlert({petId:PetCtrl.pet._id})"
+              class="button button-assertive button-block">Je l'ai perdu
       </button>
     </div>
   </ion-content>

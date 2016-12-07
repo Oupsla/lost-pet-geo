@@ -14,7 +14,7 @@
     };
 
     self.getPet = function (petId) {
-      return $http.get(url + "/pets/" + petId)
+      return $http.get(url + "pets/" + petId)
         .then((resp) => resp.data);
     };
 
