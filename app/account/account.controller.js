@@ -13,7 +13,6 @@
     function getAccount() {
       AccountService.getAccount(self.account.id).then(function (result) {
         self.account = result;
-        console.log(result);
       });
     }
 
