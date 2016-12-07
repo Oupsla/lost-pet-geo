@@ -1,70 +1,39 @@
 <ion-view title="Account" id="tab-account">
+
+
   <ion-content padding="true" class="has-header">
 
-    <form name="AccountCtrl.accountForm" id="AccountCtrl.accountForm" class="list">
-      <div>
-        <label class="item item-input">
-          <span class="input-label">LastName:</span>
-          <p data-ng-bind="AccountCtrl.account.lastName"></p>
-        </label>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">First Name:</span>
-          <p data-ng-bind="AccountCtrl.account.firstName"></p>
-        </label>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">Email:</span>
-          <p data-ng-bind="AccountCtrl.account.email"></p>
-        </label>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">Phone:</span>
-          <p data-ng-bind="AccountCtrl.account.phone"></p>
-        </label>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">Birth Date:</span>
-          <p data-ng-bind="AccountCtrl.account.birthdate"></p>
-        </label>
-      </div>
-      <div>
-        <h2 class="text-center">Address</h2>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">N°</span>
-          <p required type="text" placeholder="N°" data-ng-bind="AccountCtrl.account.address.number">
-        </label>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">Street</span>
-          <p required type="text" placeholder="street" data-ng-bind="AccountCtrl.account.address.street">
-        </label>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">Postal Code</span>
-          <p required type="number" placeholder="zip" data-ng-bind="AccountCtrl.account.address.zip">
-        </label>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">City</span>
-          <p required type="text" placeholder="city" data-ng-bind="AccountCtrl.account.address.city">
-        </label>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">Country</span>
-          <p required type="text" placeholder="country" data-ng-bind="AccountCtrl.account.address.country">
-        </label>
-      </div>
-    </form>
+
+
+    <ion-list inset>
+      <ion-item class="item" *ngFor="let item of items" (click)="itemSelected(item)">
+        <div>
+          <img data-ng-src="http://www.freeiconspng.com/uploads/account-profile-icon-1.png" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
+        </div>
+      </ion-item>
+      <ion-item class="item item-icon-left item-text-wrap" *ngFor="let item of items" (click)="itemSelected(item)">
+        <i class="icon ion-person"></i>
+        {{AccountCtrl.account.firstName}} {{AccountCtrl.account.lastName}}
+      </ion-item>
+      <ion-item class="item item-icon-left item-text-wrap" *ngFor="let item of items" (click)="itemSelected(item)">
+        <i class="icon ion-email" ></i>
+        {{AccountCtrl.account.email}}
+      </ion-item>
+      <ion-item class="item item-icon-left item-text-wrap" *ngFor="let item of items" (click)="itemSelected(item)">
+        <i class="icon ion-ios-telephone" ></i>
+        <a href="tel:{{AccountCtrl.account.phone}}" >{{AccountCtrl.account.phone}}</a>
+      </ion-item>
+      <ion-item class="item item-icon-left item-text-wrap" *ngFor="let item of items" (click)="itemSelected(item)">
+        <i class="icon icon ion-map" ></i>
+        {{AccountCtrl.account.address.number}} {{AccountCtrl.account.address.street}} {{AccountCtrl.account.address.zip}} {{AccountCtrl.account.address.france}}
+      </ion-item>
+      <ion-item  class="item item-text-wrap" class="wrap" *ngFor="let item of items item-text-wrap">
+        Pensez à ajouter une description, Pensez à ajouter une description, Pensez à ajouter une description, Pensez à ajouter une description
+        Pensez à ajouter une description, Pensez à ajouter une description, Pensez à ajouter une description, Pensez à ajouter une description
+      </ion-item>
+
+    </ion-list>
+
+
   </ion-content>
 </ion-view>
