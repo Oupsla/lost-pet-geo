@@ -4,7 +4,6 @@
   angular
     .module('navs')
     .controller('NavsCtrl', navController);
-
   navController.$inject = ['AccountService'];
 
   function navController(AccountService) {
