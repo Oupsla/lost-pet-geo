@@ -8,8 +8,8 @@
   addAlertController.$inject = ['$stateParams', 'AlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService'];
 
   function addAlertController($stateParams, AlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService) {
-
     let self = this;
+    self.myPetId = $stateParams.petId;
 
     function getSpecies() {
       self.loaders.species = true;
@@ -160,6 +160,12 @@
     }
 
     function init() {
+      if(self.myPetId != ""){
+        PetService.getPet(self.myPetId).then(function(result){
+          self.pet = result;
+       });
+     }
+
       self.loaders = {};
       self.breeds = {};
       self.species = [];
@@ -176,8 +182,6 @@
       else {
         getSpecies();
       }
-
-
     }
 
     init();
