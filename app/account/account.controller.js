@@ -13,12 +13,13 @@
     function getAccount() {
       AccountService.getAccount(self.account.id).then(function (result) {
         self.account = result;
+        console.log(result);
       });
     }
 
     function init() {
       self.account = {
-        id: "5807394d416656001d4012e7"
+        id: "584532c4926c47001d9209bb"
       };
 
       getAccount();
