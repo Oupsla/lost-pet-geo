@@ -25,7 +25,7 @@
 
     function init() {
       self.nav = {
-        id: '5807394d416656001d4012e7'
+        id: '584532c4926c47001d9209bb'
       };
 
       self.getAccount();
