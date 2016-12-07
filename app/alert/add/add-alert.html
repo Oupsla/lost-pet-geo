@@ -3,52 +3,51 @@
 
 
     <form id="ajouter-form1" class="list">
-      <button data-ng-if="! AddAlertCtrl.pet.photo" class="button button-block button-calm"
+      <button data-ng-if="! AddAlertCtrl.alert.pet.photo" class="button button-block button-calm"
               data-ng-click="AddAlertCtrl.takePhoto()">
         <i class="ion-ios-camera"></i> Ajouter une photo
       </button>
 
       <label class="item item-input">
         <div class="input-label">Nom</div>
-        <input type="text" placeholder="Felix" data-ng-model="AddAlertCtrl.pet.name">
+        <input type="text" placeholder="Felix" data-ng-model="AddAlertCtrl.alert.pet.name">
       </label>
 
-      <label class="item item-input" data-ng-if="AddAlertCtrl.pet.photo"
+      <label class="item item-input" data-ng-if="AddAlertCtrl.alert.pet.photo"
              data-ng-click="AddAlertCtrl.takePhoto();">
-        <img data-ng-src="{{AddAlertCtrl.pet.photo}}" width="50%" height="auto"
+        <img data-ng-src="{{AddAlertCtrl.alert.pet.photo}}" width="50%" height="auto"
              style="display: block; margin-left: auto; margin-right: auto;" data-ng-click="AddAlertCtrl.takePhoto();">
       </label>
       <ion-spinner data-ng-if="AddAlertCtrl.loaders.species || AddAlertCtrl.loaders.breeds"></ion-spinner>
 
+      <ion-spinner data-ng-if="AddAlertCtrl.loaders.species || AddAlertCtrl.loaders.breeds"></ion-spinner>
       <label class="item item-input item-select" data-ng-show="! AddAlertCtrl.loaders.species">
-        <div class="input-label">Espèce</div>
-        {{AddAlertCtrl.pet.species}}
-        <select data-ng-model="AddAlertCtrl.alert.pet.species" data-ng-change="AddAlertCtrl.getBreeds()">
-          <option data-ng-repeat="species in AddAlertCtrl.species">{{species.name}}</option>
+        <span class="input-label">Espèce</span>
+        <select data-ng-model="AddAlertCtrl.alert.pet.species" data-ng-change="AddAlertCtrl.getBreeds()"
+                data-ng-options="species.name for species in AddAlertCtrl.species">
         </select>
       </label>
 
       <label class="item item-input item-select"
-             data-ng-show="! AddAlertCtrl.loaders.breeds && AddAlertCtrl.breeds[AddAlertCtrl.pet.species]">
-        <div class="input-label">Race</div>
-        <select data-ng-model="AddAlertCtrl.pet.breed" data-ng-show="! AddAlertCtrl.loaders.species">
-          <option data-ng-repeat="breeds in AddAlertCtrl.breeds[AddAlertCtrl.pet.species]">{{breeds.name}}</option>
+             data-ng-show="!AddAlertCtrl.loaders.breeds && AddAlertCtrl.breeds[AddAlertCtrl.alert.pet.species._id]">
+        <span class="input-label">Race</span>
+        <select data-ng-model="AddAlertCtrl.alert.pet.breed" data-ng-options="breeds.name for breeds in AddAlertCtrl.breeds[AddAlertCtrl.alert.pet.species._id]">
         </select>
       </label>
 
       <label class="item item-input">
         <div class="input-label">Couleur</div>
-        <input type="text" placeholder="Noir" data-ng-model="AddAlertCtrl.pet.color">
+        <input type="text" placeholder="Noir" data-ng-model="AddAlertCtrl.alert.pet.color">
       </label>
       <label class="item item-input">
         <div class="input-label">Signes distinctifs</div>
-        <input type="text" placeholder="Collier bleu" data-ng-model="AddAlertCtrl.pet.particularity">
+        <input type="text" placeholder="Collier bleu" data-ng-model="AddAlertCtrl.alert.pet.particularity">
       </label>
       <label class="item item-input">
         <div class="input-label">Commentaire</div>
-        <input type="text" placeholder="A l'air très apeuré" data-ng-model="AddAlertCtrl.pet.comment">
+        <input type="text" placeholder="A l'air très apeuré" data-ng-model="AddAlertCtrl.alert.pet.comment">
       </label>
-      <button class="button button-balanced button-block"><i class="ion-plus"></i> Ajouter</button>
+      <button class="button button-balanced button-block" ng-click="AddAlertCtrl.addAlert()"><i class="ion-plus"></i> Ajouter</button>
     </form>
   </ion-content>
 </ion-view>

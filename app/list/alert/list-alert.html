@@ -1,4 +1,9 @@
 <ion-view title="Liste alerte" id="tab-list-alert">
+  <ion-nav-buttons side="right">
+    <button class="button" ui-sref="nav.addAlert">
+      <i class="ion-plus-circled"></i>
+    </button>
+  </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
     <ion-spinner data-ng-if="ListAlertCtrl.loaders.getList"></ion-spinner>
     <ion-list can-swipe="true" id="listAlertPet-lost" data-ng-if="!ListAlertCtrl.loaders.getList">
@@ -15,11 +20,11 @@
         </h2positive>
         <ion-option-button data-ng-if="alert.isMyAlert" class="button-assertive"
                            ng-click="ListAlertCtrl.delete(alert)">
-          <i class="ion-minus-circled"></i> Sup
+          <i class="ion-minus-circled"></i>&nbsp; Sup
         </ion-option-button>
         <ion-option-button data-ng-if="alert.isMyAlert" class="button-positive"
                            ng-click="ListAlertCtrl.update(alert)">
-          <i class="ion-edit"></i> Màj
+          <i class="ion-edit"></i>&nbsp; Màj
         </ion-option-button>
 
       </ion-item>

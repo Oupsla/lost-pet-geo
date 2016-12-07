@@ -1,4 +1,9 @@
 <ion-view title="Mes animaux" id="tab-list-pet">
+  <ion-nav-buttons side="right">
+    <button class="button" ui-sref="nav.addPet">
+      <i class="ion-plus-circled"></i>
+    </button>
+  </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
     <ion-list can-swipe="true" id="listPet" can-swipe="true">
       <ion-item ui-sref="nav.pet({petId: pet._id})" show-delete="true"

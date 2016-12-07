@@ -13,19 +13,9 @@
 
     function getSpecies() {
       self.loaders.species = true;
+      self.species = [];
       PetService.getSpecies().then(function (result) {
         self.species = result;
-        if (self.pet.speciesId) {
-          self.pet.species = {};
-          for (var index in self.species) {
-            var species = self.species[index];
-
-            if (species._id === self.pet.speciesId) {
-              self.pet.species = species;
-              return;
-            }
-          }
-        }
       }).finally(function () {
         self.loaders.species = false;
       });
@@ -33,32 +23,26 @@
 
     self.getBreeds = function () {
       self.loaders.breeds = true;
-      if (!self.breeds[self.pet.species]) {
-        PetService.getBreeds(self.pet.species).then(function (result) {
-          self.breeds[result.species] = result.breeds;
-          if (self.pet.breedId) {
-            self.pet.breed = {};
-            for (var index in self.breeds) {
-              var breed = self.breeds[index];
-              if (breed._id === self.pet.breedId) {
-                self.pet.breed = breed;
-              }
-            }
-          }
+      console.log(self.alert.pet.species);
+      if (!self.breeds[self.alert.pet.species._id]) {
+        PetService.getBreeds(self.alert.pet.species._id).then(function (result) {
+          self.breeds[self.alert.pet.species._id] = result;
         }).finally(function () {
           self.loaders.breeds = false;
         });
       }
     };
 
-    function addAlert() {
+    self.addAlert = function () {
       showIonicLoading();
+      self.alert.breedId = self.alert.pet.breed._id;
+      self.alert.speciesId = self.alert.pet.species._id;
       AlertService.addAlert(self.alert).then(function (result) {
         console.log(result);
       }).finally(function () {
         hideIonicLoading();
       });
-    }
+    };
 
     function addImage() {
       $ionicPlatform.ready(function () {
@@ -98,7 +82,7 @@
     }
 
     function onPhotoDataSuccess(imageData) {
-      self.pet.photo = 'data:image/jpeg;base64,' + imageData;
+      self.alert.pet.photo = 'data:image/jpeg;base64,' + imageData;
       hideIonicLoading();
     }
 
@@ -120,7 +104,7 @@
     }
 
     function deletePicture() {
-      self.pet.photo = '';
+      self.alert.pet.photo = '';
       return true;
     }
 
@@ -147,7 +131,7 @@
           return true;
         }
       };
-      if (self.pet.photo) {
+      if (self.alert.pet.photo) {
         opts.destructiveText = 'Supprimer';
         opts.destructiveButtonClicked = deletePicture;
       }

@@ -18,17 +18,17 @@
     };
 
     self.delete = function(id) {
-      return $http.delete(url + "delete/alerts/"  + id)
+      return $http.delete(url + "alerts/"  + id)
         .then((resp) => resp.data);
     };
 
     self.addAlert = function (alert) {
-      return $http.post(url + "alert/add", alert)
+      return $http.post(url + "alerts", alert)
         .then((resp) => resp.data);
     };
 
     self.update = function (alert) {
-      return $http.post(url + "alert/update", alert)
+      return $http.post(url + "alerts/" + alert._id, alert)
         .then((resp) => resp.data);
     };
   }
