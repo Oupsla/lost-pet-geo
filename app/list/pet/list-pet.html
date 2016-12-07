@@ -7,7 +7,11 @@
   <ion-content padding="true" class="has-header">
     <ion-list data-ng-if="!ListPetCtrl.listPet.length">
       <ion-item>
-        Pas d'animaux
+        Pas encore d'animaux
+        <button class="button button-full button-balanced" ui-sref="nav.addPet">
+          <i class="ion-plus-circled"></i> &nbsp;
+          Ajouter un animal
+        </button>
       </ion-item>
     </ion-list>
     <ion-list can-swipe="true" id="listPet" can-swipe="true" data-ng-if="ListPetCtrl.listPet.length">

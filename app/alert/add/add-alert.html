@@ -2,7 +2,7 @@
   <ion-content padding="true" class="has-header">
 
 
-    <form id="ajouter-form1" class="list">
+    <form name="AddAlertCtrl.addForm" class="list">
       <button data-ng-if="! AddAlertCtrl.alert.pet.photo" class="button button-block button-calm"
               data-ng-click="AddAlertCtrl.takePhoto()">
         <i class="ion-ios-camera"></i> Ajouter une photo
@@ -31,7 +31,8 @@
       <label class="item item-input item-select"
              data-ng-show="!AddAlertCtrl.loaders.breeds && AddAlertCtrl.breeds[AddAlertCtrl.alert.pet.species._id]">
         <span class="input-label">Race</span>
-        <select data-ng-model="AddAlertCtrl.alert.pet.breed" data-ng-options="breeds.name for breeds in AddAlertCtrl.breeds[AddAlertCtrl.alert.pet.species._id]">
+        <select data-ng-model="AddAlertCtrl.alert.pet.breed"
+                data-ng-options="breeds.name for breeds in AddAlertCtrl.breeds[AddAlertCtrl.alert.pet.species._id]">
         </select>
       </label>
 
@@ -47,7 +48,12 @@
         <div class="input-label">Commentaire</div>
         <input type="text" placeholder="A l'air très apeuré" data-ng-model="AddAlertCtrl.alert.pet.comment">
       </label>
-      <button class="button button-balanced button-block" ng-click="AddAlertCtrl.addAlert()"><i class="ion-plus"></i> Ajouter</button>
+      <button class="button button-balanced button-block"
+              data-ng-disabled="AddAlertCtrl.addForm.$invalid || AddAlertCtrl.loaders.breeds || AddAlertCtrl.loaders.species"
+              ng-click="AddAlertCtrl.addAlert()">
+        <i class="ion-plus"></i>&nbsp;
+        Ajouter
+      </button>
     </form>
   </ion-content>
 </ion-view>

@@ -23,7 +23,6 @@
 
     self.getBreeds = function () {
       self.loaders.breeds = true;
-      console.log(self.alert.pet.species);
       if (!self.breeds[self.alert.pet.species._id]) {
         PetService.getBreeds(self.alert.pet.species._id).then(function (result) {
           self.breeds[self.alert.pet.species._id] = result;
