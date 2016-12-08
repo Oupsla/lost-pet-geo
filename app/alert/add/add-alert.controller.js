@@ -169,6 +169,7 @@
       if (self.myPetId) {
         PetService.getPet(self.myPetId).then(function (result) {
           self.alert.pet = result;
+          self.alert.state = 'Perdu';
           getSpecies(self.alert.pet.speciesId);
           self.getBreeds(self.alert.pet.breedId);
         });

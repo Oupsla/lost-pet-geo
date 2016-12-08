@@ -10,9 +10,11 @@
     let self = this;
 
     self.getAccount = function () {
-      AccountService.getAccount(self.nav._id).then(function (result) {
-        self.account = result;
-      });
+      if(self.userId) {
+        AccountService.getAccount(self.userId).then(function (result) {
+          self.account = result;
+        });
+      }
     };
 
     self.disconnect = function () {
@@ -25,10 +27,6 @@
 
     function init() {
       getAccountId();
-
-      self.nav = {
-        _id: self.userId
-      };
 
       self.getAccount();
       self.today = new Date();
