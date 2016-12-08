@@ -24,7 +24,10 @@
             var result = results[index];
 
             if (result.state === 'Perdu') {
-              result.class = "assertive";
+              result.class = 'ion-android-warning';
+            }
+            else {
+              result.class = 'ion-checkmark-circled';
             }
 
             if (result.userId === self.userId) {

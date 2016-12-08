@@ -179,6 +179,7 @@
     }
 
     function init() {
+      self.states = ['Perdu', 'Trouvé'];
       getAccountId();
       document.addEventListener('deviceready', onDeviceReady, false);
       reset();

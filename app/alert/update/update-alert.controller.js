@@ -165,6 +165,7 @@
     }
 
     function init() {
+      self.states = ['Perdu', 'Trouvé'];
       self.loaders = {getAlert : false};
       self.breeds = {};
       self.species = [];

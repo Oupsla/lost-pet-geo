@@ -6,17 +6,11 @@
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
     <div class="list card">
-      <div class="item item-avatar">
-        <i class="ion-android-warning">{{AlertCtrl.alert.state}} </i>
-        <h2 data-ng-bind="AlertCtrl.alert.pet.name"></h2>
-        <p data-ng-bind="AlertCtrl.alert.date"></p>
-      </div>
-
-      <div class="item item-avatar">
-        <h1 data-ng-bind="AlertCtrl.alert.pet.name"></h1>
-      </div>
       <div class="item item-body">
-        <img class="full-image" data-ng-src="{{AlertCtrl.alert.pet.photo}}">
+        <h1 class="ion-android-warning">{{AlertCtrl.alert.state}} </h1>
+        <h1 data-ng-bind="AlertCtrl.alert.pet.name"></h1>
+        <img class="full-image" data-ng-src="{{AlertCtrl.alert.photo}}">
+        <p data-ng-bind="AlertCtrl.alert.date | date"></p>
         <p>Type:
           <span data-ng-bind="AlertCtrl.alert.pet.species.name"></span>
         </p>

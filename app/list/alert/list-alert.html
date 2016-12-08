@@ -13,10 +13,12 @@
     </ion-list>
     <ion-list can-swipe="true" id="listAlertPet-lost" data-ng-if="!ListAlertCtrl.loaders.getList">
       <ion-item ui-sref="nav.alert({alertId: alert._id})" ng-repeat="alert in ListAlertCtrl.listAlert track by $index"
-                class="item-thumbnail-left" ng-class="alert.class">
+                class="item-thumbnail-left">
         <img ng-if="alert.photo" ng-src="{{alert.photo}}"/>
         <h2positive>
-          <p data-ng-bind="alert.state"></p>
+
+          <h2 ng-class="alert.class" data-ng-bind="alert.state"></h2>
+
           <p>
             <span data-ng-bind="alert.pet.species.name"></span>
             <span data-ng-bind="alert.pet.breed.name"></span>

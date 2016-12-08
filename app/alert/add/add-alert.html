@@ -25,7 +25,12 @@
                 data-ng-options="species.name for species in AddAlertCtrl.species">
         </select>
       </label>
-
+      <label class="item item-input item-select">
+        <span class="input-label">Status</span>
+        <select data-ng-model="AddAlertCtrl.alert.state"
+                data-ng-options="state for state in AddAlertCtrl.states">
+        </select>
+      </label>
       <label class="item item-input item-select"
              data-ng-show="!AddAlertCtrl.loaders.breeds && AddAlertCtrl.breeds[AddAlertCtrl.alert.pet.species._id]">
         <span class="input-label">Race</span>
