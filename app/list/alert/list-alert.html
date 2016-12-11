@@ -5,13 +5,13 @@
     </button>
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
-    <ion-spinner data-ng-if="ListAlertCtrl.loaders.getList"></ion-spinner>
-    <ion-list data-ng-if="!ListAlertCtrl.loaders.getList && !ListAlertCtrl.listAlert.length">
+    <ion-spinner data-ng-if="ListAlertCtrl.loaders.getList">Chargement ...</ion-spinner>
+    <ion-list data-ng-if="(!ListAlertCtrl.loaders.getList) && (!ListAlertCtrl.listAlert.length)">
       <ion-item class="primary">
         Pas d'alerte
       </ion-item>
     </ion-list>
-    <ion-list can-swipe="true" id="listAlertPet-lost" data-ng-if="!ListAlertCtrl.loaders.getList">
+    <ion-list can-swipe="true" id="listAlertPet-lost">
       <ion-item ui-sref="nav.alert({alertId: alert._id})" ng-repeat="alert in ListAlertCtrl.listAlert track by $index"
                 class="item-thumbnail-left">
         <img ng-if="alert.photo" ng-src="{{alert.photo}}"/>

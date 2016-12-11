@@ -5,8 +5,8 @@
     </button>
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
-    <ion-spinner data-ng-if="ListAlertCtrl.loaders.getList"></ion-spinner>
-    <ion-list data-ng-if="!ListPetCtrl.listPet.length && !ListAlertCtrl.loaders.getList">
+    <ion-spinner data-ng-if="ListPetCtrl.loaders.getList">Chargement ...</ion-spinner>
+    <ion-list data-ng-if="(!ListPetCtrl.listPet.length) && (!ListPetCtrl.loaders.getList)">
       <ion-item>
         Pas encore d'animaux
         <button class="button button-full button-balanced" ui-sref="nav.addPet">
@@ -15,7 +15,7 @@
         </button>
       </ion-item>
     </ion-list>
-    <ion-list can-swipe="true" id="listPet" can-swipe="true" data-ng-if="ListPetCtrl.listPet.length && !ListAlertCtrl.loaders.getList">
+    <ion-list can-swipe="true" id="listPet" can-swipe="true" data-ng-if="ListPetCtrl.listPet.length && !ListPetCtrl.loaders.getList">
       <ion-item ui-sref="nav.pet({petId: pet._id})" show-delete="true"
                 ng-repeat="pet in ListPetCtrl.listPet track by $index" class="item-thumbnail-left positive">
         <img ng-if="pet.photo" data-ng-src="{{pet.photo}}"/>

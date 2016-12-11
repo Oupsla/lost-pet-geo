@@ -161,13 +161,6 @@
       hideIonicLoading();
     }
 
-    function getPet() {
-      PetService.getPet(self.petId).then(function (result) {
-        self.pet = result;
-        resetSpecies(self.pet.speciesId);
-      });
-    }
-
     function reset() {
       self.loaders = {};
       self.images = [];
@@ -177,6 +170,19 @@
     function resetSpecies(id) {
       self.species = [];
       getSpecies(id);
+    }
+
+    function resetBreeds(id) {
+      self.breeds = [];
+      self.getBreeds(id);
+    }
+
+    function getPet() {
+      PetService.getPet(self.petId).then(function (result) {
+        self.pet = result;
+        resetSpecies(self.pet.speciesId);
+        resetBreeds(self.pet.breedId);
+      });
     }
 
     function init() {
