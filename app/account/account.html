@@ -1,72 +1,37 @@
-<ion-view title="Compte" id="tab-account">
-  <ion-content padding="true" class="has-header">
-    <div class="text-center" data-ng-if="AccountCtrl.loading">
-      <ion-spinner icon="lines"></ion-spinner>
-    </div>
-    <form name="AccountCtrl.accountForm" id="AccountCtrl.accountForm" data-ng-if="!AccountCtrl.loading" class="list">
-      <div>
-        <label class="item item-input">
-          <span class="input-label">Nom:</span>
-          <p data-ng-bind="AccountCtrl.account.lastName"></p>
-        </label>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">Prénom:</span>
-          <p data-ng-bind="AccountCtrl.account.firstName"></p>
-        </label>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">Email:</span>
-          <p data-ng-bind="AccountCtrl.account.email"></p>
-        </label>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">Téléphone:</span>
-          <p data-ng-bind="AccountCtrl.account.phone"></p>
-        </label>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">Date de naissance:</span>
-          <p data-ng-bind="AccountCtrl.account.birthdate"></p>
-        </label>
-      </div>
-      <div>
-        <h2 class="text-center">Adresse</h2>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">N°</span>
-          <p required type="text" placeholder="N°" data-ng-bind="AccountCtrl.account.address.number">
-        </label>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">Rue</span>
-          <p required type="text" placeholder="street" data-ng-bind="AccountCtrl.account.address.street">
-        </label>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">Code postal</span>
-          <p required type="number" placeholder="zip" data-ng-bind="AccountCtrl.account.address.zip">
-        </label>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">Ville</span>
-          <p required type="text" placeholder="city" data-ng-bind="AccountCtrl.account.address.city">
-        </label>
-      </div>
-      <div>
-        <label class="item item-input">
-          <span class="input-label">Pays</span>
-          <p required type="text" placeholder="country" data-ng-bind="AccountCtrl.account.address.country">
-        </label>
-      </div>
-    </form>
-  </ion-content>
+<ion-view title="Account" id="tab-account" >
+  <ion-nav-buttons side="right">
+    <button class="button" >
+      <i class="ion-edit"></i>
+    </button>
+  </ion-nav-buttons>
+    <div class= "list has-header">
+      <ul class="list">
+        <li class="item">
+          <div>
+            <img data-ng-src="http://www.freeiconspng.com/uploads/account-profile-icon-1.png" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
+          </div>
+        </li>
+
+        <li class="item item-icon-left item-text-wrap">
+          <i class="icon ion-person"></i>
+          {{AccountCtrl.account.firstName}} {{AccountCtrl.account.lastName}}
+        </li>
+
+        <li class="item item-icon-left item-text-wrap">
+          <i class="icon ion-email" ></i>
+          {{AccountCtrl.account.email}}
+        </li>
+
+        <li class="item item-icon-left item-text-wrap">
+          <i class="icon ion-ios-telephone" ></i>
+          <a href="tel:{{AccountCtrl.account.phone}}" >{{AccountCtrl.account.phone}}</a>
+        </li>
+
+        <li class="item item-icon-left item-text-wrap">
+          <i class="icon icon ion-map" ></i>
+          {{AccountCtrl.account.address.number}} {{AccountCtrl.account.address.street}} {{AccountCtrl.account.address.country}}
+        </li>
+      </ul>
+</div>
+
 </ion-view>
