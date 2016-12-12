@@ -29,8 +29,8 @@
                            ng-click="ListAlertCtrl.delete(alert)">
           <i class="ion-minus-circled"></i>&nbsp; Sup
         </ion-option-button>
-        <ion-option-button data-ng-if="alert.isMyAlert" class="button-positive"
-                           ui-sref="nav.updateAlert({alertId : alert._id})">
+        <ion-option-button  data-ng-if="alert.isMyAlert" class="button-positive"
+                            ui-sref="nav.updateAlert({alertId : alert._id})">
           <i class="ion-edit"></i>&nbsp; Màj
         </ion-option-button>
       </ion-item>

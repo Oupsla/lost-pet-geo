@@ -3,8 +3,8 @@
     .module('listPet')
     .controller('ListPetCtrl', listPetController);
 
-  listPetController.$inject = ['$stateParams', 'PetService', '$state'];
-  function listPetController($stateParams, PetService, $state) {
+  listPetController.$inject = ['$stateParams', 'PetService', '$state', '$ionicPopup'];
+  function listPetController($stateParams, PetService, $state, $ionicPopup) {
     let self = this;
 
     function getListPet() {
@@ -12,6 +12,7 @@
       self.loaders.getList = true;
       PetService.getListPet(self.userId).then(function (result) {
         self.listPet = result;
+      }).finally(function () {
       }).finally(function () {
       }).finally(function () {
         self.loaders.getList = false;
@@ -29,8 +30,17 @@
     }
 
     self.delete = function (id) {
-      PetService.deletePet(id).then(function () {
-        reset();
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Supprimer l\'animal',
+        template: 'Êtes-vous sur de vouloir supprimer l\'animal ?'
+      });
+      confirmPopup.then(function (res) {
+        if (res) {
+          PetService.deletePet(id).then(function () {
+            reset();
+          });
+        } else {
+        }
       });
     };
 
@@ -40,7 +50,6 @@
 
     function init() {
       self.loaders = {getList: true};
-
       self.userId = $stateParams.userId;
       self.userId = '584532c4926c47001d9209bb';
       getListPet();

@@ -37,6 +37,7 @@
               var result = results[index];
               if (result._id === id) {
                 self.pet.breed = result;
+                self.oldPet = angular.copy(result);
               }
             }
           }
@@ -49,16 +50,13 @@
 
 
     self.updatePet = function () {
-      $ionicLoading.show({
-        template: '<ion-spinner></ion-spinner>'
-      });
+      showIonicLoading();
 
       PetService.updatePet(self.pet).then(function (result) {
         console.log(result);
+        reset();
       }).finally(function () {
-        $timeout(function () {
-          $ionicLoading.hide();
-        }, 1000);
+        hideIonicLoading();
       });
     };
 
@@ -190,7 +188,6 @@
       self.petId = $stateParams.petId;
       reset();
     }
-
 
     init();
   }

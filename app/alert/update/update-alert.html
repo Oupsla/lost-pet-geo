@@ -1,5 +1,5 @@
 <ion-view title="Mettre à jour l'alerte" id="tab-update-alert">
-  <ion-content pUpdateing="true" class="has-header">
+  <ion-content padding="true" class="has-header">
     <form name="UpdateAlertCtrl.UpdateForm" class="list">
       <button data-ng-if="! UpdateAlertCtrl.alert.pet.photo" class="button button-block button-calm"
               data-ng-click="UpdateAlertCtrl.takePhoto()">
@@ -15,6 +15,11 @@
       <label class="item item-input">
         <div class="input-label">Nom</div>
         <input type="text" placeholder="Felix" data-ng-model="UpdateAlertCtrl.alert.pet.name">
+      </label>
+
+      <label class="item item-input">
+        <div class="input-label">Date</div>
+        <input type="date" placeholder="Date" data-ng-model="UpdateAlertCtrl.alert.date">
       </label>
 
       <label class="item item-input" data-ng-if="UpdateAlertCtrl.alert.pet.photo"

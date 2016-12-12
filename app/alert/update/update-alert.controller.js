@@ -13,6 +13,7 @@
     function getAlert(){
       self.loaders.getAlert = true;
       AlertService.getAlert(self.alertId).then(function(result){
+        result.date = new Date(result.date);
         self.alert = result;
         getSpecies(self.alert.pet.speciesId);
         self.getBreeds(self.alert.pet.breedId);

@@ -3,16 +3,25 @@
     .module('listAlert')
     .controller('ListAlertCtrl', listAlertController);
 
-  listAlertController.$inject = ['AlertService', 'AccountService'];
-  function listAlertController(AlertService, AccountService) {
+  listAlertController.$inject = ['AlertService', 'AccountService', '$state', '$ionicPopup'];
+  function listAlertController(AlertService, AccountService, $state, $ionicPopup) {
     let self = this;
 
     self.delete = function (item) {
-      AlertService.delete(item._id);
-    };
 
-    self.update = function (item) {
-      AlertService.update(item);
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Supprimer l\'annonce',
+        template: 'Êtes-vous sur de vouloir supprimer l\'annonce ?'
+      });
+
+      confirmPopup.then(function (res) {
+        if (res) {
+          AlertService.delete(item._id).then(function () {
+            reset();
+          });
+        } else {
+        }
+      });
     };
 
     function getListAlert() {
@@ -46,10 +55,14 @@
       self.userId = AccountService.getAccountId();
     }
 
+    function reset() {
+      getListAlert();
+    }
+
     function init() {
       self.loaders = {getList: true};
       getAccountId();
-      getListAlert();
+      reset();
     }
 
     init();
