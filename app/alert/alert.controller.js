@@ -8,10 +8,12 @@
     let self = this;
 
     function getAlert(id) {
-
-      AlertService.getAlert(id).then(function (result) {
-        self.alert = result;
-      });
+      self.loading = true;
+      AlertService.getAlert(id)
+        .then(function (result) {
+          self.alert = result;
+        })
+        .finally(() => self.loading = false)
     }
 
     function init() {

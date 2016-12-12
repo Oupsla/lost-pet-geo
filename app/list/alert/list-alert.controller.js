@@ -17,12 +17,9 @@
 
     function getListAlert() {
       self.loaders.getList = true;
-      AlertService.getListAlert().then(function (results) {
-
-        if (results.length) {
-          for (var index in results) {
-            var result = results[index];
-
+      AlertService.getListAlert()
+        .then(function (results) {
+          results.forEach((result) => {
             if (result.state === 'Perdu') {
               result.class = "assertive";
             }
@@ -30,13 +27,12 @@
             if (result.userId === self.userId) {
               result.isMyAlert = true;
             }
-          }
-        }
+          });
 
-        self.listAlert = result;
-      }).finally(function () {
-        self.loaders.getList = false;
-      });
+          self.listAlert = results;
+        }).finally(function () {
+          self.loaders.getList = false;
+        });
     }
 
     function getAccountId() {

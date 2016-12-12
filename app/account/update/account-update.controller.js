@@ -11,15 +11,19 @@
     let self = this;
 
     function getAccount() {
+      self.loading = true;
       AccountService.getAccount(self.account.id).then(function (result) {
         self.account = result;
-      });
+      })
+      .finally(() => self.loading = false);
     }
 
     self.updateAccount = function () {
+      self.loading = true;
       AccountService.updateAccount(self.account).then(function () {
         $state.go('tab.account');
-      });
+      })
+      .finally(() => self.loading = false);
     };
 
     function init() {
