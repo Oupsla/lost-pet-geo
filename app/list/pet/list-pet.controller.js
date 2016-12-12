@@ -10,22 +10,22 @@
     function getListPet() {
       self.listPet = [];
       self.loaders.getList = true;
-      PetService.getListPet(self.userId).then(function (result) {
-        self.listPet = result;
-      }).finally(function () {
-      }).finally(function () {
-        self.loaders.getList = false;
-      });
+      PetService.getListPet(self.userId)
+        .then(function (result) {
+          self.listPet = result;
+        })
+        .finally(() => self.loaders.getList = true);
     }
 
     function getSpecies(id) {
       self.loaders.species = true;
 
-      PetService.getSpecies(id).then(function (result) {
-        self.species = result;
-      }).finally(function () {
-        self.loaders.species = false;
-      });
+      PetService.getSpecies(id)
+        .then(function (result) {
+          self.species = result;
+        }).finally(function () {
+          self.loaders.species = false;
+        });
     }
 
     self.delete = function (id) {
