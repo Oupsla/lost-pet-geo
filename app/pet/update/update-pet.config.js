@@ -9,7 +9,7 @@
   function configUpdatePet($stateProvider) {
     $stateProvider
       .state('nav.updatePet', {
-        url: '/pet/update',
+        url: '/pet/update/:petId',
         views: {
           'menuContent': {
             templateUrl: 'pet/update/update-pet.html',

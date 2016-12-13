@@ -1,8 +1,8 @@
 <ion-view title="Mise à jour d'un animal" id="nav-update-pet">
-  <ion-content pupdateing="true" class="has-header">
+  <ion-content padding="true" class="has-header">
 
     <form id="UpdatePetCtrl.updateForm" class="list">
-      <button data-ng-if="! UpdatePetCtrl.pet.photo" class="button button-block button-calm"
+      <button data-ng-if="! UpdatePetCtrl.pet.photo" class="button button-block button-royal"
               data-ng-click="UpdatePetCtrl.takePhoto()">
         <i class="ion-ios-camera"></i> Ajouter une photo
       </button>
@@ -18,16 +18,16 @@
       <ion-spinner data-ng-if="UpdatePetCtrl.loaders.species || UpdatePetCtrl.loaders.breeds"></ion-spinner>
       <label class="item item-input item-select" data-ng-show="! UpdatePetCtrl.loaders.species">
         <span class="input-label">Espèce</span>
-        <select required data-ng-model="UpdatePetCtrl.pet.species" data-ng-change="UpdatePetCtrl.getBreeds()">
-          <option data-ng-repeat="species in UpdatePetCtrl.species">{{species}}</option>
+        <select required data-ng-model="UpdatePetCtrl.pet.species" data-ng-change="UpdatePetCtrl.getBreeds()"
+                data-ng-options="species.name for species in UpdatePetCtrl.species">
         </select>
       </label>
 
       <label class="item item-input item-select"
-             data-ng-show="! UpdatePetCtrl.loaders.breeds && UpdatePetCtrl.breeds[UpdatePetCtrl.pet.species]">
+             data-ng-show="!UpdatePetCtrl.loaders.breeds && UpdatePetCtrl.breeds[UpdatePetCtrl.pet.species._id]">
         <span class="input-label">Race</span>
-        <select required data-ng-model="UpdatePetCtrl.pet.race" data-ng-show="! UpdatePetCtrl.loaders.species">
-          <option data-ng-repeat="breeds in UpdatePetCtrl.breeds[UpdatePetCtrl.pet.species]">{{breeds}}</option>
+        <select required data-ng-model="UpdatePetCtrl.pet.breed"
+                data-ng-options="breeds.name for breeds in UpdatePetCtrl.breeds[UpdatePetCtrl.pet.species._id]">
         </select>
       </label>
 

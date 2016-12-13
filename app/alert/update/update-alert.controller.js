@@ -5,26 +5,52 @@
     .module('updateAlert')
     .controller('UpdateAlertCtrl', updateAlertController);
 
-  updateAlertController.$inject = ['AlertService', 'PetService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet'];
+  updateAlertController.$inject = ['AlertService', 'PetService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', '$stateParams'];
 
-  function updateAlertController(AlertService, PetService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet) {
+  function updateAlertController(AlertService, PetService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, $stateParams) {
     let self = this;
 
-    function getSpecies() {
-      self.loaders.species = true;
+    function getAlert(){
+      self.loaders.getAlert = true;
+      AlertService.getAlert(self.alertId).then(function(result){
+        result.date = new Date(result.date);
+        self.alert = result;
+        getSpecies(self.alert.pet.speciesId);
+        self.getBreeds(self.alert.pet.breedId);
+      });
+    }
 
-      PetService.getSpecies().then(function (result) {
-        self.species = result;
+    function getSpecies(id) {
+      self.loaders.species = true;
+      PetService.getSpecies().then(function (results) {
+        if(id) {
+          for (var index in results) {
+            var result = results[index];
+            if (result._id === id) {
+              self.alert.pet.species = result;
+            }
+          }
+        }
+        self.species = results;
       }).finally(function () {
         self.loaders.species = false;
       });
     }
 
-    self.getBreeds = function () {
+    self.getBreeds = function (id) {
       self.loaders.breeds = true;
-      if (!self.breeds[self.pet.species]) {
-        PetService.getBreeds(self.pet.species).then(function (result) {
-          self.breeds[result.species] = result.breeds;
+      if (!self.breeds[self.alert.pet.species._id]) {
+        PetService.getBreeds(self.alert.pet.species._id).then(function (results) {
+          if(id) {
+            for (var index in results) {
+              var result = results[index];
+              if (result._id === id) {
+                self.alert.pet.breed = result;
+              }
+            }
+          }
+          self.breeds[self.alert.pet.species._id] = results;
+
         }).finally(function () {
           self.loaders.breeds = false;
         });
@@ -78,7 +104,7 @@
     }
 
     function onPhotoDataSuccess(imageData) {
-      self.pet.photo = "data:image/jpeg;base64," + imageData;
+      self.alert.pet.photo = "data:image/jpeg;base64," + imageData;
       hideIonicLoading();
     }
 
@@ -100,7 +126,7 @@
     }
 
     function deletePicture() {
-      self.pet.photo = "";
+      self.alert.pet.photo = "";
       return true;
     }
 
@@ -127,7 +153,7 @@
           return true;
         }
       };
-      if (self.pet.photo) {
+      if (self.alert.pet.photo) {
         opts.destructiveText = "Supprimer";
         opts.destructiveButtonClicked = deletePicture;
       }
@@ -140,12 +166,13 @@
     }
 
     function init() {
-      self.loaders = {};
+      self.states = ['Perdu', 'Trouvé'];
+      self.loaders = {getAlert : false};
       self.breeds = {};
       self.species = [];
-      self.pet = {};
-      document.updateEventListener("deviceready", onDeviceReady, false);
-      getSpecies();
+      self.alertId = $stateParams.alertId;
+      self.alert = {};
+      getAlert();
     }
 
     init();

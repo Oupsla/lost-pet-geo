@@ -1,50 +1,65 @@
-<ion-view title="Créer une alerte" id="tab-update-alert">
-  <ion-content pupdateing="true" class="has-header">
-
-
-    <form name="UpdateAlertCtrl.updateForm" class="list">
-      <button data-ng-if="! UpdateAlertCtrl.pet.photo" class="button button-block button-calm"
+<ion-view title="Mettre à jour l'alerte" id="tab-update-alert">
+  <ion-content padding="true" class="has-header">
+    <form name="UpdateAlertCtrl.UpdateForm" class="list">
+      <button data-ng-if="! UpdateAlertCtrl.alert.pet.photo" class="button button-block button-calm"
               data-ng-click="UpdateAlertCtrl.takePhoto()">
         <i class="ion-ios-camera"></i> Ajouter une photo
       </button>
-      <label class="item item-input" data-ng-if="UpdateAlertCtrl.pet.photo"
-             data-ng-click="UpdateAlertCtrl.takePhoto();">
-        <img data-ng-src="{{UpdateAlertCtrl.pet.photo}}" width="50%" height="auto"
-             style="display: block; margin-left: auto; margin-right: auto;"
-             data-ng-click="UpdateAlertCtrl.takePhoto();">
+
+      <label class="item item-input item-select">
+        <span class="input-label">Status</span>
+        <select data-ng-model="UpdateAlertCtrl.alert.state"
+                data-ng-options="state for state in UpdateAlertCtrl.states">
+        </select>
       </label>
+      <label class="item item-input">
+        <div class="input-label">Nom</div>
+        <input type="text" placeholder="Felix" data-ng-model="UpdateAlertCtrl.alert.pet.name">
+      </label>
+
+      <label class="item item-input">
+        <div class="input-label">Date</div>
+        <input type="date" placeholder="Date" data-ng-model="UpdateAlertCtrl.alert.date">
+      </label>
+
+      <label class="item item-input" data-ng-if="UpdateAlertCtrl.alert.pet.photo"
+             data-ng-click="UpdateAlertCtrl.takePhoto();">
+        <img data-ng-src="{{UpdateAlertCtrl.alert.pet.photo}}" width="50%" height="auto"
+             style="display: block; margin-left: auto; margin-right: auto;" data-ng-click="UpdateAlertCtrl.takePhoto();">
+      </label>
+
       <ion-spinner data-ng-if="UpdateAlertCtrl.loaders.species || UpdateAlertCtrl.loaders.breeds"></ion-spinner>
 
       <label class="item item-input item-select" data-ng-show="! UpdateAlertCtrl.loaders.species">
-        <div class="input-label">Espèce</div>
-        <select data-ng-model="UpdateAlertCtrl.pet.species" data-ng-change="UpdateAlertCtrl.getBreeds()">
-          <option data-ng-repeat="species in UpdateAlertCtrl.species">{{species}}</option>
+        <span class="input-label">Espèce</span>
+        <select data-ng-model="UpdateAlertCtrl.alert.pet.species" data-ng-change="UpdateAlertCtrl.getBreeds()"
+                data-ng-options="species.name for species in UpdateAlertCtrl.species">
         </select>
       </label>
-
       <label class="item item-input item-select"
-             data-ng-show="! UpdateAlertCtrl.loaders.breeds && UpdateAlertCtrl.breeds[UpdateAlertCtrl.pet.species]">
-        <div class="input-label">Race</div>
-        <select data-ng-model="UpdateAlertCtrl.pet.race" data-ng-show="! UpdateAlertCtrl.loaders.species">
-          <option data-ng-repeat="breeds in UpdateAlertCtrl.breeds[UpdateAlertCtrl.pet.species]">{{breeds}}</option>
+             data-ng-show="!UpdateAlertCtrl.loaders.breeds && UpdateAlertCtrl.breeds[UpdateAlertCtrl.alert.pet.species._id]">
+        <span class="input-label">Race</span>
+        <select data-ng-model="UpdateAlertCtrl.alert.pet.breed"
+                data-ng-options="breed.name for breed in UpdateAlertCtrl.breeds[UpdateAlertCtrl.alert.pet.species._id]">
         </select>
       </label>
 
       <label class="item item-input">
         <div class="input-label">Couleur</div>
-        <input type="text" placeholder="Noir" data-ng-model="UpdateAlertCtrl.pet.color">
+        <input type="text" placeholder="Noir" data-ng-model="UpdateAlertCtrl.alert.pet.color">
       </label>
       <label class="item item-input">
         <div class="input-label">Signes distinctifs</div>
-        <input type="text" placeholder="Collier bleu" data-ng-model="UpdateAlertCtrl.pet.particularity">
+        <input type="text" placeholder="Collier bleu" data-ng-model="UpdateAlertCtrl.alert.pet.particularity">
       </label>
       <label class="item item-input">
         <div class="input-label">Commentaire</div>
-        <input type="text" placeholder="A l'air très apeuré" data-ng-model="UpdateAlertCtrl.pet.comment">
+        <input type="text" placeholder="A l'air très apeuré" data-ng-model="UpdateAlertCtrl.alert.pet.comment">
       </label>
       <button class="button button-balanced button-block"
-              data-ng-disabled="UpdateAlertCtrl.updateForm.$invalid || UpdateAlertCtrl.loaders.species || UpdateAlertCtrl.loaders.breeds">
-        <i class="ion-edit"></i>&nbsp;
+              data-ng-disabled="UpdateAlertCtrl.UpdateForm.$invalid || UpdateAlertCtrl.loaders.breeds || UpdateAlertCtrl.loaders.species"
+              ng-click="UpdateAlertCtrl.UpdateAlert()">
+        <i class="ion-plus"></i>&nbsp;
         Mettre à jour
       </button>
     </form>

@@ -1,5 +1,11 @@
 <ion-view title="Alerte Animal {{AlertCtrl.alert.pet.name}}" id="alert">
+  <ion-nav-buttons side="right">
+    <button class="button" ui-sref="nav.updateAlert({alertId : AlertCtrl.alert._id})">
+      <i class="ion-edit"></i>
+    </button>
+  </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
+
     <div class="text-center" data-ng-if="AlertCtrl.loading">
       <ion-spinner icon="lines"></ion-spinner>
     </div>
@@ -14,7 +20,10 @@
         <h1 data-ng-bind="AlertCtrl.alert.pet.name"></h1>
       </div> -->
       <div class="item item-body">
-        <img class="full-image" data-ng-src="{{AlertCtrl.alert.pet.photo}}">
+        <h1 class="ion-android-warning">{{AlertCtrl.alert.state}} </h1>
+        <h1 data-ng-bind="AlertCtrl.alert.pet.name"></h1>
+        <img class="full-image" data-ng-src="{{AlertCtrl.alert.photo}}">
+        <p data-ng-bind="AlertCtrl.alert.date | date"></p>
         <p>Type:
           <span data-ng-bind="AlertCtrl.alert.pet.species.name"></span>
         </p>

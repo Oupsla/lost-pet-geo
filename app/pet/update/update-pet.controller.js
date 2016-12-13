@@ -10,21 +10,38 @@
   function updatePetController($ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, $stateParams) {
     let self = this;
 
-    function getSpecies() {
+    function getSpecies(id) {
       self.loaders.species = true;
 
-      PetService.getSpecies().then(function (result) {
-        self.species = result;
+      PetService.getSpecies(id).then(function (results) {
+        if(id) {
+          for (var index in results) {
+            var result = results[index];
+            if (result._id === id) {
+              self.pet.species = result;
+            }
+          }
+        }
+        self.species = results;
       }).finally(function () {
         self.loaders.species = false;
       });
     }
 
-    self.getBreeds = function () {
+    self.getBreeds = function (id) {
       self.loaders.breeds = true;
       if (!self.breeds[self.pet.species._id]) {
-        PetService.getBreeds(self.pet.species._id).then(function (result) {
-          self.breeds[self.pet.species._id] = result;
+        PetService.getBreeds(self.pet.species._id).then(function (results) {
+          if(id){
+            for (var index in results) {
+              var result = results[index];
+              if (result._id === id) {
+                self.pet.breed = result;
+                self.oldPet = angular.copy(result);
+              }
+            }
+          }
+          self.breeds[self.pet.species._id] = results;
         }).finally(function () {
           self.loaders.breeds = false;
         });
@@ -33,16 +50,13 @@
 
 
     self.updatePet = function () {
-      $ionicLoading.show({
-        template: '<ion-spinner></ion-spinner>'
-      });
+      showIonicLoading();
 
       PetService.updatePet(self.pet).then(function (result) {
         console.log(result);
+        reset();
       }).finally(function () {
-        $timeout(function () {
-          $ionicLoading.hide();
-        }, 1000);
+        hideIonicLoading();
       });
     };
 
@@ -145,31 +159,35 @@
       hideIonicLoading();
     }
 
-    function getPet(id) {
-      PetService.getPet(id).then(function (result) {
-        self.pet = result;
-        console.log(result);
-      });
-    }
-
     function reset() {
       self.loaders = {};
       self.images = [];
-      getPet($stateParams.petId);
+      getPet();
     }
 
-    function resetSpecies() {
+    function resetSpecies(id) {
       self.species = [];
-      getSpecies();
+      getSpecies(id);
+    }
+
+    function resetBreeds(id) {
+      self.breeds = [];
+      self.getBreeds(id);
+    }
+
+    function getPet() {
+      PetService.getPet(self.petId).then(function (result) {
+        self.pet = result;
+        resetSpecies(self.pet.speciesId);
+        resetBreeds(self.pet.breedId);
+      });
     }
 
     function init() {
       self.breeds = {};
-      console.log($stateParams);
+      self.petId = $stateParams.petId;
       reset();
-      resetSpecies();
     }
-
 
     init();
   }
