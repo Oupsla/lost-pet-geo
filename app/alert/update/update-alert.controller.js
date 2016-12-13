@@ -104,7 +104,7 @@
     }
 
     function onPhotoDataSuccess(imageData) {
-      self.alert.pet.photo = "data:image/jpeg;base64," + imageData;
+      self.alert.pet.photo = 'data:image/jpeg;base64,' + imageData;
       hideIonicLoading();
     }
 
@@ -126,7 +126,7 @@
     }
 
     function deletePicture() {
-      self.alert.pet.photo = "";
+      self.alert.pet.photo = '';
       return true;
     }
 
@@ -154,7 +154,7 @@
         }
       };
       if (self.alert.pet.photo) {
-        opts.destructiveText = "Supprimer";
+        opts.destructiveText = 'Supprimer';
         opts.destructiveButtonClicked = deletePicture;
       }
 
@@ -164,7 +164,6 @@
     function onFail() {
       hideIonicLoading();
     }
-
     function init() {
       self.states = ['Perdu', 'Trouvé'];
       self.loaders = {getAlert : false};
@@ -172,6 +171,7 @@
       self.species = [];
       self.alertId = $stateParams.alertId;
       self.alert = {};
+      document.addEventListener('deviceready', onDeviceReady, false);
       getAlert();
     }
 

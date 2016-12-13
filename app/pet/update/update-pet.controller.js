@@ -186,6 +186,7 @@
     function init() {
       self.breeds = {};
       self.petId = $stateParams.petId;
+      document.addEventListener('deviceready', onDeviceReady, false);
       reset();
     }
 
