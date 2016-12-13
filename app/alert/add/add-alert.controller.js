@@ -15,14 +15,14 @@
       self.loaders.species = true;
       self.species = [];
       PetService.getSpecies().then(function (result) {
-        if (id) {
-          angular.forEach(result, function (species) {
-            species.image = self.images[species.name];
+        angular.forEach(result, function (species) {
+          species.image = self.images[species.name];
+          if (id) {
             if (species._id === id) {
               self.alert.pet.species = species;
             }
-          });
-        }
+          }
+        });
 
         self.species = result;
       }).finally(function () {
@@ -31,8 +31,8 @@
     }
 
     self.getBreeds = function (id) {
-      self.loaders.breeds = true;
       if (!self.breeds[self.alert.pet.species._id]) {
+        self.loaders.breeds = true;
         PetService.getBreeds(self.alert.pet.species._id).then(function (result) {
           if (id) {
             for (var index in result) {
