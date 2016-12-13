@@ -39,6 +39,7 @@
       showIonicLoading();
       self.pet.breedId = self.pet.breed._id;
       self.pet.speciesId = self.pet.species._id;
+      self.pet.photos = [self.pet.photo];
       PetService.addPet(self.pet).then(function (result) {
         $state.go("nav.listPet");
       }).finally(function () {
