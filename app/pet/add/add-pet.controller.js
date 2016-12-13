@@ -39,7 +39,6 @@
       showIonicLoading();
       self.pet.breedId = self.pet.breed._id;
       self.pet.speciesId = self.pet.species._id;
-      self.pet.photos = [self.pet.photo];
       PetService.addPet(self.pet).then(function (result) {
         $state.go("nav.listPet");
       }).finally(function () {
@@ -85,7 +84,7 @@
     }
 
     function onPhotoDataSuccess(imageData) {
-      self.pet.photo = 'data:image/jpeg;base64,' + imageData;
+      self.pet.photos = 'data:image/jpeg;base64,' + imageData;
       hideIonicLoading();
     }
 
@@ -107,7 +106,7 @@
     }
 
     function deletePicture() {
-      self.pet.photo = '';
+      self.pet.photos = '';
       return true;
     }
 
@@ -134,7 +133,7 @@
           return true;
         }
       };
-      if (self.pet.photo) {
+      if (self.pet.photos) {
         opts.destructiveText = 'Supprimer';
         opts.destructiveButtonClicked = deletePicture;
       }
@@ -154,8 +153,7 @@
       self.loaders = {};
       self.images = [];
       self.pet = {
-        userId: self.userId,
-        photo : 'http://www.racedechien.fr/wp-content/uploads/2014/08/Shih-tzu-4.jpg'
+        userId: self.userId
       };
       self.breeds = {};
       getSpecies();
