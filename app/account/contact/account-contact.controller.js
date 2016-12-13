@@ -20,9 +20,7 @@
 
     function init() {
       self.userId = $stateParams.userIdFound;
-      console.log(self.userId);
       getAccount();
-      self.today = new Date();
     }
 
     init();
