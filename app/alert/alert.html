@@ -5,32 +5,35 @@
     </button>
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
-
     <div class="text-center" data-ng-if="AlertCtrl.loading">
       <ion-spinner icon="lines"></ion-spinner>
     </div>
     <div class="list card" data-ng-if="!AlertCtrl.loading">
-      <div class="item item-avatar">
-        <i class="ion-android-warning">{{AlertCtrl.alert.state}} </i>
-        <h2 data-ng-bind="AlertCtrl.alert.pet.name"></h2>
-        <p data-ng-bind="AlertCtrl.alert.date | date:'dd/MM/yyyy'"></p>
-      </div>
-
-   <!--    <div class="item item-avatar">
-        <h1 data-ng-bind="AlertCtrl.alert.pet.name"></h1>
-      </div> -->
       <div class="item item-body">
-        <h1 class="ion-android-warning">{{AlertCtrl.alert.state}} </h1>
-        <h1 data-ng-bind="AlertCtrl.alert.pet.name"></h1>
         <img class="full-image" data-ng-src="{{AlertCtrl.alert.photo}}">
-        <p data-ng-bind="AlertCtrl.alert.date | date"></p>
-        <p>Type:
+        <p>
+          <strong>Nom :</strong>
+          <span data-ng-bind="AlertCtrl.alert.pet.name"></span>
+        </p>
+        <p>
+          <strong>Etat :</strong>
+          <span data-ng-bind="AlertCtrl.alert.state"></span>
+        </p>
+        <p>
+          <strong>Date :</strong>
+          <span data-ng-bind="AlertCtrl.alert.date | date:'dd/MM/yyyy'"></span>
+        </p>
+        <p>
+          <strong>Type :</strong>
           <span data-ng-bind="AlertCtrl.alert.pet.species.name"></span>
         </p>
-        <p>Race:
+
+        <p>
+          <strong>Race :</strong>
           <span data-ng-bind="AlertCtrl.alert.pet.breed.name"></span>
         </p>
-        <p>Color:
+        <p>
+          <strong>Color :</strong>
           <span data-ng-bind="AlertCtrl.alert.pet.color"></span>
         </p>
 

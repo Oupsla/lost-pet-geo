@@ -25,7 +25,9 @@
         <img data-ng-src="{{AddAlertCtrl.alert.pet.photo}}" width="50%" height="auto"
              style="display: block; margin-left: auto; margin-right: auto;" data-ng-click="AddAlertCtrl.takePhoto();">
       </label>
-      <ion-spinner data-ng-if="AddAlertCtrl.loaders.species || AddAlertCtrl.loaders.breeds"></ion-spinner>
+      <div class="text-center" data-ng-if="AddAlertCtrl.loaders.species || AddAlertCtrl.loaders.breeds">
+        <ion-spinner icon="lines"></ion-spinner>
+      </div>
       <label class="item item-input item-select" data-ng-show="! AddAlertCtrl.loaders.species">
         <span class="input-label">Espèce</span>
         <select required data-ng-model="AddAlertCtrl.alert.pet.species"  data-ng-change="AddAlertCtrl.getBreeds()"
