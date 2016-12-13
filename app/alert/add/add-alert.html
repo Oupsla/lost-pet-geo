@@ -20,10 +20,13 @@
         <input required type="date" placeholder="Date" data-ng-model="AddAlertCtrl.alert.date">
       </label>
 
+
       <label class="item item-input" data-ng-if="AddAlertCtrl.alert.pet.photo"
              data-ng-click="AddAlertCtrl.takePhoto();">
-        <img data-ng-src="{{AddAlertCtrl.alert.pet.photo}}" width="50%" height="auto"
-             style="display: block; margin-left: auto; margin-right: auto;" data-ng-click="AddAlertCtrl.takePhoto();">
+        <img ng-if="AddAlertCtrl.alert.pet.photos && AddAlertCtrl.alert.pet.photos.length"
+             data-ng-src="{{AddAlertCtrl.alert.pet.photos[0]}}" height="auto"
+             style="display: block; margin-left: auto; margin-right: auto;" data-ng-click="AddAlertCtrl.takePhoto();"/>
+
       </label>
       <div class="text-center" data-ng-if="AddAlertCtrl.loaders.species || AddAlertCtrl.loaders.breeds">
         <ion-spinner icon="lines"></ion-spinner>
@@ -32,7 +35,7 @@
         <span class="input-label">Espèce</span>
         <img data-ng-if="AddAlertCtrl.alert.pet.species.image"
              ng-src="{{AddAlertCtrl.alert.pet.species.image}}" width="30" height="30"/>
-        <select required data-ng-model="AddAlertCtrl.alert.pet.species"  data-ng-change="AddAlertCtrl.getBreeds()"
+        <select required data-ng-model="AddAlertCtrl.alert.pet.species" data-ng-change="AddAlertCtrl.getBreeds()"
                 data-ng-options="species.name for species in AddAlertCtrl.species">
         </select>
       </label>
