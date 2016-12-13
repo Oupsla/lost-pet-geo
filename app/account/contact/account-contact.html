@@ -9,10 +9,11 @@
       <ion-spinner icon="lines"></ion-spinner>
     </div>
     <div data-ng-if="!AccountContactCtrl.loading">
-      <a class="button button-balanced button-block" href="tel:+123%{{AccountContactCtrl.account.phone}}">
+      <a class="button button-balanced button-block" href="tel:{{AccountContactCtrl.account.phone}}">
         Appeler
         <span class="static-control" placeholder="First Name"
         data-ng-bind="AccountContactCtrl.account.firstName"></span>
+        {{AccountContactCtrl.account.phone}}
       </a>
       <a class="button button-calm button-block" href="mailto:{{AccountContactCtrl.account.email}}">
         Envoyer un e-mail à
