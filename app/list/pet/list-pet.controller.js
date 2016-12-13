@@ -3,8 +3,8 @@
     .module('listPet')
     .controller('ListPetCtrl', listPetController);
 
-  listPetController.$inject = ['$stateParams', 'PetService', '$state', '$ionicPopup', '$scope'];
-  function listPetController($stateParams, PetService, $state, $ionicPopup, $scope) {
+  listPetController.$inject = ['$stateParams', 'PetService', '$state', '$ionicPopup', '$scope', 'AccountService'];
+  function listPetController($stateParams, PetService, $state, $ionicPopup, $scope, AccountService) {
     let self = this;
 
     function getListPet() {
@@ -60,8 +60,7 @@
       };
 
       self.loaders = {getList: true};
-      self.userId = $stateParams.userId;
-      self.userId = '584532c4926c47001d9209bb';
+      self.userId = AccountService.getAccountId();
       getListPet();
     }
 

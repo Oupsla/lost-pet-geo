@@ -5,9 +5,9 @@
     .module('addAlert')
     .controller('AddAlertCtrl', addAlertController);
 
-  addAlertController.$inject = ['$stateParams', 'AlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', 'AccountService'];
+  addAlertController.$inject = ['$stateParams', 'AlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', 'AccountService', '$state'];
 
-  function addAlertController($stateParams, AlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, AccountService) {
+  function addAlertController($stateParams, AlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, AccountService, $state) {
     let self = this;
     self.myPetId = $stateParams.petId;
 
@@ -52,9 +52,9 @@
       showIonicLoading();
       self.alert.breedId = self.alert.pet.breed._id;
       self.alert.speciesId = self.alert.pet.species._id;
-      self.alert = new Date().toISOString();
+      self.alert.date = new Date().toISOString();
       AlertService.addAlert(self.alert).then(function (result) {
-        reset();
+        $state.go('nav.listAlert');
       }).finally(function () {
         hideIonicLoading();
       });

@@ -10,7 +10,7 @@
     <form name="AccountUpdateCtrl.accountForm" id="AccountUpdateCtrl.accountForm" data-ng-if="!AccountUpdateCtrl.loading" class="list">
       <label class="item item-input">
         <span class="input-label">Name:</span>
-        <input required type="text" placeholder="Name" data-ng-model="AccountUpdateCtrl.account.name">
+        <input required type="text" placeholder="Name" data-ng-model="AccountUpdateCtrl.account.lastName">
       </label>
       <label class="item item-input">
         <span class="input-label">First Name:</span>
@@ -22,7 +22,7 @@
       </label>
       <label class="item item-input">
         <span class="input-label">Phone:</span>
-        <input type="text" placeholder="Phone" data-ng-model="AccountUpdateCtrl.account.phone">
+        <input type="tel" placeholder="Phone" data-ng-model="AccountUpdateCtrl.account.phone">
       </label>
       <label class="item item-input">
         <span class="input-label">Birth Date:</span>
