@@ -13,7 +13,6 @@
         .then(function (result) {
           self.alert = result;
           self.alert.pet.species.image = self.images[self.alert.pet.species.name];
-          console.log(self.alert.pet.userId);
         })
         .finally(() => self.loading = false)
     }
