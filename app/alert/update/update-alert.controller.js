@@ -5,25 +5,27 @@
     .module('updateAlert')
     .controller('UpdateAlertCtrl', updateAlertController);
 
-  updateAlertController.$inject = ['AlertService', 'PetService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', '$stateParams'];
+  updateAlertController.$inject = ['AlertService', 'PetService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', '$stateParams', '$state'];
 
-  function updateAlertController(AlertService, PetService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, $stateParams) {
+  function updateAlertController(AlertService, PetService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, $stateParams, $state) {
     let self = this;
 
-    function getAlert(){
+    function getAlert() {
       self.loaders.getAlert = true;
-      AlertService.getAlert(self.alertId).then(function(result){
+      AlertService.getAlert(self.alertId).then(function (result) {
         result.date = new Date(result.date);
         self.alert = result;
         getSpecies(self.alert.pet.speciesId);
         self.getBreeds(self.alert.pet.breedId);
+      }).finally(function () {
+        self.loaders.getAlert = false;
       });
     }
 
     function getSpecies(id) {
       self.loaders.species = true;
       PetService.getSpecies().then(function (results) {
-        if(id) {
+        if (id) {
           for (var index in results) {
             var result = results[index];
             if (result._id === id) {
@@ -41,7 +43,7 @@
       self.loaders.breeds = true;
       if (!self.breeds[self.alert.pet.species._id]) {
         PetService.getBreeds(self.alert.pet.species._id).then(function (results) {
-          if(id) {
+          if (id) {
             for (var index in results) {
               var result = results[index];
               if (result._id === id) {
@@ -57,14 +59,14 @@
       }
     };
 
-    function updateAlert() {
+    self.updateAlert = function () {
       showIonicLoading();
       AlertService.updateAlert(self.alert).then(function (result) {
-        console.log(result);
+        $state.go('nav.listAlert');
       }).finally(function () {
         hideIonicLoading();
       });
-    }
+    };
 
     function updateImage() {
       $ionicPlatform.ready(function () {
@@ -164,9 +166,10 @@
     function onFail() {
       hideIonicLoading();
     }
+
     function init() {
       self.states = ['Perdu', 'Trouvé'];
-      self.loaders = {getAlert : false};
+      self.loaders = {getAlert: false};
       self.breeds = {};
       self.species = [];
       self.alertId = $stateParams.alertId;

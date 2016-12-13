@@ -5,9 +5,9 @@
     .module('updatePet')
     .controller('UpdatePetCtrl', updatePetController);
 
-  updatePetController.$inject = ['$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', '$stateParams'];
+  updatePetController.$inject = ['$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', '$stateParams', '$state'];
 
-  function updatePetController($ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, $stateParams) {
+  function updatePetController($ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, $stateParams, $state) {
     let self = this;
 
     function getSpecies(id) {
@@ -52,9 +52,9 @@
     self.updatePet = function () {
       showIonicLoading();
 
-      PetService.updatePet(self.pet).then(function (result) {
-        console.log(result);
+      PetService.updatePet(self.pet).then(function () {
         reset();
+        $state.go('nav.listPet');
       }).finally(function () {
         hideIonicLoading();
       });
