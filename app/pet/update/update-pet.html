@@ -18,6 +18,8 @@
       <ion-spinner data-ng-if="UpdatePetCtrl.loaders.species || UpdatePetCtrl.loaders.breeds"></ion-spinner>
       <label class="item item-input item-select" data-ng-show="! UpdatePetCtrl.loaders.species">
         <span class="input-label">Espèce</span>
+        <img data-ng-if="UpdatePetCtrl.pet.species.image"
+             ng-src="{{UpdatePetCtrl.pet.species.image}}" width="30" height="30"/>
         <select required data-ng-model="UpdatePetCtrl.pet.species" data-ng-change="UpdatePetCtrl.getBreeds()"
                 data-ng-options="species.name for species in UpdatePetCtrl.species">
         </select>

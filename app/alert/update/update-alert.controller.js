@@ -30,9 +30,16 @@
             var result = results[index];
             if (result._id === id) {
               self.alert.pet.species = result;
+              self.alert.pet.species.image = self.images[self.alert.pet.species.name];
             }
           }
         }
+
+        angular.forEach(results, function (species) {
+            species.image = self.images[species.name];
+          }
+        );
+
         self.species = results;
       }).finally(function () {
         self.loaders.species = false;
@@ -168,6 +175,8 @@
     }
 
     function init() {
+      self.images = PetService.getImages();
+
       self.states = ['Perdu', 'Trouvé'];
       self.loaders = {getAlert: false};
       self.breeds = {};

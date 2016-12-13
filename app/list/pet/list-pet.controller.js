@@ -52,6 +52,13 @@
     }
 
     function init() {
+      self.images = {
+        'Chien': 'http://image.flaticon.com/icons/png/512/220/220070.png',
+        'Araignée': 'http://image.flaticon.com/icons/svg/236/236340.svg',
+        'Chat': 'http://image.flaticon.com/icons/png/512/220/220073.png',
+        'Lapin': 'http://image.flaticon.com/icons/svg/165/165179.svg'
+      };
+
       self.loaders = {getList: true};
       self.userId = $stateParams.userId;
       self.userId = '584532c4926c47001d9209bb';

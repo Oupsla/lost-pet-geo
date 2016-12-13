@@ -25,7 +25,9 @@
         </p>
         <p>
           <strong>Type :</strong>
-          <span data-ng-bind="AlertCtrl.alert.pet.species.name"></span>
+          <img data-ng-if="AlertCtrl.alert.pet.species.image"
+               ng-src="{{AlertCtrl.alert.pet.species.image}}" width="30" height="30"/>
+          <span data-ng-if="!AlertCtrl.alert.pet.species.image" data-ng-bind="AlertCtrl.alert.pet.species.name"></span>
         </p>
 
         <p>

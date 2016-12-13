@@ -30,6 +30,8 @@
       </div>
       <label class="item item-input item-select" data-ng-show="! AddAlertCtrl.loaders.species">
         <span class="input-label">Espèce</span>
+        <img data-ng-if="AddAlertCtrl.alert.pet.species.image"
+             ng-src="{{AddAlertCtrl.alert.pet.species.image}}" width="30" height="30"/>
         <select required data-ng-model="AddAlertCtrl.alert.pet.species"  data-ng-change="AddAlertCtrl.getBreeds()"
                 data-ng-options="species.name for species in AddAlertCtrl.species">
         </select>

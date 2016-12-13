@@ -42,5 +42,14 @@
       return $http.post(url + "pets", pet)
         .then((resp) => resp.data);
     };
+
+    self.getImages = function(){
+      return {
+        'Chien': 'http://image.flaticon.com/icons/png/512/220/220070.png',
+        'Araignée': 'http://image.flaticon.com/icons/svg/236/236340.svg',
+        'Chat': 'http://image.flaticon.com/icons/png/512/220/220073.png',
+        'Lapin': 'http://image.flaticon.com/icons/svg/165/165179.svg'
+      };
+    };
   }
 })();

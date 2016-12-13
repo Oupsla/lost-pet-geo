@@ -26,7 +26,8 @@
           <h2 ng-class="alert.class" data-ng-bind="alert.state" ui-sref="nav.alert({alertId: alert._id})"></h2>
 
           <p ui-sref="nav.alert({alertId: alert._id})">
-            <span data-ng-bind="alert.pet.species.name"></span>
+            <img ng-src="{{ListAlertCtrl.images[alert.pet.species.name]}}" width="30" height="30" />
+            <span data-ng-if="!ListAlertCtrl.images[alert.pet.species.name]" data-ng-bind="alert.pet.species.name"></span>
             <span data-ng-bind="alert.pet.breed.name"></span>
           </p>
           <p data-ng-bind="alert.date | date:'dd/MM/yyyy'"></p>
