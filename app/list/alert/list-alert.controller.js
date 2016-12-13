@@ -26,12 +26,10 @@
 
     function getListAlert() {
       self.loaders.getList = true;
-      return AlertService.getListAlert().then(function (results) {
 
-        if (results.length) {
-          for (var index in results) {
-            var result = results[index];
-
+      return AlertService.getListAlert()
+        .then(function (results) {
+          results.forEach((result) => {
             if (result.state === 'Perdu') {
               result.class = 'ion-android-warning';
             }
@@ -42,13 +40,13 @@
             if (result.userId === self.userId) {
               result.isMyAlert = true;
             }
-          }
-        }
+          });
 
-        self.listAlert = results;
+          self.listAlert = results;
       }).finally(function () {
         self.loaders.getList = false;
       });
+
     }
 
     self.refresh  = function() {

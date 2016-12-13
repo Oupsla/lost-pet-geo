@@ -5,12 +5,15 @@
     </button>
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
-    <ion-spinner data-ng-if="ListPetCtrl.loaders.getList">Chargement ...</ion-spinner>
     <ion-refresher
       pulling-text="Pull to refresh..."
       on-refresh="ListPetCtrl.refresh()">
     </ion-refresher>
-    <ion-list data-ng-if="(!ListPetCtrl.listPet.length) && (!ListPetCtrl.loaders.getList)">
+
+    <div class="text-center">
+      <ion-spinner icon="lines"  data-ng-if="ListPetCtrl.loaders.getList"></ion-spinner>
+    </div>
+    <ion-list data-ng-if="!ListPetCtrl.listPet.length && !ListPetCtrl.loaders.getList">
       <ion-item>
         Pas encore d'animaux
         <button class="button button-full button-balanced" ui-sref="nav.addPet">

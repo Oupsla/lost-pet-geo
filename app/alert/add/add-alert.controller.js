@@ -50,6 +50,7 @@
       showIonicLoading();
       self.alert.breedId = self.alert.pet.breed._id;
       self.alert.speciesId = self.alert.pet.species._id;
+      self.alert = new Date().toISOString();
       AlertService.addAlert(self.alert).then(function (result) {
         reset();
       }).finally(function () {

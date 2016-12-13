@@ -11,9 +11,11 @@
     let self = this;
 
     function getAccount() {
-      AccountService.getAccount(self.account.id).then(function (result) {
-        self.account = result;
-      });
+      AccountService.getAccount(self.account.id)
+        .then(function (result) {
+          self.account = result;
+        })
+        .finally(() => self.loading = false);
     }
 
     function getAccountId() {
@@ -21,6 +23,7 @@
     }
 
     function init() {
+      self.loading = true;
       self.account = {};
       getAccountId();
 
