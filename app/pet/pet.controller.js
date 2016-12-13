@@ -11,6 +11,7 @@
     function getPet(id) {
       PetService.getPet(id).then(function (result) {
         self.pet = result;
+        self.pet.species.image = self.images[self.pet.species.name];
       });
     }
 
@@ -22,6 +23,7 @@
 
     function init() {
       self.petId = $stateParams.petId;
+      self.images = PetService.getImages();
       getPet(self.petId);
     }
 

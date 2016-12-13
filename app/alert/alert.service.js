@@ -27,8 +27,8 @@
         .then((resp) => resp.data);
     };
 
-    self.update = function (alert) {
-      return $http.post(url + "alerts/" + alert._id, alert)
+    self.updateAlert = function (alert) {
+      return $http.put(url + "alerts/" + alert._id, alert)
         .then((resp) => resp.data);
     };
   }

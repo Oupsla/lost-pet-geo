@@ -1,0 +1,25 @@
+<div class="bar bar-header bar-dark">
+  <div class="h1 title">Edit Account</div>
+</div>
+
+<ion-view title="Modifier le compte" id="tab-accountContact">
+  AccountContact
+  <ion-content padding="true" class="has-header">
+    <div class="text-center" data-ng-if="AccountContactCtrl.loading">
+      <ion-spinner icon="lines"></ion-spinner>
+    </div>
+    <div data-ng-if="!AccountContactCtrl.loading">
+      <a class="button button-balanced button-block" href="tel:{{AccountContactCtrl.account.phone}}">
+        Appeler
+        <span class="static-control" placeholder="First Name"
+        data-ng-bind="AccountContactCtrl.account.firstName"></span>
+        {{AccountContactCtrl.account.phone}}
+      </a>
+      <a class="button button-calm button-block" href="mailto:{{AccountContactCtrl.account.email}}">
+        Envoyer un e-mail à
+        <span class="static-control" placeholder="First Name"
+              data-ng-bind="AccountContactCtrl.account.firstName"></span>
+      </a>
+    </div>
+  </ion-content>
+</ion-view>

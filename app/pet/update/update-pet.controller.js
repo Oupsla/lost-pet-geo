@@ -5,9 +5,9 @@
     .module('updatePet')
     .controller('UpdatePetCtrl', updatePetController);
 
-  updatePetController.$inject = ['$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', '$stateParams'];
+  updatePetController.$inject = ['$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', '$stateParams', '$state'];
 
-  function updatePetController($ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, $stateParams) {
+  function updatePetController($ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, $stateParams, $state) {
     let self = this;
 
     function getSpecies(id) {
@@ -19,9 +19,16 @@
             var result = results[index];
             if (result._id === id) {
               self.pet.species = result;
+              self.pet.species.image = self.images[self.pet.species.name];
             }
           }
         }
+
+        angular.forEach(results, function (species) {
+            species.image = self.images[species.name];
+          }
+        );
+
         self.species = results;
       }).finally(function () {
         self.loaders.species = false;
@@ -52,9 +59,9 @@
     self.updatePet = function () {
       showIonicLoading();
 
-      PetService.updatePet(self.pet).then(function (result) {
-        console.log(result);
+      PetService.updatePet(self.pet).then(function () {
         reset();
+        $state.go('nav.listPet');
       }).finally(function () {
         hideIonicLoading();
       });
@@ -161,7 +168,6 @@
 
     function reset() {
       self.loaders = {};
-      self.images = [];
       getPet();
     }
 
@@ -184,8 +190,10 @@
     }
 
     function init() {
+      self.images = PetService.getImages();
       self.breeds = {};
       self.petId = $stateParams.petId;
+      document.addEventListener('deviceready', onDeviceReady, false);
       reset();
     }
 

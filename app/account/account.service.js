@@ -8,11 +8,14 @@
     let self = this;
 
     self.getAccountId = function(){
+ //     return '584fe218312aff001de26481';
       return "584532c4926c47001d9209bb";
     };
 
     self.getAccount = function (id) {
-      id = self.getAccountId();
+      if(! id) {
+        id = self.getAccountId();
+      }
       return $http.get("http://lostpet-api.mybluemix.net/api/v1.0/users/" + id)
         .then((resp) => resp.data);
     };

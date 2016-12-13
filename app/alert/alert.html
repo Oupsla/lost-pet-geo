@@ -25,7 +25,9 @@
         </p>
         <p>
           <strong>Type :</strong>
-          <span data-ng-bind="AlertCtrl.alert.pet.species.name"></span>
+          <img data-ng-if="AlertCtrl.alert.pet.species.image"
+               ng-src="{{AlertCtrl.alert.pet.species.image}}" width="30" height="30"/>
+          <span data-ng-if="!AlertCtrl.alert.pet.species.image" data-ng-bind="AlertCtrl.alert.pet.species.name"></span>
         </p>
 
         <p>
@@ -37,7 +39,7 @@
           <span data-ng-bind="AlertCtrl.alert.pet.color"></span>
         </p>
 
-        <button id="found-button1" class="button button-balanced  button-block">Je l'ai trouvé !</button>
+        <button id="found-button1" class="button button-balanced  button-block" ui-sref="nav.accountContact({userIdFound : AlertCtrl.alert.pet.userId})">Je l'ai trouvé !</button>
       </div>
     </div>
   </ion-content>

@@ -14,7 +14,9 @@
         </p>
         <p>
           <strong>Type :</strong>
-          <span data-ng-bind="PetCtrl.pet.species.name"></span>
+          <img data-ng-if="PetCtrl.pet.species.image"
+               ng-src="{{PetCtrl.pet.species.image}}" width="30" height="30"/>
+          <span data-ng-if="!PetCtrl.pet.species.image" data-ng-bind="PetCtrl.pet.species.name"></span>
         </p>
 
         <p>

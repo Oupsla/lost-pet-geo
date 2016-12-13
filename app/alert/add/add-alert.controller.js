@@ -5,9 +5,9 @@
     .module('addAlert')
     .controller('AddAlertCtrl', addAlertController);
 
-  addAlertController.$inject = ['$stateParams', 'AlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', 'AccountService'];
+  addAlertController.$inject = ['$stateParams', 'AlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', 'AccountService', '$state'];
 
-  function addAlertController($stateParams, AlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, AccountService) {
+  function addAlertController($stateParams, AlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, AccountService, $state) {
     let self = this;
     self.myPetId = $stateParams.petId;
 
@@ -16,12 +16,14 @@
       self.species = [];
       PetService.getSpecies().then(function (result) {
         if (id) {
-          for (var index in result) {
-            if (result[index]._id === id) {
-              self.alert.pet.species = result[index];
+          angular.forEach(result, function (species) {
+            species.image = self.images[species.name];
+            if (species._id === id) {
+              self.alert.pet.species = species;
             }
-          }
+          });
         }
+
         self.species = result;
       }).finally(function () {
         self.loaders.species = false;
@@ -50,9 +52,9 @@
       showIonicLoading();
       self.alert.breedId = self.alert.pet.breed._id;
       self.alert.speciesId = self.alert.pet.species._id;
-      self.alert = new Date().toISOString();
+      self.alert.date = new Date().toISOString();
       AlertService.addAlert(self.alert).then(function (result) {
-        reset();
+        $state.go('nav.listAlert');
       }).finally(function () {
         hideIonicLoading();
       });
@@ -161,7 +163,7 @@
       self.userId = AccountService.getAccountId();
     }
 
-    function getPet(){
+    function getPet() {
       self.loaders.getPet = true;
       PetService.getPet(self.myPetId).then(function (result) {
         self.alert.pet = result;
@@ -172,13 +174,13 @@
     }
 
     function reset() {
-      self.loaders = {getPet : true};
+      self.loaders = {getPet: true};
       self.breeds = {};
       self.species = [];
       self.alert = {userId: self.userId, pet: {}};
       self.myPetId = $stateParams.petId;
       if (self.myPetId) {
-       getPet();
+        getPet();
       }
       else {
         self.loaders.getPet = false;
@@ -187,6 +189,8 @@
     }
 
     function init() {
+      self.images = PetService.getImages();
+
       self.states = ['Perdu', 'Trouvé'];
       getAccountId();
       document.addEventListener('deviceready', onDeviceReady, false);

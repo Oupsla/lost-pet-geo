@@ -14,6 +14,10 @@
       self.loaders.species = true;
       self.species = [];
       PetService.getSpecies().then(function (result) {
+        angular.forEach(result, function (species) {
+            species.image = self.images[species.name];
+          }
+        );
         self.species = result;
       }).finally(function () {
         self.loaders.species = false;
@@ -157,8 +161,8 @@
       getAccountId();
       reset();
       document.addEventListener('deviceready', onDeviceReady, false);
+      self.images = PetService.getImages();
     }
-
 
     init();
   }

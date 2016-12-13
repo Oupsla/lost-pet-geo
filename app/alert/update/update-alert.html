@@ -32,6 +32,8 @@
 
       <label class="item item-input item-select" data-ng-show="! UpdateAlertCtrl.loaders.species">
         <span class="input-label">Espèce</span>
+        <img data-ng-if="UpdateAlertCtrl.alert.pet.species.image"
+             ng-src="{{UpdateAlertCtrl.alert.pet.species.image}}" width="30" height="30"/>
         <select data-ng-model="UpdateAlertCtrl.alert.pet.species" data-ng-change="UpdateAlertCtrl.getBreeds()"
                 data-ng-options="species.name for species in UpdateAlertCtrl.species">
         </select>
@@ -57,8 +59,8 @@
         <input type="text" placeholder="A l'air très apeuré" data-ng-model="UpdateAlertCtrl.alert.pet.comment">
       </label>
       <button class="button button-balanced button-block"
-              data-ng-disabled="UpdateAlertCtrl.UpdateForm.$invalid || UpdateAlertCtrl.loaders.breeds || UpdateAlertCtrl.loaders.species"
-              ng-click="UpdateAlertCtrl.UpdateAlert()">
+              data-ng-disabled="UpdateAlertCtrl.UpdateForm.$invalid || UpdateAlertCtrl.loaders.breeds || UpdateAlertCtrl.loaders.species || UpdateAlertCtrl.loaders.getAlert"
+              ng-click="UpdateAlertCtrl.updateAlert()">
         <i class="ion-plus"></i>&nbsp;
         Mettre à jour
       </button>
