@@ -98,7 +98,7 @@
     }
 
     function onPhotoDataSuccess(imageData) {
-      self.alert.pet.photo = 'data:image/jpeg;base64,' + imageData;
+      self.alert.photo = 'data:image/jpeg;base64,' + imageData;
       hideIonicLoading();
     }
 
