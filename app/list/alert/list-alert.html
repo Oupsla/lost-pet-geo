@@ -18,19 +18,22 @@
       </ion-item>
     </ion-list>
     <ion-list can-swipe="true" id="listAlertPet-lost">
-      <ion-item ui-sref="nav.alert({alertId: alert._id})" ng-repeat="alert in ListAlertCtrl.listAlert track by $index"
+      <ion-item ng-repeat="alert in ListAlertCtrl.listAlert track by $index"
                 class="item-thumbnail-left">
-        <img ng-if="alert.photo" ng-src="{{alert.photo}}"/>
-        <h2positive>
+        <div ui-sref="nav.alert({alertId: alert._id})">
+          <img ng-if="alert.photo" ng-src="{{alert.photo}}"/>
+          <h2positive>
 
-          <h2 ng-class="alert.class" data-ng-bind="alert.state"></h2>
+            <h2 ng-class="alert.class" data-ng-bind="alert.state"></h2>
 
-          <p>
-            <span data-ng-bind="alert.pet.species.name"></span>
-            <span data-ng-bind="alert.pet.breed.name"></span>
-          </p>
-          <p data-ng-bind="alert.date | date:'dd/MM/yyyy'"></p>
-        </h2positive>
+            <p>
+              <span data-ng-bind="alert.pet.species.name"></span>
+              <span data-ng-bind="alert.pet.breed.name"></span>
+            </p>
+            <p data-ng-bind="alert.date | date:'dd/MM/yyyy'"></p>
+          </h2positive>
+        </div>
+
         <ion-option-button data-ng-if="alert.isMyAlert" class="button-assertive"
                            ng-click="ListAlertCtrl.delete(alert)">
           <i class="ion-minus-circled"></i>&nbsp; Sup

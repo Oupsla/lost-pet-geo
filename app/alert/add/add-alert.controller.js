@@ -15,7 +15,7 @@
       self.loaders.species = true;
       self.species = [];
       PetService.getSpecies().then(function (result) {
-        if(id) {
+        if (id) {
           for (var index in result) {
             if (result[index]._id === id) {
               self.alert.pet.species = result[index];
@@ -32,7 +32,7 @@
       self.loaders.breeds = true;
       if (!self.breeds[self.alert.pet.species._id]) {
         PetService.getBreeds(self.alert.pet.species._id).then(function (result) {
-          if(id) {
+          if (id) {
             for (var index in result) {
               if (result[index]._id === id) {
                 self.alert.pet.breed = result[index];
@@ -161,21 +161,27 @@
       self.userId = AccountService.getAccountId();
     }
 
+    function getPet(){
+      self.loaders.getPet = true;
+      PetService.getPet(self.myPetId).then(function (result) {
+        self.alert.pet = result;
+        self.alert.state = 'Perdu';
+        getSpecies(self.alert.pet.speciesId);
+        self.getBreeds(self.alert.pet.breedId);
+      }).finally(() => self.loaders.getPet = false);
+    }
+
     function reset() {
-      self.loaders = {};
+      self.loaders = {getPet : true};
       self.breeds = {};
       self.species = [];
       self.alert = {userId: self.userId, pet: {}};
       self.myPetId = $stateParams.petId;
       if (self.myPetId) {
-        PetService.getPet(self.myPetId).then(function (result) {
-          self.alert.pet = result;
-          self.alert.state = 'Perdu';
-          getSpecies(self.alert.pet.speciesId);
-          self.getBreeds(self.alert.pet.breedId);
-        });
+       getPet();
       }
       else {
+        self.loaders.getPet = false;
         getSpecies();
       }
     }

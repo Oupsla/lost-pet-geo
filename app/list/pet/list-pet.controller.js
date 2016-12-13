@@ -3,13 +3,13 @@
     .module('listPet')
     .controller('ListPetCtrl', listPetController);
 
-  listPetController.$inject = ['$stateParams', 'PetService', '$state', '$ionicPopup'];
-  function listPetController($stateParams, PetService, $state, $ionicPopup) {
+  listPetController.$inject = ['$stateParams', 'PetService', '$state', '$ionicPopup', '$scope'];
+  function listPetController($stateParams, PetService, $state, $ionicPopup, $scope) {
     let self = this;
 
     function getListPet() {
-      self.listPet = [];
       self.loaders.getList = true;
+      self.listPet = [];
       return PetService.getListPet(self.userId)
         .then(function (result) {
           self.listPet = result;
@@ -20,7 +20,7 @@
     function getSpecies(id) {
       self.loaders.species = true;
 
-      PetService.getSpecies(id)
+      return PetService.getSpecies(id)
         .then(function (result) {
           self.species = result;
         }).finally(function () {

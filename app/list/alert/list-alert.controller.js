@@ -26,7 +26,7 @@
 
     function getListAlert() {
       self.loaders.getList = true;
-
+      self.listAlert = {};
       return AlertService.getListAlert()
         .then(function (results) {
           results.forEach((result) => {

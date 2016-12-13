@@ -24,13 +24,14 @@
     </ion-list>
     <ion-list can-swipe="true" id="listPet" can-swipe="true"
               data-ng-if="ListPetCtrl.listPet.length && !ListPetCtrl.loaders.getList">
-      <ion-item ui-sref="nav.pet({petId: pet._id})"
-                ng-repeat="pet in ListPetCtrl.listPet track by $index" class="item-thumbnail-left positive">
-        <img ng-if="pet.photo" data-ng-src="{{pet.photo}}"/>
-        <h2positive>
-          <p>Nom : {{pet.name}}</p>
-          <p>Couleur : {{pet.color}}</p>
-        </h2positive>
+      <ion-item ng-repeat="pet in ListPetCtrl.listPet track by $index" class="item-thumbnail-left positive">
+        <div ui-sref="nav.pet({petId: pet._id})">
+          <img ng-if="pet.photo" data-ng-src="{{pet.photo}}"/>
+          <h2positive>
+            <p>Nom : {{pet.name}}</p>
+            <p>Couleur : {{pet.color}}</p>
+          </h2positive>
+        </div>
         <ion-option-button class="button-assertive"
                            ng-click="ListPetCtrl.delete(pet._id)">
           <i class="ion-minus-circled"></i>&nbsp; Sup
