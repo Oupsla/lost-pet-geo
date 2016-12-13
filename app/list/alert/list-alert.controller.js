@@ -3,8 +3,8 @@
     .module('listAlert')
     .controller('ListAlertCtrl', listAlertController);
 
-  listAlertController.$inject = ['AlertService', 'AccountService', '$state', '$ionicPopup'];
-  function listAlertController(AlertService, AccountService, $state, $ionicPopup) {
+  listAlertController.$inject = ['AlertService', 'AccountService', '$state', '$ionicPopup', '$scope'];
+  function listAlertController(AlertService, AccountService, $state, $ionicPopup, $scope) {
     let self = this;
 
     self.delete = function (item) {
@@ -26,7 +26,7 @@
 
     function getListAlert() {
       self.loaders.getList = true;
-      AlertService.getListAlert().then(function (results) {
+      return AlertService.getListAlert().then(function (results) {
 
         if (results.length) {
           for (var index in results) {
@@ -51,12 +51,16 @@
       });
     }
 
+    self.refresh  = function() {
+      getListAlert().finally(() => $scope.$broadcast('scroll.refreshComplete'));
+    };
+
     function getAccountId() {
       self.userId = AccountService.getAccountId();
     }
 
     function reset() {
-      getListAlert();
+      self.refresh();
     }
 
     function init() {

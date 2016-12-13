@@ -10,10 +10,8 @@
     function getListPet() {
       self.listPet = [];
       self.loaders.getList = true;
-      PetService.getListPet(self.userId).then(function (result) {
+      return PetService.getListPet(self.userId).then(function (result) {
         self.listPet = result;
-      }).finally(function () {
-      }).finally(function () {
       }).finally(function () {
         self.loaders.getList = false;
       });
@@ -42,6 +40,10 @@
         } else {
         }
       });
+    };
+
+    self.refresh  = function() {
+      getListPet().finally(() => $scope.$broadcast('scroll.refreshComplete'));
     };
 
     function reset() {

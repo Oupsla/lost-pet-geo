@@ -6,6 +6,10 @@
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
     <ion-spinner data-ng-if="ListAlertCtrl.loaders.getList">Chargement ...</ion-spinner>
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="ListAlertCtrl.refresh()">
+    </ion-refresher>
     <ion-list data-ng-if="(!ListAlertCtrl.loaders.getList) && (!ListAlertCtrl.listAlert.length)">
       <ion-item class="primary">
         Pas d'alerte
