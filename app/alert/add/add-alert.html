@@ -5,6 +5,11 @@
               data-ng-click="AddAlertCtrl.takePhoto()">
         <i class="ion-ios-camera"></i> Ajouter une photo
       </button>
+      <label class="item item-input" data-ng-if="AddAlertCtrl.alert.photo"
+             data-ng-click="AddAlertCtrl.takePhoto();">
+        <img data-ng-src="{{AddAlertCtrl.alert.photo}}" width="50%" height="auto"
+             style="display: block; margin-left: auto; margin-right: auto;" data-ng-click="AddAlertCtrl.takePhoto();">
+      </label>
       <label class="item item-input item-select">
         <span class="input-label">Status</span>
         <select data-ng-model="AddAlertCtrl.alert.state"

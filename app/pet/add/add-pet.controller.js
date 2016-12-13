@@ -92,7 +92,7 @@
     function capturePhoto() {
       showIonicLoading();
       navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-        quality: 50,
+        quality: 20,
         destinationType: self.destinationType.DATA_URL
       });
     }
@@ -100,7 +100,7 @@
     function getPhoto(source) {
       showIonicLoading();
       navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-        quality: 50,
+        quality: 20,
         destinationType: self.destinationType.DATA_URL,
         sourceType: source
       });
@@ -153,7 +153,10 @@
     function reset() {
       self.loaders = {};
       self.images = [];
-      self.pet = {userId: self.userId};
+      self.pet = {
+        userId: self.userId,
+        photo : 'http://www.racedechien.fr/wp-content/uploads/2014/08/Shih-tzu-4.jpg'
+      };
       self.breeds = {};
       getSpecies();
     }

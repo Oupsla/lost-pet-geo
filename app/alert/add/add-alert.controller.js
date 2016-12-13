@@ -104,7 +104,7 @@
     function capturePhoto() {
       showIonicLoading();
       navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-        quality: 50,
+        quality: 20,
         destinationType: self.destinationType.DATA_URL
       });
     }
@@ -112,7 +112,7 @@
     function getPhoto(source) {
       showIonicLoading();
       navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-        quality: 50,
+        quality: 20,
         destinationType: self.destinationType.DATA_URL,
         sourceType: source
       });
@@ -167,6 +167,9 @@
       PetService.getPet(self.myPetId).then(function (result) {
         self.alert.pet = result;
         self.alert.state = 'Perdu';
+        if(self.alert.pet.photos.length) {
+          self.alert.photo = self.alert.pet.photos[0];
+        }
         getSpecies(self.alert.pet.speciesId);
         self.getBreeds(self.alert.pet.breedId);
       }).finally(() => self.loaders.getPet = false);
