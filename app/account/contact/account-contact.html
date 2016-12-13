@@ -13,16 +13,13 @@
         <span class="static-control" placeholder="First Name"
               data-ng-bind="AccountContactCtrl.account.firstName"></span>
       </label>
-      <label class="item item-input">
+      <label class="item item-input" data-ng-if="AccountContactCtrl.account.email">
         <span class="input-label">Email:</span>
-        <span class="static-control" data-ng-bind="AccountContactCtrl.account.email"></span>
+        <a ng-href="mailto:{{AccountContactCtrl.account.email}}">Envoyer un mail</a>
       </label>
-      <label class="item item-input">
+      <label class="item item-input" data-ng-if="AccountContactCtrl.account.phone">
         <span class="input-label">Phone:</span>
-        <a href="tel:+33102030405"> Appeler la société xxx </a>
-<!--
-        <a ng-href="tel:+123%{{AccountContactCtrl.account.phone}}">{{AccountContactCtrl.account.phone}}</a>
--->
+        <a href="tel:+123%{{AccountContactCtrl.account.phone}}"> Appeler</a>
       </label>
     </div>
   </ion-content>
