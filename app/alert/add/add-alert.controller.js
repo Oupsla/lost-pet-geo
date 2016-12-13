@@ -52,7 +52,7 @@
       showIonicLoading();
       self.alert.breedId = self.alert.pet.breed._id;
       self.alert.speciesId = self.alert.pet.species._id;
-      self.alert.date = new Date().toISOString();
+      // self.alert.date = new Date().toISOString();
       AlertService.addAlert(self.alert).then(function (result) {
         $state.go('nav.listAlert');
       }).finally(function () {
