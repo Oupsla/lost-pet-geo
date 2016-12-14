@@ -10,6 +10,12 @@
   function accountController(AccountService) {
     let self = this;
 
+    self.updateAccount = function() {
+      AccountService.change();
+      getAccountId();
+      getAccount();
+    };
+
     function getAccount() {
       AccountService.getAccount(self.account.id)
         .then(function (result) {
