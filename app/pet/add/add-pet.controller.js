@@ -84,7 +84,7 @@
     }
 
     function onPhotoDataSuccess(imageData) {
-     self.pet.photos = 'data:image/jpeg;base64,' + imageData;
+     self.pet.photos = 'data:image/png;base64,' + imageData;
       hideIonicLoading();
     }
 
