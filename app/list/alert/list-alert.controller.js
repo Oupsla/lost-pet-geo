@@ -3,8 +3,8 @@
     .module('listAlert')
     .controller('ListAlertCtrl', listAlertController);
 
-  listAlertController.$inject = ['AlertService', 'AccountService', '$state', '$ionicPopup', '$scope'];
-  function listAlertController(AlertService, AccountService, $state, $ionicPopup, $scope) {
+  listAlertController.$inject = ['AlertService', 'AccountService', '$state', '$ionicPopup', '$scope', 'PetService'];
+  function listAlertController(AlertService, AccountService, $state, $ionicPopup, $scope, PetService) {
     let self = this;
 
     self.delete = function (item) {
@@ -62,12 +62,7 @@
     }
 
     function init() {
-      self.images = {
-        'Chien': 'http://image.flaticon.com/icons/png/512/220/220070.png',
-        'Araignée': 'http://image.flaticon.com/icons/svg/236/236340.svg',
-        'Chat': 'http://image.flaticon.com/icons/png/512/220/220073.png',
-        'Lapin': 'http://image.flaticon.com/icons/svg/165/165179.svg'
-      };
+      self.images = PetService.getImages();
 
       self.loaders = {getList: true};
       getAccountId();
