@@ -27,6 +27,8 @@
     function getListAlert() {
       self.loaders.getList = true;
       self.listAlert = {};
+      getAccountId();
+
       return AlertService.getListAlert()
         .then(function (results) {
           results.forEach((result) => {

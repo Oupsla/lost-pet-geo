@@ -10,11 +10,17 @@
     function getListPet() {
       self.loaders.getList = true;
       self.listPet = [];
+      getAccountId();
+      console.log(self.userId);
       return PetService.getListPet(self.userId)
         .then(function (result) {
           self.listPet = result;
         })
         .finally(() => self.loaders.getList = false);
+    }
+
+    function getAccountId() {
+      self.userId = AccountService.getAccountId();
     }
 
     function getSpecies(id) {
@@ -53,7 +59,7 @@
 
     function init() {
       self.loaders = {getList: true};
-      self.userId = AccountService.getAccountId();
+
       getListPet();
     }
 

@@ -3,12 +3,15 @@
     .module('alert')
     .controller('AlertCtrl', alertController);
 
-  alertController.$inject = ['$stateParams', 'AlertService', 'PetService'];
-  function alertController($stateParams, AlertService, PetService) {
+  alertController.$inject = ['$stateParams', 'AlertService', 'PetService', 'AccountService'];
+  function alertController($stateParams, AlertService, PetService, AccountService) {
     let self = this;
 
     function getAlert(id) {
       self.loading = true;
+      function getAccountId() {
+        self.userId = AccountService.getAccountId();
+      }
       AlertService.getAlert(id)
         .then(function (result) {
           self.alert = result;

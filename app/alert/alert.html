@@ -1,5 +1,5 @@
 <ion-view title="Alerte Animal {{AlertCtrl.alert.pet.name}}" id="alert">
-  <ion-nav-buttons side="right">
+  <ion-nav-buttons side="right" data-ng-if="AlertCtrl.userId === AlertCtrl.alert.userId">
     <button class="button" ui-sref="nav.updateAlert({alertId : AlertCtrl.alert._id})">
       <i class="ion-edit"></i>
     </button>
