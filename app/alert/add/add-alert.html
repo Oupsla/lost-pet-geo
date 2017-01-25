@@ -1,6 +1,9 @@
 <ion-view title="Créer une alerte" id="tab-add-alert">
+
   <ion-content padding="true" class="has-header">
-    <form name="AddAlertCtrl.addForm" class="list" data-ng-if="!AddAlertCtrl.loaders.getPet">
+
+    <form name="AddAlertCtrl.addForm" class="list" data-ng-if="! AddAlertCtrl.loaders.getPet"
+          data-ng-show="! AddAlertCtrl.showedMap">
       <button data-ng-if="! AddAlertCtrl.alert.photo" class="button button-block button-royal"
               data-ng-click="AddAlertCtrl.takePhoto()">
         <i class="ion-ios-camera"></i> Ajouter une photo
@@ -68,9 +71,35 @@
       <button class="button button-balanced button-block"
               data-ng-disabled="AddAlertCtrl.addForm.$invalid || AddAlertCtrl.loaders.breeds || AddAlertCtrl.loaders.species"
               ng-click="AddAlertCtrl.addAlert()">
-        <i class="ion-plus"></i>&nbsp;
+        <i class="ion-plus"></i>&nbsp
         Ajouter
       </button>
+
     </form>
+    <button class="button button-balanced button-block" data-ng-if="! AddAlertCtrl.showedMap"
+            ng-click="AddAlertCtrl.getLocalisation()">
+      <i class="ion-plus"></i>&nbsp;
+      Voir la carte
+    </button>
+    <div data-ng-show="AddAlertCtrl.showedMap">
+      <button class="button button-balanced button-block"
+              ng-click="AddAlertCtrl.hideMap()">
+        <i class="ion-plus"></i>&nbsp;
+        Cacher la carte
+      </button>
+      <button class="button button-balanced button-block"
+              ng-click="AddAlertCtrl.setLocalication()">
+        <i class="ion-plus"></i>&nbsp;
+        Je l'ai perdu Ici
+      </button>
+      <input type="text" data-ng-model="AddAlertCtrl.address">
+      <button class="button button-balanced button-block"
+              ng-click="AddAlertCtrl.geocodeAddress()">
+        <i class="ion-plus"></i>&nbsp;
+        Chercher
+      </button>
+    </div>
+    <div id="map" data-ng-show="AddAlertCtrl.showedMap"></div>
+
   </ion-content>
 </ion-view>

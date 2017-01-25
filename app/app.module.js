@@ -1,6 +1,6 @@
 (function () {
   angular
-    .module('lostpetgeo', ['ionic', 'navs',
+    .module('lostpetgeo', ['ngCordova', 'ionic', 'navs',
       'alert', 'listAlert', 'addAlert', 'updateAlert',
       'pet', 'listPet', 'addPet', 'updatePet',
       'account', 'accountUpdate', 'accountContact']);

@@ -26,6 +26,7 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
+    "cordova-plugin-geolocalisation",
     "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [

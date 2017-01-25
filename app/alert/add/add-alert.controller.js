@@ -5,11 +5,94 @@
     .module('addAlert')
     .controller('AddAlertCtrl', addAlertController);
 
-  addAlertController.$inject = ['$stateParams', 'AlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', 'AccountService', '$state'];
+  addAlertController.$inject = ['$scope', '$stateParams', 'AlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', 'AccountService', '$state', '$compile'];
 
-  function addAlertController($stateParams, AlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, AccountService, $state) {
+  function addAlertController($scope, $stateParams, AlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, AccountService, $state, $compile) {
     let self = this;
     self.myPetId = $stateParams.petId;
+
+    self.stopSelectPosition = function () {
+      self.selectPosition = false;
+    };
+
+    self.setLocalication = function (pos) {
+      if (!pos) {
+        var streetView = self.map.getStreetView();
+        if (streetView.getVisible()) {
+          pos = streetView.getPosition();
+        }
+        else {
+          pos = self.map.getCenter();
+        }
+      }
+
+      self.map.setCenter(pos);
+
+      setMarker(pos);
+
+      self.alert.lat = pos.latitude;
+      self.alert.lng = pos.longitude;
+    };
+
+    function setMarker(pos) {
+      if (self.marker) {
+        self.marker.setPosition(pos);
+      }
+      else {
+        self.marker = new google.maps.Marker({
+          position: pos,
+          map: self.map,
+          animation: google.maps.Animation.DROP,
+          title: "Je l'ai perdu ici"
+        });
+      }
+    }
+
+    self.hideMap = function () {
+      self.showedMap = false;
+    };
+
+    self.showMap = function () {
+      if (!self.map) {
+        alert(google.maps.MapTypeId.ROADMAP);
+
+        var mapOptions = {
+          zoom: 16,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        self.map = new google.maps.Map(document.getElementById("map"),
+          mapOptions);
+
+        self.geocoder = new google.maps.Geocoder();
+
+        self.getLocalisation();
+      }
+
+      self.showedMap = true;
+    };
+
+    self.geocodeAddress = function () {
+      self.geocoder.geocode({'address': self.address}, function (results, status) {
+        if (status === google.maps.GeocoderStatus.OK) {
+          var location = results[0].geometry.location;
+          self.setLocalication(location);
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    };
+
+    self.getLocalisation = function () {
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        self.showMap();
+        var myLatlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+        self.setLocalication(myLatlng);
+      }, function (error) {
+        alert('Unable to get location: ' + error.message);
+      });
+    };
+
 
     function getSpecies(id) {
       self.loaders.species = true;
@@ -98,7 +181,7 @@
     }
 
     function onPhotoDataSuccess(imageData) {
-     self.alert.photo = 'data:image/png;base64,' + imageData;
+      self.alert.photo = 'data:image/png;base64,' + imageData;
       hideIonicLoading();
     }
 
@@ -192,8 +275,9 @@
     }
 
     function init() {
+      self.showedMap = false;
       self.images = PetService.getImages();
-
+      self.address = 'Paris';
       self.states = ['Perdu', 'Trouvé'];
       getAccountId();
       reset();
