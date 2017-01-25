@@ -25,7 +25,6 @@
           pos = self.map.getCenter();
         }
       }
-
       self.map.setCenter(pos);
 
       setMarker(pos);
@@ -84,7 +83,6 @@
     self.getLocalisation = function () {
       navigator.geolocation.getCurrentPosition(function (pos) {
         self.showMap();
-        self.setLocalisation(myLatlng);
         var myLatlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
         self.setLocalisation(myLatlng);
       }, function (error) {
