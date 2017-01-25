@@ -15,7 +15,7 @@
       self.selectPosition = false;
     };
 
-    self.setLocalication = function (pos) {
+    self.setLocalisation = function (pos) {
       if (!pos) {
         var streetView = self.map.getStreetView();
         if (streetView.getVisible()) {
@@ -54,8 +54,6 @@
 
     self.showMap = function () {
       if (!self.map) {
-        alert(google.maps.MapTypeId.ROADMAP);
-
         var mapOptions = {
           zoom: 16,
           mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -76,7 +74,7 @@
       self.geocoder.geocode({'address': self.address}, function (results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
           var location = results[0].geometry.location;
-          self.setLocalication(location);
+          self.setLocalisation(location);
         } else {
           alert('Geocode was not successful for the following reason: ' + status);
         }
@@ -86,8 +84,9 @@
     self.getLocalisation = function () {
       navigator.geolocation.getCurrentPosition(function (pos) {
         self.showMap();
+        self.setLocalisation(myLatlng);
         var myLatlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-        self.setLocalication(myLatlng);
+        self.setLocalisation(myLatlng);
       }, function (error) {
         alert('Unable to get location: ' + error.message);
       });
