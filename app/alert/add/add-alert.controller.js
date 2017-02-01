@@ -16,34 +16,36 @@
     };
 
     self.setLocalisation = function (pos) {
-      if (!pos) {
-        var streetView = self.map.getStreetView();
-        if (streetView.getVisible()) {
-          pos = streetView.getPosition();
+      if (self.canShowMap) {
+        if (!pos) {
+          let streetView = self.map.getStreetView();
+          if (streetView.getVisible()) {
+            pos = streetView.getPosition();
+          }
+          else {
+            pos = self.map.getCenter();
+          }
         }
-        else {
-          pos = self.map.getCenter();
-        }
+
+        self.map.setCenter(pos);
+
+        setMarker(pos);
       }
-      self.map.setCenter(pos);
-
-      setMarker(pos);
-
-      self.alert.lat = pos.latitude;
-      self.alert.lng = pos.longitude;
     };
 
     function setMarker(pos) {
-      if (self.marker) {
-        self.marker.setPosition(pos);
-      }
-      else {
-        self.marker = new google.maps.Marker({
-          position: pos,
-          map: self.map,
-          animation: google.maps.Animation.DROP,
-          title: "Je l'ai perdu ici"
-        });
+      if (self.canShowMap) {
+        if (self.marker) {
+          self.marker.setPosition(pos);
+        }
+        else {
+          self.marker = new google.maps.Marker({
+            position: pos,
+            map: self.map,
+            animation: google.maps.Animation.DROP,
+            title: "Je l'ai perdu ici"
+          });
+        }
       }
     }
 
@@ -52,44 +54,66 @@
     };
 
     self.showMap = function () {
-      if (!self.map) {
-        var mapOptions = {
-          zoom: 16,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
+      if (self.canShowMap) {
+        if (!self.map) {
+          let mapOptions = {
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
 
-        self.map = new google.maps.Map(document.getElementById("map"),
-          mapOptions);
+          self.map = new google.maps.Map(document.getElementById("map"),
+            mapOptions);
 
-        self.geocoder = new google.maps.Geocoder();
+          self.geocoder = new google.maps.Geocoder();
 
-        self.getLocalisation();
+          self.getLocalisation();
+        }
+
+        self.showedMap = true;
       }
-
-      self.showedMap = true;
     };
 
     self.geocodeAddress = function () {
-      self.geocoder.geocode({'address': self.address}, function (results, status) {
-        if (status === google.maps.GeocoderStatus.OK) {
-          var location = results[0].geometry.location;
-          self.setLocalisation(location);
-        } else {
-          alert('Geocode was not successful for the following reason: ' + status);
-        }
-      });
+      if (self.canShowMap) {
+        self.geocoder.geocode({'address': self.address}, function (results, status) {
+          if (status === google.maps.GeocoderStatus.OK) {
+            let location = results[0].geometry.location;
+            self.setLocalisation(location);
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
     };
 
     self.getLocalisation = function () {
+      showIonicLoading();
       navigator.geolocation.getCurrentPosition(function (pos) {
-        self.showMap();
-        var myLatlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-        self.setLocalisation(myLatlng);
-      }, function (error) {
-        alert('Unable to get location: ' + error.message);
-      });
-    };
+        self.alert.position = {lat: pos.coords.latitude, lng: pos.coords.longitude};
 
+        if (self.canShowMap) {
+          self.showMap();
+          self.setLocalisation(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+        }
+        hideIonicLoading();
+      }, function (error) {
+        hideIonicLoading();
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            alert("Vous n'avez pas autorisé l'accès à votre position");
+            break;
+          case error.POSITION_UNAVAILABLE:
+            alert("Votre emplacement n'a pas pu être déterminé");
+            break;
+          case error.TIMEOUT:
+            alert("Le service n'a pas répondu à temps");
+            break;
+          default:
+            alert('Impossible de récupérer la localisation: ' + error.message);
+            break;
+        }
+      }, {enableHighAccuracy : true});
+    };
 
     function getSpecies(id) {
       self.loaders.species = true;
@@ -115,7 +139,7 @@
         self.loaders.breeds = true;
         PetService.getBreeds(self.alert.pet.species._id).then(function (result) {
           if (id) {
-            for (var index in result) {
+            for (let index in result) {
               if (result[index]._id === id) {
                 self.alert.pet.breed = result[index];
               }
@@ -152,7 +176,7 @@
     function importPhoto() {
       $ionicPlatform.ready(function () {
         if (window.cordova) {
-          var source = self.pictureSource.PHOTOLIBRARY;
+          let source = self.pictureSource.PHOTOLIBRARY;
           getPhoto(source);
         }
       });
@@ -205,7 +229,7 @@
     }
 
     self.takePhoto = function () {
-      var opts = {
+      let opts = {
         buttons: [
           {text: 'Prendre une photo'},
           {text: 'Photo de la librairie'}
@@ -257,10 +281,12 @@
     }
 
     function reset() {
+      console.log('reset');
       self.loaders = {getPet: true};
       self.breeds = {};
       self.species = [];
       self.alert = {userId: self.userId, pet: {}};
+      self.canShowMap = false; //(!!google.maps.MapTypeId.ROADMAP);
       self.myPetId = $stateParams.petId;
       if (self.myPetId) {
         getPet();

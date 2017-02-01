@@ -27,7 +27,15 @@
         <div class="input-label">Date</div>
         <input required type="date" placeholder="Date" data-ng-model="AddAlertCtrl.alert.date">
       </label>
-
+      <label class="item item-input">
+        <div class="input-label">Latitude</div>
+        <span data-ng-bind="AddAlertCtrl.alert.position.lat"></span>
+      </label>
+      {{AddAlertCtrl.alert.position}}
+      <label class="item item-input">
+        <div class="input-label">Longitude</div>
+        <span data-ng-bind="AddAlertCtrl.alert.position.lng"></span>
+      </label>
 
       <label class="item item-input" data-ng-if="AddAlertCtrl.alert.pet.photo"
              data-ng-click="AddAlertCtrl.takePhoto();">
@@ -74,32 +82,38 @@
         <i class="ion-plus"></i>&nbsp
         Ajouter
       </button>
-
     </form>
-    <button class="button button-balanced button-block" data-ng-if="! AddAlertCtrl.showedMap"
+    <button class="button button-balanced button-block"
+            data-ng-if="! AddAlertCtrl.showedMap && AddAlertCtrl.canShowMap"
             ng-click="AddAlertCtrl.showMap()">
       <i class="ion-plus"></i>&nbsp;
       Voir la carte
     </button>
+
+    <button class="button button-balanced button-block"
+            data-ng-if="(! AddAlertCtrl.canShowMap) && (! AddAlertCtrl.alert.position)"
+            ng-click="AddAlertCtrl.getLocalisation(); alert('lat ' + AddAlertCtrl.alert.position.lat); alert('lng ' + AddAlertCtrl.alert.position.lng);">
+      <i class="ion-localisation"></i>&nbsp;
+    </button>
     <div data-ng-show="AddAlertCtrl.showedMap">
+
       <button class="button button-balanced button-block"
-              ng-click="AddAlertCtrl.hideMap()">
-        <i class="ion-plus"></i>&nbsp;
-        Cacher la carte
-      </button>
-      <button class="button button-balanced button-block"
-              ng-click="AddAlertCtrl.setLocalication()">
-        <i class="ion-plus"></i>&nbsp;
+              ng-click="AddAlertCtrl.setLocalisation()">
+        <i class="ion-localisation"></i>&nbsp;
         Je l'ai perdu Ici
       </button>
       <input type="text" data-ng-model="AddAlertCtrl.address">
       <button class="button button-balanced button-block"
               ng-click="AddAlertCtrl.geocodeAddress()">
-        <i class="ion-plus"></i>&nbsp;
+        <i class="ion-search"></i>&nbsp;
         Chercher
       </button>
     </div>
     <div id="map" data-ng-show="AddAlertCtrl.showedMap"></div>
-
+    <button class="button button-balanced button-block" data-ng-show="AddAlertCtrl.showedMap"
+            ng-click="AddAlertCtrl.hideMap()">
+      <i class="ion-minus"></i>&nbsp;
+      Cacher la carte
+    </button>
   </ion-content>
 </ion-view>
