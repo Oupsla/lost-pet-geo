@@ -47,7 +47,6 @@
             animation: plugin.google.maps.Animation.BOUNCE
           }, function (marker) {
             self.marker = marker;
-            self.marker.addListener('click', toggleBounce);
             self.marker.addListener('ondrag', drag);
 
             // Show the info window
@@ -70,25 +69,11 @@
             animation: google.maps.Animation.DROP,
             title: "Je l'ai perdu ici"
           });
-          self.marker.addListener('click', toggleBounce);
 
           google.maps.event.addListener(self.marker, 'dragend', function (event) {
             self.setLocalisation(new google.maps.LatLng(this.position.lat(), this.position.lng()));
           });
         }
-      }
-    }
-
-    function drag() {
-      console.log('drag');
-    }
-
-    function toggleBounce() {
-      console.log("toggle bounce");
-      if (self.marker.getAnimation() !== null) {
-        self.marker.setAnimation(null);
-      } else {
-        self.marker.setAnimation(google.maps.Animation.BOUNCE);
       }
     }
 
@@ -131,8 +116,23 @@
     }
 
     self.geocodeAddress = function () {
-      if (self.geocoder) {
-        self.geocoder.geocode({'address': self.address}, function (results, status) {
+      var request = {
+        'address': self.address
+      };
+      try {
+        plugin.google.maps.Geocoder.geocode(request, function (results) {
+          if (results.length) {
+            var result = results[0];
+            var position = result.position;
+
+            self.marker.setPosition(position);
+          } else {
+            alert("Not found");
+          }
+        });
+      }
+      catch (e) {
+        self.geocoder.geocode(request, function (results, status) {
           if (status === google.maps.GeocoderStatus.OK) {
             let location = results[0].geometry.location;
             self.setLocalisation(location);
@@ -149,7 +149,11 @@
         self.alert.position = {lat: pos.coords.latitude, lng: pos.coords.longitude};
 
         self.showMap();
-        self.setLocalisation(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+        try {
+          self.setLocalisation(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+        }
+        catch (error) {
+        }
         hideIonicLoading();
       }, function (error) {
         hideIonicLoading();

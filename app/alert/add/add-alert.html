@@ -84,28 +84,19 @@
       </button>
     </form>
     <button class="button button-balanced button-block"
-            data-ng-if="! AddAlertCtrl.showedMap && AddAlertCtrl.canShowMap"
+            data-ng-if="! AddAlertCtrl.showedMap"
             ng-click="AddAlertCtrl.showMap()">
       <i class="ion-location"></i>&nbsp;
       Voir la carte
     </button>
 
-    <button class="button button-balanced button-block"
-            data-ng-if="(! AddAlertCtrl.canShowMap) && (! AddAlertCtrl.alert.position)"
-            ng-click="AddAlertCtrl.getLocalisation()">
-      <i class="ion-location"></i>&nbsp;
-      Ma position
-    </button>
-
     <div data-ng-show="AddAlertCtrl.showedMap">
-      <div id="floating-panel" data-ng-if="AddAlertCtrl.geocoder">
-        <input type="text" data-ng-model="AddAlertCtrl.address">
-        <button class="button button-balanced button-block"
-                ng-click="AddAlertCtrl.geocodeAddress()">
-          <i class="ion-search"></i>&nbsp;
-          Chercher
-        </button>
-      </div>
+      <input type="text" data-ng-model="AddAlertCtrl.address">
+      <button class="button button-balanced button-block"
+              ng-click="AddAlertCtrl.geocodeAddress()">
+        <i class="ion-search"></i>&nbsp;
+        Chercher
+      </button>
     </div>
     <div id="map" data-ng-show="AddAlertCtrl.showedMap">
 
