@@ -5,9 +5,9 @@
     .module('addAlert')
     .controller('AddAlertCtrl', addAlertController);
 
-  addAlertController.$inject = ['$scope', '$stateParams', 'AlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', 'AccountService', '$state', '$compile'];
+  addAlertController.$inject = ['$stateParams', 'AlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', 'AccountService', '$state'];
 
-  function addAlertController($scope, $stateParams, AlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, AccountService, $state, $compile) {
+  function addAlertController($stateParams, AlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, AccountService, $state) {
     let self = this;
     self.myPetId = $stateParams.petId;
 
@@ -16,7 +16,7 @@
     };
 
     self.setLocalisation = function (pos) {
-      if (self.canShowMap) {
+      if (self.map) {
         if (!pos) {
           let streetView = self.map.getStreetView();
           if (streetView.getVisible()) {
@@ -34,18 +34,61 @@
     };
 
     function setMarker(pos) {
-      if (self.canShowMap) {
-        if (self.marker) {
-          self.marker.setPosition(pos);
+      if (self.marker) {
+        self.marker.setPosition(pos);
+      }
+      else {
+        try {
+          self.map.addMarker({
+            position: {lat: pos.latitude, lng: pos.longitude},
+            title: "Je l'ai perdu ici \n",
+            snippet: "Je l'ai vu ici",
+            draggable: true,
+            animation: plugin.google.maps.Animation.BOUNCE
+          }, function (marker) {
+            self.marker = marker;
+            self.marker.addListener('click', toggleBounce);
+            self.marker.addListener('ondrag', drag);
+
+            // Show the info window
+            self.marker.showInfoWindow();
+
+            // Catch the click event
+            self.marker.on(plugin.google.maps.event.INFO_CLICK, function () {
+
+              // To do something...
+              alert("Hello world!");
+
+            });
+          });
         }
-        else {
+        catch (error) {
           self.marker = new google.maps.Marker({
             position: pos,
             map: self.map,
+            draggable: true,
             animation: google.maps.Animation.DROP,
             title: "Je l'ai perdu ici"
           });
+          self.marker.addListener('click', toggleBounce);
+
+          google.maps.event.addListener(self.marker, 'dragend', function (event) {
+            self.setLocalisation(new google.maps.LatLng(this.position.lat(), this.position.lng()));
+          });
         }
+      }
+    }
+
+    function drag() {
+      console.log('drag');
+    }
+
+    function toggleBounce() {
+      console.log("toggle bounce");
+      if (self.marker.getAnimation() !== null) {
+        self.marker.setAnimation(null);
+      } else {
+        self.marker.setAnimation(google.maps.Animation.BOUNCE);
       }
     }
 
@@ -54,27 +97,41 @@
     };
 
     self.showMap = function () {
-      if (self.canShowMap) {
-        if (!self.map) {
+      if (!self.map) {
+        showIonicLoading();
+        var div = document.getElementById("map");
+        try {
+          self.map = plugin.google.maps.Map.getMap(div);
+          self.map.addEventListener(plugin.google.maps.event.MAP_READY, onMapReady);
+          console.log('test plugin');
+        }
+        catch (error) {
           let mapOptions = {
             zoom: 16,
             mapTypeId: google.maps.MapTypeId.ROADMAP
           };
 
-          self.map = new google.maps.Map(document.getElementById("map"),
-            mapOptions);
-
-          self.geocoder = new google.maps.Geocoder();
-
+          self.map = new google.maps.Map(div, mapOptions);
           self.getLocalisation();
-        }
+          self.showedMap = true;
+          self.geocoder = new google.maps.Geocoder();
+          hideIonicLoading();
 
+        }
+      }
+      else {
         self.showedMap = true;
       }
     };
 
+    function onMapReady() {
+      self.getLocalisation();
+      hideIonicLoading();
+      self.showedMap = true;
+    }
+
     self.geocodeAddress = function () {
-      if (self.canShowMap) {
+      if (self.geocoder) {
         self.geocoder.geocode({'address': self.address}, function (results, status) {
           if (status === google.maps.GeocoderStatus.OK) {
             let location = results[0].geometry.location;
@@ -91,10 +148,8 @@
       navigator.geolocation.getCurrentPosition(function (pos) {
         self.alert.position = {lat: pos.coords.latitude, lng: pos.coords.longitude};
 
-        if (self.canShowMap) {
-          self.showMap();
-          self.setLocalisation(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-        }
+        self.showMap();
+        self.setLocalisation(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
         hideIonicLoading();
       }, function (error) {
         hideIonicLoading();
@@ -112,7 +167,7 @@
             alert('Impossible de récupérer la localisation: ' + error.message);
             break;
         }
-      }, {enableHighAccuracy : true});
+      }, {enableHighAccuracy: true});
     };
 
     function getSpecies(id) {
@@ -286,7 +341,7 @@
       self.breeds = {};
       self.species = [];
       self.alert = {userId: self.userId, pet: {}};
-      self.canShowMap = false; //(!!google.maps.MapTypeId.ROADMAP);
+
       self.myPetId = $stateParams.petId;
       if (self.myPetId) {
         getPet();
