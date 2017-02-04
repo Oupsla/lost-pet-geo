@@ -23,6 +23,7 @@
     };
 
     self.addAlert = function (alert) {
+      alert.location = [alert.position.lat, alert.position.lng];
       return $http.post(url + "alerts", alert)
         .then((resp) => resp.data);
     };

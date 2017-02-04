@@ -1,4 +1,13 @@
 {
   "name": "lost_pet_geo",
-  "app_id": "38828a71"
+  "app_id": "38828a71",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*",
+    "!www/**/*.map"
+  ]
 }
