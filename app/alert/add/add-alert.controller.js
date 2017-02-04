@@ -8,7 +8,7 @@
   addAlertController.$inject = ['$stateParams', 'AlertService', '$ionicPlatform', '$ionicLoading', '$timeout', '$ionicActionSheet', 'PetService', 'AccountService', '$state'];
 
   function addAlertController($stateParams, AlertService, $ionicPlatform, $ionicLoading, $timeout, $ionicActionSheet, PetService, AccountService, $state) {
-    let self = this;
+    var self = this;
     self.myPetId = $stateParams.petId;
 
     self.stopSelectPosition = function () {
@@ -18,11 +18,14 @@
     self.setLocalisation = function (pos) {
       if (self.map) {
         if (!pos) {
-          let streetView = self.map.getStreetView();
-          if (streetView.getVisible()) {
-            pos = streetView.getPosition();
+          try {
+            var streetView = self.map.getStreetView();
+            if (streetView.getVisible()) {
+              pos = streetView.getPosition();
+            }
           }
-          else {
+          catch(e) {
+            console.log(e, 28);
             pos = self.map.getCenter();
           }
         }
@@ -42,7 +45,7 @@
           self.map.addMarker({
             position: {lat: pos.latitude, lng: pos.longitude},
             title: "Je l'ai perdu ici \n",
-            snippet: "Je l'ai vu ici",
+            snippet: "Je l'ai perdu ici",
             draggable: true,
             animation: plugin.google.maps.Animation.BOUNCE
           }, function (marker) {
@@ -62,6 +65,8 @@
           });
         }
         catch (error) {
+          console.log(error, 68);
+
           self.marker = new google.maps.Marker({
             position: pos,
             map: self.map,
@@ -81,44 +86,41 @@
       self.showedMap = false;
     };
 
+    self.initMap = function () {
+      showIonicLoading();
+      var div = document.getElementById('map');
+      try {
+        self.map = plugin.google.maps.Map.getMap(div);
+        self.map.addEventListener(plugin.google.maps.event.MAP_READY, onMapReady);
+      }
+      catch (error) {
+        console.log(error, 97);
+
+        var mapOptions = {
+          zoom: 16,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        self.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        console.log(self.map);
+        hideIonicLoading();
+      }
+
+    };
+
     self.showMap = function () {
-      if (!self.map) {
-        showIonicLoading();
-        var div = document.getElementById("map");
-        try {
-          self.map = plugin.google.maps.Map.getMap(div);
-          self.map.addEventListener(plugin.google.maps.event.MAP_READY, onMapReady);
-          console.log('test plugin');
-        }
-        catch (error) {
-          let mapOptions = {
-            zoom: 16,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
-
-          self.map = new google.maps.Map(div, mapOptions);
-          self.getLocalisation();
-          self.showedMap = true;
-          self.geocoder = new google.maps.Geocoder();
-          hideIonicLoading();
-
-        }
-      }
-      else {
-        self.showedMap = true;
-      }
+      self.showedMap = true;
     };
 
     function onMapReady() {
       self.getLocalisation();
       hideIonicLoading();
-      self.showedMap = true;
     }
 
     self.geocodeAddress = function () {
       var request = {
         'address': self.address
       };
+
       try {
         plugin.google.maps.Geocoder.geocode(request, function (results) {
           if (results.length) {
@@ -132,9 +134,13 @@
         });
       }
       catch (e) {
+        console.log(e, 137);
+        if (!self.geocoder) {
+          self.geocoder = new google.maps.Geocoder();
+        }
         self.geocoder.geocode(request, function (results, status) {
           if (status === google.maps.GeocoderStatus.OK) {
-            let location = results[0].geometry.location;
+            var location = results[0].geometry.location;
             self.setLocalisation(location);
           } else {
             alert('Geocode was not successful for the following reason: ' + status);
@@ -148,11 +154,12 @@
       navigator.geolocation.getCurrentPosition(function (pos) {
         self.alert.position = {lat: pos.coords.latitude, lng: pos.coords.longitude};
 
-        self.showMap();
         try {
           self.setLocalisation(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
         }
         catch (error) {
+          console.log(error, 161);
+
         }
         hideIonicLoading();
       }, function (error) {
@@ -235,7 +242,7 @@
     function importPhoto() {
       $ionicPlatform.ready(function () {
         if (window.cordova) {
-          let source = self.pictureSource.PHOTOLIBRARY;
+          var source = self.pictureSource.PHOTOLIBRARY;
           getPhoto(source);
         }
       });
@@ -256,6 +263,7 @@
 
 
     function onDeviceReady() {
+      console.log("device ready");
       self.pictureSource = navigator.camera.PictureSourceType;
       self.destinationType = navigator.camera.DestinationType;
     }
@@ -288,7 +296,7 @@
     }
 
     self.takePhoto = function () {
-      let opts = {
+      var opts = {
         buttons: [
           {text: 'Prendre une photo'},
           {text: 'Photo de la librairie'}
@@ -340,7 +348,6 @@
     }
 
     function reset() {
-      console.log('reset');
       self.loaders = {getPet: true};
       self.breeds = {};
       self.species = [];
@@ -361,10 +368,9 @@
       self.images = PetService.getImages();
       self.address = 'Paris';
       self.states = ['Perdu', 'Trouvé'];
-      getAccountId();
       reset();
+      getAccountId();
       document.addEventListener('deviceready', onDeviceReady, false);
-
     }
 
     init();
